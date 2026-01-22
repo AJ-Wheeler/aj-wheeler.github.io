@@ -31,17 +31,6 @@ body {
   opacity: 0.85;
 }
 
-.hack-fail {
-  color: red;
-  font-weight: bold;
-  animation: flash 0.15s steps(1) infinite;
-}
-
-@keyframes flash {
-  50% { opacity: 0; }
-}
-
-
 @media (max-width: 700px) {
   .command-grid {
     grid-template-columns: 120px 1fr;
