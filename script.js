@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       case "ping":
         launchPong();
-        return "<b>Controls:</b> Left Paddle: W & S, Right Paddle: ↑ & ↓, Esc to exit";
+        return "<b>Controls:</b> Left Paddle: ← & →, Right Paddle: ↑ & ↓, Esc to exit";
 
       case "pip":
         displayImage();
