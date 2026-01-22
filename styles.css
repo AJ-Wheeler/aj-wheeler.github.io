@@ -10,9 +10,10 @@ body {
 }
 
 #terminal {
-	border: none;
-	padding: 20px;
-	box-sizing: border-box;
+  margin-top: 60px; /* same as header height */
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
 }
 
 .command-grid {
@@ -49,9 +50,9 @@ body {
 }
 
 #output {
-	min-height: 300px;
-	margin-bottom: 10px;
-	white-space: pre-wrap;
+  flex: 1;
+  overflow-y: auto;
+  white-space: pre-wrap;
 }
 
 #input-line {
