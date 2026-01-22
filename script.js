@@ -1,3 +1,31 @@
+const ASCII_ART = {
+  rocket: `
+         ^
+        /^\\
+        |-|
+        | |
+        | |
+       /| |\\
+      /_|_|_\\
+        /_\\
+       /___\\
+      |=   =|
+      |  R  |
+      |  O  |
+      |  S  |
+      |  E  |
+      |  W  |   -- Systems 79%
+      |  A  |
+      |  T  |
+      |  E  |
+      |  R  |
+     /|\\___/|\\
+    /_|_______|_\\
+      /_____\\   -- Boosters 100%
+      '  '  '
+  `
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("input");
   const output = document.getElementById("output");
@@ -22,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const helpCommands = [
     ["login", "authorized user access only"],
     ["help", "list of commands"],
-    ["systems", "check system status"],
     ["hello", "returns a friendly message"],
     ["date", "today's date"],
     ["journal", "***private*** no peeking!"],
@@ -86,52 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
     switch (command.toLowerCase()) {
       case "help":
         return `Available commands:\n${buildCommandGrid(helpCommands)}`;
-      case "systems":
-        return "                  /\
-                   //\\
-                  ||##||
-                 //##mm\\
-                //##*mmm\\
-               //###**mmm\\   <— Systems 100%
-              //###***nmmm\\
-             //####***@nmmm\\
-             ||####***@nnmm||
-             ||####**@@@nnm||  <— Navigation 100%
-             |______________|
-             |              |
-              \____________/
-               |          |
-              /|    /\    |\
-             /_|    || /\ |_\
-               |      UFO|
-               |       \/ |
-               |          |
-              /|    /\    |\
-             / |    ||    | \
-            /  |    ||    |  \
-           /  /\    ||    /\  \
-          |__/  \   ||   /  \__|
-            /____\      /____\
-            |    |      |    |
-            |    |______|    |
-            |    | /--\ |    |
-            |____|/——\|____|  <— Boosters 50%
-             \||/ //##\\ \||/
-             /##\//####\\/##\
-            //##\\/####\//##\\
-           ||/::\||/##\||/::\||
-           \\\''///:**:\\\''///
-            \\\///\::::/\\\///
-             \\//\\\::///\\//
-              \/\\\\..////\/
-                 \\\\////
-                  \\\///
-                   \\//
-                    \/
-
-     ▰▰▰▰▰▰▱▱▱▱▱▱ 50%";
-
-        
       case "secretmenu":
         return `Secret commands:\n${buildCommandGrid(secretCommands)}`;
       case "login":
@@ -139,6 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return "Enter password:";
       case "hello":
         return "Howdy, partner!";
+      case "systems":
+        return `<pre>${ASCII_ART.rocket}</pre>`;
       case "journal":
         awaitingJournalSelection = true;
         output.innerHTML = ""; // Clear screen before showing journal menu
@@ -301,3 +284,4 @@ const handleJournalSelection = (inputValue) => {
   });
 
 });
+
