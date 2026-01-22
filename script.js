@@ -2,14 +2,14 @@ const ASCII_ART = {
   rocket: `
          ^
         /^\\
-        |-|   -- Navigation
-       /| |\\    ▰▰▰▰▰▰▰▰▱▱ 80%
+        |-|     -- Navigation
+       /| |\\     ▰▰▰▰▰▰▰▰▱▱ 80%
       /_|_|_\\
-        /_\\   -- Emergency Systems
+        /_\\    -- Emergency Systems
        /___\\     ▰▰▰▰▰▰▰▰▰▰ 100%
       |=   =|
       |  R  |   -- Reactor
-      |  S  |   ▰▰▰▰▰▰▰▰▰▰ 100%
+      |  S  |     ▰▰▰▰▰▰▰▰▰▰ 100%
       |  E  |
       |  W  |   -- Fuel
       |  T  |     ▰▰▰▰▰▱▱▱▱▱ 50%
