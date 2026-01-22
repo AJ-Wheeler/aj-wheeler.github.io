@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["login", "authorized user access only"],
     ["help", "list of commands"],
     ["hello", "returns a friendly message"],
+    ["systems", "check status of rocket systems"],
     ["date", "today's date"],
     ["journal", "***private*** no peeking!"],
     ["ping", "server ping"],
