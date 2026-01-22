@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["hello", "returns a friendly message"],
     ["date", "today's date"],
     ["journal", "***private*** no peeking!"],
+    ["ping", "server ping"],
     ["pip", "show pip boy"],
     ["clear", "clear all prompts"]
   ];
@@ -119,6 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
       case "calliefornia":
         return "cutie girl";
 
+      case "ping":
+        launchPong();
+        return "";
+
       case "pip":
         displayImage();
         return "";
@@ -140,4 +145,91 @@ document.addEventListener("DOMContentLoaded", () => {
     img.style.height = "100px";
     output.appendChild(img);
   };
+
+  const launchPong = () => {
+  const gameContainer = document.getElementById("game-container");
+  const canvas = document.getElementById("pong");
+  const ctx = canvas.getContext("2d");
+
+  gameContainer.style.display = "block";
+  input.disabled = true;
+
+  startPong(ctx, canvas);
+};
+
+  let pongInterval;
+
+const startPong = (ctx, canvas) => {
+  const paddleHeight = 80;
+  const paddleWidth = 10;
+
+  let leftY = canvas.height / 2 - paddleHeight / 2;
+  let rightY = leftY;
+
+  let ballX = canvas.width / 2;
+  let ballY = canvas.height / 2;
+  let ballVX = 4;
+  let ballVY = 3;
+
+  const keys = {};
+
+  document.addEventListener("keydown", e => keys[e.key] = true);
+  document.addEventListener("keyup", e => keys[e.key] = false);
+
+  pongInterval = setInterval(() => {
+    // Controls
+    if (keys["w"]) leftY -= 5;
+    if (keys["s"]) leftY += 5;
+    if (keys["ArrowUp"]) rightY -= 5;
+    if (keys["ArrowDown"]) rightY += 5;
+
+    // Ball movement
+    ballX += ballVX;
+    ballY += ballVY;
+
+    // Wall collision
+    if (ballY <= 0 || ballY >= canvas.height) ballVY *= -1;
+
+    // Paddle collision
+    if (
+      ballX <= paddleWidth &&
+      ballY > leftY &&
+      ballY < leftY + paddleHeight
+    ) ballVX *= -1;
+
+    if (
+      ballX >= canvas.width - paddleWidth &&
+      ballY > rightY &&
+      ballY < rightY + paddleHeight
+    ) ballVX *= -1;
+
+    // Reset
+    if (ballX < 0 || ballX > canvas.width) {
+      ballX = canvas.width / 2;
+      ballY = canvas.height / 2;
+    }
+
+    // Draw
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff00";
+    ctx.fillRect(0, leftY, paddleWidth, paddleHeight);
+    ctx.fillRect(canvas.width - paddleWidth, rightY, paddleWidth, paddleHeight);
+    ctx.fillRect(ballX, ballY, 8, 8);
+  }, 1000 / 60);
+};
+
+  document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && pongInterval) {
+    clearInterval(pongInterval);
+    pongInterval = null;
+
+    document.getElementById("game-container").style.display = "none";
+    input.disabled = false;
+    input.focus();
+
+    output.innerHTML += "Exited pong.\n";
+  }
+});
+
 });
