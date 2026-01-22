@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Commands for help menus ---
   const helpCommands = [
     ["login", "authorized user access only"],
-    ["help", "clearly you know how to use this"],
+    ["help", "list of commands"],
     ["hello", "returns a friendly message"],
     ["date", "today's date"],
     ["journal", "***private*** no peeking!"],
@@ -29,12 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const secretCommands = [
-    ["bloom", "a beautiful flower for your beautiful self"],
+    ["bloom", "a beautiful flower for you"],
     ["boyack", "plumpy dumpy boiii"],
     ["calliefornia", "aww...sweet fluffy girl"],
     ["gemini", "now this appears to be a good sign..."],
     ["hack", "break into the mainframe"],
-    ["leo", "yawn...meow big kitty"],
+    ["leo", "meow big kitty"],
     ["lewis", "gross boy"]
   ];
 
