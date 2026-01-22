@@ -92,11 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return "Howdy, partner!";
       case "journal":
         awaitingJournalSelection = true;
-        output.innerHTML = ""; // <-- clear terminal before showing journal menu
-        let menu = "Select a journal entry:\n";
+        output.innerHTML = ""; // Clear screen before showing journal menu
+        let menu = "Journal Menu (type entry name or number, 'exit' to leave):\n";
         Object.keys(journalEntries).forEach((key, index) => {
           menu += `${index + 1}. ${key}\n`;
-        });
+  });
+  menu += "\nType the entry name or number:";
+  return menu;
         menu += "\nType the entry name or number:";
         return menu;
       case "bloom":
@@ -137,28 +139,36 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- Journal selection handler ---
-  const handleJournalSelection = (inputValue) => {
+const handleJournalSelection = (inputValue) => {
+
+  // Allow exiting journal mode
+  if (inputValue.toLowerCase() === "exit" || inputValue.toLowerCase() === "back") {
     awaitingJournalSelection = false;
-    let entryText = "";
-
-    // Number selection
-    if (!isNaN(inputValue)) {
-      const index = parseInt(inputValue) - 1;
-      const keys = Object.keys(journalEntries);
-      if (keys[index]) entryText = journalEntries[keys[index]];
-    } else {
-      // Name selection
-      if (journalEntries[inputValue]) entryText = journalEntries[inputValue];
-    }
-
-    if (entryText) {
-      output.innerHTML += entryText + "\n";
-    } else {
-      output.innerHTML += "Entry not found. Try 'journal' again.\n";
-    }
-
+    output.innerHTML += "Exited journal mode.\n";
     output.scrollTop = output.scrollHeight;
-  };
+    return;
+  }
+
+  let entryText = "";
+
+  // Number selection
+  if (!isNaN(inputValue)) {
+    const index = parseInt(inputValue) - 1;
+    const keys = Object.keys(journalEntries);
+    if (keys[index]) entryText = journalEntries[keys[index]];
+  } else {
+    // Name selection
+    if (journalEntries[inputValue]) entryText = journalEntries[inputValue];
+  }
+
+  if (entryText) {
+    output.innerHTML += `\n${entryText}\n`;
+  } else {
+    output.innerHTML += "Entry not found. Try again or type 'exit' to leave.\n";
+  }
+
+  output.scrollTop = output.scrollHeight;
+};
 
   const displayPip = () => {
     const img = document.createElement("img");
