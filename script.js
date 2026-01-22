@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const handlePassword = (inputValue) => {
     awaitingPassword = false;
     if (inputValue === CORRECT_PASSWORD) {
-      output.innerHTML += "Access granted.\nWelcome back, admin.\n";
+      output.innerHTML += "<br>\nWelcome back, admin. Access to <b>secretmenu</b>now authorized.\n";
     } else {
       output.innerHTML += "Access denied.\nInvalid credentials.\n";
     }
