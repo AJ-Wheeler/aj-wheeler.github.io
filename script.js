@@ -9,20 +9,15 @@ const ASCII_ART = {
        /___\\
       |=   =|
       |  R  |
-      |  O  |
       |  S  |
       |  E  |
-      |  W  |   -- Systems 50%
-      |  A  |
-      |  T  |
-      |  E  |
+      |  W  |   -- Systems
+      |  T  |     ▰▰▰▰▰▱▱▱▱▱ 50%
       |  R  |
-     /|\\___/|\\   -- Boosters 100%
-    /_|______|_\\
+     /|\\___/|\\   -- Boosters
+    /_|______|_\\    ▰▰▰▰▰▰▰▰▰▰ 100%
       /_____\\  
-      '  '  '
-▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱ 75%
-  `
+      '  '  ' `
 };
 
 document.addEventListener("DOMContentLoaded", () => {
