@@ -115,8 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return new Date().toString();
 
       case "hack":
-        runHackSequence();
-        return "";
+        return "You didn't think that was actually going to work...did you?";
 
       case "calliefornia":
         return "cutie girl";
@@ -146,49 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
     img.style.height = "100px";
     output.appendChild(img);
   };
-
-  const runHackSequence = () => {
-  const block = document.createElement("div");
-  output.appendChild(block);
-
-  const lines = [
-    "Initializing exploit framework...",
-    "Loading payload modules...",
-    "Establishing secure connection...",
-    "Bypassing firewall...",
-    "Escalating privileges..."
-  ];
-
-  let index = 0;
-
-  const typeNextLine = () => {
-    if (index < lines.length) {
-      const lineEl = document.createElement("div");
-      block.appendChild(lineEl);
-
-      typeText(lineEl, lines[index] + "<br>", 20);
-      index++;
-
-      setTimeout(typeNextLine, 700);
-    } else {
-      setTimeout(showHackFailure, 1500);
-    }
-  };
-
-  typeNextLine();
-};
-
-const showHackFailure = () => {
-  const failEl = document.createElement("div");
-  failEl.className = "hack-fail";
-  failEl.innerHTML = "ACCESS DENIED";
-
-  output.appendChild(failEl);
-
-  setTimeout(() => {
-    output.innerHTML += "<br>Request failed. Authorities have not been notified.";
-  }, 800);
-};
 
   
   const launchPong = () => {
