@@ -144,6 +144,11 @@ const handleJournalSelection = (inputValue) => {
   // Allow exiting journal mode
   if (inputValue.toLowerCase() === "exit" || inputValue.toLowerCase() === "back") {
     awaitingJournalSelection = false;
+
+    // Clear the terminal after exiting
+    output.innerHTML = "";
+
+    // Optionally, you can add a welcome line back
     output.innerHTML += "Exited journal mode.\n";
     output.scrollTop = output.scrollHeight;
     return;
