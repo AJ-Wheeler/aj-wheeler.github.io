@@ -67,8 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const getCommandResponse = (command) => {
     switch (command.toLowerCase()) {
       case "help":
-        return `
-          Available commands:
+        return `Available commands:
           ${buildCommandGrid(helpCommands)}
         `;
 
