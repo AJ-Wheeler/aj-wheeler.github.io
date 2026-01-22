@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "Monday": "Monday: Today I woke up early and enjoyed some donuts. The sunrise was beautiful...",
     "Tuesday": "Tuesday: Had a strange encounter with a cat that followed me around the block...",
     "Wednesday": "Wednesday: Got hacked again...I guess 'rosewater' was too easy a password...I'll make my new one 'rosebud'",
-    "Thursday": "Thursday: Went for a walk and thought about the Rosewater Lane project..."
-    "Friday": "Friday: Made a new discovery...this Dr. Pepper guy knows what he's doing!"
+    "Thursday": "Thursday: Went for a walk and thought about the Rosewater Lane project...",
+    "Friday": "Friday: Made a new discovery...this Dr. Pepper guy knows what he's doing!",
     "Saturday": "Saturday: ...the humans are starting to notice, I must be more inconspicuous..."
   };
 
