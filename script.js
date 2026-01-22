@@ -18,9 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     output.scrollTop = output.scrollHeight;
   };
 
-  /* =========================
-     COMMAND GRID GENERATOR
-     ========================= */
   const buildCommandGrid = (commands) => {
     let html = `<div class="command-grid">`;
 
@@ -45,21 +42,21 @@ document.addEventListener("DOMContentLoaded", () => {
     html += `</div>`;
     return html;
   };
-
-  /* =========================
-     COMMAND DEFINITIONS
-     ========================= */
+  
   const helpCommands = [
+    ["login", "authorized user access only"],
     ["help", "clearly you know how to use this"],
     ["hello", "returns a friendly message"],
     ["date", "today's date"],
-    ["clear", "clear all prompts"],
     ["journal", "***private*** no peeking!"],
-    ["pip", "show pip boy"]
+    ["pip", "show pip boy"],
+    ["clear", "clear all prompts"]
   ];
 
   const secretCommands = [
     ["bloom", "a beautiful flower for your beautiful self"],
+    ["boyack", "yawn...meow big kitty"],
+    ["calliefornia", "aww...sweet fluffy girl"],
     ["gemini", "now this appears to be a good sign..."],
     ["leo", "yawn...meow big kitty"],
     ["lewis", "gross boy"]
@@ -81,7 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
           Secret commands:
           ${buildCommandGrid(secretCommands)}
         `;
-
+        
+      case "login":
+        return "Enter user password...";
+        
       case "hello":
         return "Howdy, partner!";
 
