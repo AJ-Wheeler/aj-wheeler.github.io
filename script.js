@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       case "ping":
         launchPong();
-        return "";
+        return "Left Paddle: W & S, Right Paddle: ↑ & ↓, Esc to exit";
 
       case "pip":
         displayImage();
