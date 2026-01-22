@@ -125,7 +125,7 @@ Secret commands:
         return "";
 
       case "pip":
-        displayImage();
+        displayPip();
         return "";
 
       case "clear":
@@ -137,7 +137,7 @@ Secret commands:
     }
   };
   
-  const displayImage = () => {
+  const displayPip = () => {
     const img = document.createElement("img");
     img.src = "https://gifdb.com/images/high/black-background-pip-boy-v3z1j9i2auvwgcz8.webp";
     img.alt = "Pip Boy";
