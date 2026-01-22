@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const helpCommands = [
     ["login", "authorized user access only"],
     ["help", "list of commands"],
+    ["systems", "check system status"],
     ["hello", "returns a friendly message"],
     ["date", "today's date"],
     ["journal", "***private*** no peeking!"],
@@ -85,6 +86,52 @@ document.addEventListener("DOMContentLoaded", () => {
     switch (command.toLowerCase()) {
       case "help":
         return `Available commands:\n${buildCommandGrid(helpCommands)}`;
+      case "systems":
+        return "                  /\
+                   //\\
+                  ||##||
+                 //##mm\\
+                //##*mmm\\
+               //###**mmm\\   <— Systems 100%
+              //###***nmmm\\
+             //####***@nmmm\\
+             ||####***@nnmm||
+             ||####**@@@nnm||  <— Navigation 100%
+             |______________|
+             |              |
+              \____________/
+               |          |
+              /|    /\    |\
+             /_|    || /\ |_\
+               |      UFO|
+               |       \/ |
+               |          |
+              /|    /\    |\
+             / |    ||    | \
+            /  |    ||    |  \
+           /  /\    ||    /\  \
+          |__/  \   ||   /  \__|
+            /____\      /____\
+            |    |      |    |
+            |    |______|    |
+            |    | /--\ |    |
+            |____|/——\|____|  <— Boosters 50%
+             \||/ //##\\ \||/
+             /##\//####\\/##\
+            //##\\/####\//##\\
+           ||/::\||/##\||/::\||
+           \\\''///:**:\\\''///
+            \\\///\::::/\\\///
+             \\//\\\::///\\//
+              \/\\\\..////\/
+                 \\\\////
+                  \\\///
+                   \\//
+                    \/
+
+     ▰▰▰▰▰▰▱▱▱▱▱▱ 50%";
+
+        
       case "secretmenu":
         return `Secret commands:\n${buildCommandGrid(secretCommands)}`;
       case "login":
