@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       case "ping":
         launchPong();
-        return "Left Paddle: W & S, Right Paddle: ↑ & ↓, Esc to exit";
+        return "<b>Controls:</b> Left Paddle: W & S, Right Paddle: ↑ & ↓, Esc to exit";
 
       case "pip":
         displayImage();
@@ -223,8 +223,8 @@ const startPong = (ctx, canvas) => {
 
   pongInterval = setInterval(() => {
     // Controls
-    if (keys["w"]) leftY -= 5;
-    if (keys["s"]) leftY += 5;
+    if (keys["ArrowLeft"]) leftY -= 5;
+    if (keys["ArrowRight"]) leftY += 5;
     if (keys["ArrowUp"]) rightY -= 5;
     if (keys["ArrowDown"]) rightY += 5;
 
