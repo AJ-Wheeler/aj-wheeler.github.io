@@ -1,109 +1,82 @@
 body {
-  background-color: #000;
-  color: #00ff00;
-  font-family: 'Courier New', Courier, monospace;
-  margin: 0;
-  height: 100vh;
-
-  /* IMPORTANT: remove vertical centering */
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-
-  /* Prevent page scrolling */
-  overflow: hidden;
+	background-color: #000;
+	color: #00ff00;
+	font-family: 'Courier New', Courier, monospace;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
 }
 
-/* Fixed header */
-#header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  padding: 10px 20px;
-  box-sizing: border-box;
-
-  font-size: 0.5em;
-  font-family: "Courier New", Courier, monospace;
-  background: black;
-  z-index: 100;
-}
-
-#user {
-  font-size: 1em;
-  color: #ffffff;
-}
-
-/* Terminal container */
 #terminal {
-  margin-top: 50px; /* same as header height */
-  width: 100%;
-  max-width: 900px;
-  height: calc(100vh - 50px);
-  padding: 20px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
+	border: none;
+	padding: 20px;
+	box-sizing: border-box;
 }
 
-/* Output scrolls internally */
-#output {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 10px;
-  white-space: pre-wrap;
-}
-
-/* Input row */
-#input-line {
-  display: flex;
-}
-
-#prompt {
-  margin-right: 5px;
-}
-
-#input {
-  background: none;
-  border: none;
-  color: inherit;
-  outline: none;
-  flex: 1;
-}
-
-/* Command grid */
 .command-grid {
-  display: grid;
-  grid-template-columns: 120px 1fr 120px 1fr;
-  gap: 4px 24px;
-  font-family: monospace;
+	display: grid;
+	grid-template-columns: 120px 1fr 120px 1fr;
+	gap: 4px 24px;
+	font-family: monospace;
 }
 
 .command-grid .cmd {
-  font-weight: bold;
-  white-space: nowrap;
+	font-weight: bold;
+	white-space: nowrap;
 }
 
 .command-grid .desc {
-  opacity: 0.85;
+	opacity: 0.85;
 }
 
 @media (max-width: 700px) {
-  .command-grid {
-    grid-template-columns: 120px 1fr;
-  }
+	.command-grid {
+		grid-template-columns: 120px 1fr;
+	}
 }
 
-/* Pong overlay */
+#header {
+	font-size: .5em;
+	margin-bottom: 10px;
+	font-family: "Courier New", Courier, monospace;
+}
+
+#user {
+	font-size: 1em;
+	color: #FFFFFF;
+}
+
+#output {
+	min-height: 300px;
+	margin-bottom: 10px;
+	white-space: pre-wrap;
+}
+
+#input-line {
+	display: flex;
+}
+
+#prompt {
+	margin-right: 5px;
+}
+
+#input {
+	background: none;
+	border: none;
+	color: inherit;
+	outline: none;
+	flex: 1;
+}
+
 #game-container {
-  position: fixed;
-  top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: black;
-  padding: 12px;
-  border: 1px solid #00ff00;
-  z-index: 1000;
+	position: fixed;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: black;
+	padding: 12px;
+	border: 1px solid #00ff00;
+	z-index: 1000;
 }
