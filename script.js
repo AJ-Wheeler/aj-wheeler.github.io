@@ -10,10 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Journal entries ---
   const journalEntries = {
-    "day1": "Today I woke up early and made some coffee. The sunrise was beautiful...",
-    "day2": "Had a strange encounter with a cat that followed me around the block...",
-    "day3": "Experimented with some new code in my terminal. Feeling productive!",
-    "day4": "Went for a walk and thought about the Rosewater Lane project..."
+    "Monday": "Monday: Today I woke up early and enjoyed some donuts. The sunrise was beautiful...",
+    "Tuesday": "Tuesday: Had a strange encounter with a cat that followed me around the block...",
+    "Wednesday": "Wednesday: Got hacked again...I guess 'rosewater' was too easy a password...I'll make my new one 'rosebud'",
+    "Thursday": "Thursday: Went for a walk and thought about the Rosewater Lane project..."
+    "Friday": "Friday: Made a new discovery...this Dr. Pepper guy knows what he's doing!"
+    "Saturday": "Saturday: ...the humans are starting to notice, I must be more inconspicuous..."
   };
 
   // --- Commands for help menus ---
