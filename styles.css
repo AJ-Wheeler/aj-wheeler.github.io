@@ -68,3 +68,15 @@ color: #FFFFFF;
   outline: none;
   flex: 1;
 }
+
+#game-container {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: black;
+  padding: 12px;
+  border: 1px solid #00ff00;
+  z-index: 1000;
+}
+
