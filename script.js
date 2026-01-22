@@ -55,16 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const secretCommands = [
     ["bloom", "a beautiful flower for your beautiful self"],
-    ["boyack", "yawn...meow big kitty"],
+    ["boyack", "plumpy dumpy boiii"],
     ["calliefornia", "aww...sweet fluffy girl"],
     ["gemini", "now this appears to be a good sign..."],
+    ["hack", "break into the mainframe"],
     ["leo", "yawn...meow big kitty"],
     ["lewis", "gross boy"]
   ];
 
-  /* =========================
-     COMMAND HANDLER
-     ========================= */
   const getCommandResponse = (command) => {
     switch (command.toLowerCase()) {
       case "help":
@@ -80,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         
       case "login":
-        return "Enter user password...";
+        return "Enter user password";
         
       case "hello":
         return "Howdy, partner!";
@@ -115,6 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "date":
         return new Date().toString();
 
+       case "hack":
+        return "you didn't actually think that was going to work...did you?";
+
       case "pip":
         displayImage();
         return "";
@@ -127,10 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return `'${command}' is not recognized as a command. Type 'help' for a list of available commands.`;
     }
   };
-
-  /* =========================
-     IMAGE DISPLAY
-     ========================= */
+  
   const displayImage = () => {
     const img = document.createElement("img");
     img.src = "https://gifdb.com/images/high/black-background-pip-boy-v3z1j9i2auvwgcz8.webp";
