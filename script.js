@@ -2,47 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("input");
   const output = document.getElementById("output");
 
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      const command = input.value.trim();
-      if (command) {
-        processCommand(command);
-      }
-      input.value = "";
-    }
-  });
+  // --- Terminal state flags ---
+  let awaitingPassword = false;
+  const CORRECT_PASSWORD = "rosebud";
 
-  const processCommand = (command) => {
-    const response = getCommandResponse(command);
-    output.innerHTML += `> ${command}\n${response}\n`;
-    output.scrollTop = output.scrollHeight;
+  let awaitingJournalSelection = false;
+
+  // --- Journal entries ---
+  const journalEntries = {
+    "day1": "Today I woke up early and made some coffee. The sunrise was beautiful...",
+    "day2": "Had a strange encounter with a cat that followed me around the block...",
+    "day3": "Experimented with some new code in my terminal. Feeling productive!",
+    "day4": "Went for a walk and thought about the Rosewater Lane project..."
   };
 
-  const buildCommandGrid = (commands) => {
-    let html = `<div class="command-grid">`;
-
-    for (let i = 0; i < commands.length; i += 2) {
-      // First command
-      html += `
-        <div class="cmd">${commands[i][0]}</div>
-        <div class="desc">${commands[i][1]}</div>
-      `;
-
-      // Second command (or padding)
-      if (commands[i + 1]) {
-        html += `
-          <div class="cmd">${commands[i + 1][0]}</div>
-          <div class="desc">${commands[i + 1][1]}</div>
-        `;
-      } else {
-        html += `<div></div><div></div>`;
-      }
-    }
-
-    html += `</div>`;
-    return html;
-  };
-  
+  // --- Commands for help menus ---
   const helpCommands = [
     ["login", "authorized user access only"],
     ["help", "clearly you know how to use this"],
@@ -64,79 +38,128 @@ document.addEventListener("DOMContentLoaded", () => {
     ["lewis", "gross boy"]
   ];
 
+  // --- Input listener ---
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const value = input.value.trim();
+      if (!value) return;
+
+      if (awaitingPassword) {
+        handlePassword(value);
+      } else if (awaitingJournalSelection) {
+        handleJournalSelection(value);
+      } else {
+        processCommand(value);
+      }
+
+      input.value = "";
+    }
+  });
+
+  // --- Command processor ---
+  const processCommand = (command) => {
+    const response = getCommandResponse(command);
+    output.innerHTML += `> ${command}\n${response}\n`;
+    output.scrollTop = output.scrollHeight;
+  };
+
+  // --- Command grid builder ---
+  const buildCommandGrid = (commands) => {
+    let html = `<div class="command-grid">`;
+    for (let i = 0; i < commands.length; i += 2) {
+      html += `<div class="cmd">${commands[i][0]}</div><div class="desc">${commands[i][1]}</div>`;
+      if (commands[i + 1]) {
+        html += `<div class="cmd">${commands[i + 1][0]}</div><div class="desc">${commands[i + 1][1]}</div>`;
+      } else {
+        html += `<div></div><div></div>`;
+      }
+    }
+    html += `</div>`;
+    return html;
+  };
+
+  // --- Command responses ---
   const getCommandResponse = (command) => {
     switch (command.toLowerCase()) {
       case "help":
-        return `
-Available commands:
-          ${buildCommandGrid(helpCommands)}
-        `;
-
+        return `Available commands:\n${buildCommandGrid(helpCommands)}`;
       case "secretmenu":
-        return `
-Secret commands:
-          ${buildCommandGrid(secretCommands)}
-        `;
-        
+        return `Secret commands:\n${buildCommandGrid(secretCommands)}`;
       case "login":
-        return "Enter user password";
-        
+        awaitingPassword = true;
+        return "Enter password:";
       case "hello":
         return "Howdy, partner!";
-
       case "journal":
-        return `
-          Error: Unauthorized access attempt, admin has been notified.
-          <p>JK curiosity should be rewarded...type <b>secretmenu</b> for more commands.</p>
-        `;
-
+        awaitingJournalSelection = true;
+        output.innerHTML = ""; // <-- clear terminal before showing journal menu
+        let menu = "Select a journal entry:\n";
+        Object.keys(journalEntries).forEach((key, index) => {
+          menu += `${index + 1}. ${key}\n`;
+        });
+        menu += "\nType the entry name or number:";
+        return menu;
       case "bloom":
-        return `                     ..ooo.<br>
-                 .888888888.<br>
-                 88'P'T'T888 8o<br>
-             o8o 8.8'8 88o.'8o 8o<br>
-            88 . o88o8 8 88.'8 88P'o<br>
-           88 o8 88 oo.8 888 8 888 88<br>
-           88 88 88o888' 88'  o888 88<br>
-           88.'8o.'T88P.88'. 88888 88<br>
-           888.'888.'88P'.o8 8888 888<br>
-           '888o'8888oo8888 o888 o8P'<br>
-            '8888.''888P'P.888'.88P<br>
-             '88888ooo  888P'.o888<br>
-               ''8P''.oooooo8888P`;
-
+        return "                     ..ooo.<br>                 .888888888.<br>                 88'P'T'T888 8o";
       case "gemini":
-        return "....................................<br>....+++:.....................:+++...<br>.....-++++=:.............:=++++-....<br>........-++++++++++++++++++=-.......";
-
+        return "....................................<br>....+++:.....................:+++...";
       case "leo":
-        return "....................................<br>.............+@@@@@@@=..............<br>..........*@@@@@@@@@@@@@+...........";
-
+        return "....................................<br>.............+@@@@@@@=..............";
       case "date":
         return new Date().toString();
-
       case "hack":
         return "You didn't think that was actually going to work...did you?";
-
       case "calliefornia":
         return "cutie girl";
-
       case "ping":
         launchPong();
         return "";
-
       case "pip":
         displayPip();
         return "";
-
       case "clear":
         output.innerHTML = "";
         return "";
-
       default:
         return `'${command}' is not recognized as a command. Type 'help' for a list of available commands.`;
     }
   };
-  
+
+  // --- Password handler ---
+  const handlePassword = (inputValue) => {
+    awaitingPassword = false;
+    if (inputValue === CORRECT_PASSWORD) {
+      output.innerHTML += "Access granted.\nWelcome back, admin.\n";
+    } else {
+      output.innerHTML += "Access denied.\nInvalid credentials.\n";
+    }
+    output.scrollTop = output.scrollHeight;
+  };
+
+  // --- Journal selection handler ---
+  const handleJournalSelection = (inputValue) => {
+    awaitingJournalSelection = false;
+    let entryText = "";
+
+    // Number selection
+    if (!isNaN(inputValue)) {
+      const index = parseInt(inputValue) - 1;
+      const keys = Object.keys(journalEntries);
+      if (keys[index]) entryText = journalEntries[keys[index]];
+    } else {
+      // Name selection
+      if (journalEntries[inputValue]) entryText = journalEntries[inputValue];
+    }
+
+    if (entryText) {
+      output.innerHTML += entryText + "\n";
+    } else {
+      output.innerHTML += "Entry not found. Try 'journal' again.\n";
+    }
+
+    output.scrollTop = output.scrollHeight;
+  };
+
   const displayPip = () => {
     const img = document.createElement("img");
     img.src = "https://gifdb.com/images/high/black-background-pip-boy-v3z1j9i2auvwgcz8.webp";
@@ -146,91 +169,71 @@ Secret commands:
     output.appendChild(img);
   };
 
-  
+  // --- Pong ---
   const launchPong = () => {
-  const gameContainer = document.getElementById("game-container");
-  const canvas = document.getElementById("pong");
-  const ctx = canvas.getContext("2d");
+    const gameContainer = document.getElementById("game-container");
+    const canvas = document.getElementById("pong");
+    const ctx = canvas.getContext("2d");
 
-  gameContainer.style.display = "block";
-  input.disabled = true;
+    gameContainer.style.display = "block";
+    input.disabled = true;
 
-  startPong(ctx, canvas);
-};
+    startPong(ctx, canvas);
+  };
 
   let pongInterval;
 
-const startPong = (ctx, canvas) => {
-  const paddleHeight = 80;
-  const paddleWidth = 10;
+  const startPong = (ctx, canvas) => {
+    const paddleHeight = 80;
+    const paddleWidth = 10;
+    let leftY = canvas.height / 2 - paddleHeight / 2;
+    let rightY = leftY;
+    let ballX = canvas.width / 2;
+    let ballY = canvas.height / 2;
+    let ballVX = 4;
+    let ballVY = 3;
+    const keys = {};
 
-  let leftY = canvas.height / 2 - paddleHeight / 2;
-  let rightY = leftY;
+    document.addEventListener("keydown", e => keys[e.key] = true);
+    document.addEventListener("keyup", e => keys[e.key] = false);
 
-  let ballX = canvas.width / 2;
-  let ballY = canvas.height / 2;
-  let ballVX = 4;
-  let ballVY = 3;
+    pongInterval = setInterval(() => {
+      if (keys["ArrowLeft"]) leftY -= 5;
+      if (keys["ArrowRight"]) leftY += 5;
+      if (keys["ArrowUp"]) rightY -= 5;
+      if (keys["ArrowDown"]) rightY += 5;
 
-  const keys = {};
+      ballX += ballVX;
+      ballY += ballVY;
 
-  document.addEventListener("keydown", e => keys[e.key] = true);
-  document.addEventListener("keyup", e => keys[e.key] = false);
+      if (ballY <= 0 || ballY >= canvas.height) ballVY *= -1;
+      if (ballX <= paddleWidth && ballY > leftY && ballY < leftY + paddleHeight) ballVX *= -1;
+      if (ballX >= canvas.width - paddleWidth && ballY > rightY && ballY < rightY + paddleHeight) ballVX *= -1;
 
-  pongInterval = setInterval(() => {
-    // Controls
-    if (keys["ArrowLeft"]) leftY -= 5;
-    if (keys["ArrowRight"]) leftY += 5;
-    if (keys["ArrowUp"]) rightY -= 5;
-    if (keys["ArrowDown"]) rightY += 5;
+      if (ballX < 0 || ballX > canvas.width) {
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+      }
 
-    // Ball movement
-    ballX += ballVX;
-    ballY += ballVY;
-
-    // Wall collision
-    if (ballY <= 0 || ballY >= canvas.height) ballVY *= -1;
-
-    // Paddle collision
-    if (
-      ballX <= paddleWidth &&
-      ballY > leftY &&
-      ballY < leftY + paddleHeight
-    ) ballVX *= -1;
-
-    if (
-      ballX >= canvas.width - paddleWidth &&
-      ballY > rightY &&
-      ballY < rightY + paddleHeight
-    ) ballVX *= -1;
-
-    // Reset
-    if (ballX < 0 || ballX > canvas.width) {
-      ballX = canvas.width / 2;
-      ballY = canvas.height / 2;
-    }
-
-    // Draw
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#00ff00";
-    ctx.fillRect(0, leftY, paddleWidth, paddleHeight);
-    ctx.fillRect(canvas.width - paddleWidth, rightY, paddleWidth, paddleHeight);
-    ctx.fillRect(ballX, ballY, 8, 8);
-  }, 1000 / 60);
-};
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#00ff00";
+      ctx.fillRect(0, leftY, paddleWidth, paddleHeight);
+      ctx.fillRect(canvas.width - paddleWidth, rightY, paddleWidth, paddleHeight);
+      ctx.fillRect(ballX, ballY, 8, 8);
+    }, 1000 / 60);
+  };
 
   document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && pongInterval) {
-    clearInterval(pongInterval);
-    pongInterval = null;
+    if (e.key === "Escape" && pongInterval) {
+      clearInterval(pongInterval);
+      pongInterval = null;
 
-    document.getElementById("game-container").style.display = "none";
-    input.disabled = false;
-    input.focus();
+      document.getElementById("game-container").style.display = "none";
+      input.disabled = false;
+      input.focus();
 
-    output.innerHTML += "Exited pong.\n";
-  }
-});
+      output.innerHTML += "Exited pong.\n";
+    }
+  });
 
 });
