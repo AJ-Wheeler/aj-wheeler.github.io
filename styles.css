@@ -13,7 +13,7 @@ body {
 	border: none;
 	padding: 20px;
 	box-sizing: border-box;
-	margin-top: 50px;
+	margin-top: 10px;
 	width: 100%;
 	max-width: 900px;
 	height: calc(100vh - 50px);
@@ -57,14 +57,12 @@ body {
 #user {
 	font-size: 1em;
 	color: #FFFFFF;
-	margin-top: 20px;
 }
 
 #output {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 10px;
-  white-space: pre-wrap;
+	min-height: 300px;
+	margin-bottom: 10px;
+	white-space: pre-wrap;
 }
 
 #input-line {
