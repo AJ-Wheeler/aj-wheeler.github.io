@@ -222,6 +222,60 @@ function typeText(text, speed = 50, callback) {
 
   step();
 }
+   const displayPip = () => {
+    const img = document.createElement("img");
+    img.src = "https://gifdb.com/images/high/black-background-pip-boy-v3z1j9i2auvwgcz8.webp";
+    img.alt = "Pip Boy";
+    img.style.width = "75px";
+    img.style.height = "100px";
+    output.appendChild(img);
+  };
+
+const runHackSequence = () => {
+  const block = document.createElement("div");
+  output.appendChild(block);
+
+  const lines = [
+    "Initializing exploit framework...",
+    "Loading payload modules...",
+    "Establishing secure connection...",
+    "Bypassing firewall...",
+    "Escalating privileges..."
+  ];
+
+  let index = 0;
+
+  const typeNextLine = () => {
+    if (index < lines.length) {
+      const lineEl = document.createElement("div");
+      block.appendChild(lineEl);
+
+      // Type the entire line, then move to next
+      typeTextToElement(lineEl, lines[index] + "\n", 20, () => {
+        index++;
+        setTimeout(typeNextLine, 200); 
+      });
+    } else {
+      // After all lines finish, show failure
+      setTimeout(showHackFailure, 500);
+    }
+  };
+
+  // Start typing with a leading prompt
+  typeText("> hack\n", 10, typeNextLine);
+};
+
+const showHackFailure = () => {
+  const failEl = document.createElement("div");
+  failEl.className = "hack-fail";
+  failEl.innerHTML = "ACCESS DENIED";
+  output.appendChild(failEl);
+
+  setTimeout(() => {
+    output.innerHTML += "<br>Request failed. Admin has been notified.\n";
+    output.scrollTop = output.scrollHeight;
+  }, 500);
+};
 
 
 // --- Command processor ---
@@ -375,95 +429,6 @@ const handleJournalSelection = (inputValue) => {
   }
 
   output.scrollTop = output.scrollHeight;
-};
-
-  const displayPip = () => {
-    const img = document.createElement("img");
-    img.src = "https://gifdb.com/images/high/black-background-pip-boy-v3z1j9i2auvwgcz8.webp";
-    img.alt = "Pip Boy";
-    img.style.width = "75px";
-    img.style.height = "100px";
-    output.appendChild(img);
-  };
-
-const runHackSequence = () => {
-  const block = document.createElement("div");
-  output.appendChild(block);
-
-  const lines = [
-    "Initializing exploit framework...",
-    "Loading payload modules...",
-    "Establishing secure connection...",
-    "Bypassing firewall...",
-    "Escalating privileges..."
-  ];
-
-  let index = 0;
-
-  const typeNextLine = () => {
-    if (index < lines.length) {
-      const lineEl = document.createElement("div");
-      block.appendChild(lineEl);
-
-      typeTextToElement(lineEl, lines[index], 20, () => {
-        lineEl.innerHTML += "<br>";
-        index++;
-        // Wait a short moment before typing the next line
-        setTimeout(typeNextLine, 200); 
-      });
-    } else {
-      // Final dramatic failure
-      setTimeout(showHackFailure, 1000);
-    }
-  };
-
-  typeNextLine();
-};
-
-const runHackSequence = () => {
-  const block = document.createElement("div");
-  output.appendChild(block);
-
-  const lines = [
-    "Initializing exploit framework...",
-    "Loading payload modules...",
-    "Establishing secure connection...",
-    "Bypassing firewall...",
-    "Escalating privileges..."
-  ];
-
-  let index = 0;
-
-  const typeNextLine = () => {
-    if (index < lines.length) {
-      const lineEl = document.createElement("div");
-      block.appendChild(lineEl);
-
-      // Type the entire line, then move to next
-      typeTextToElement(lineEl, lines[index] + "\n", 20, () => {
-        index++;
-        setTimeout(typeNextLine, 200); 
-      });
-    } else {
-      // After all lines finish, show failure
-      setTimeout(showHackFailure, 500);
-    }
-  };
-
-  // Start typing with a leading prompt
-  typeText("> hack\n", 10, typeNextLine);
-};
-
-const showHackFailure = () => {
-  const failEl = document.createElement("div");
-  failEl.className = "hack-fail";
-  failEl.innerHTML = "ACCESS DENIED";
-  output.appendChild(failEl);
-
-  setTimeout(() => {
-    output.innerHTML += "<br>Request failed. Admin has been notified.\n";
-    output.scrollTop = output.scrollHeight;
-  }, 500);
 };
 
 
