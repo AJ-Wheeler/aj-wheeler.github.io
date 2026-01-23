@@ -189,7 +189,7 @@ input.value = "";
 
 let isTyping = false;
 
-function typeText(text, speed = 50, callback) {
+function typeText(text, speed = 20, callback) {
 isTyping = true;
 let i = 0;
 
@@ -292,22 +292,20 @@ menu += `${index + 1}. ${key}\n`;
 });
 menu += "\nType the entry name or number:";
 return menu;
-menu += "\nType the entry name or number:";
-return menu;
 case "bloom":
-return `\n${ASCII_ART.rose}`;
+return `<pre>${ASCII_ART.rose}</pre>`;
 case "gemini":
-return `\n${ASCII_ART.gemini}`;
+return `<pre>${ASCII_ART.gemini}</pre>`;
 case "leo":
-return `\n${ASCII_ART.leo}`;
+return `<pre>${ASCII_ART.leo}</pre>`;
 case "lewis":
-return `\n${ASCII_ART.lewis}`;
+return `<pre>${ASCII_ART.lewis}</pre>`;
 case "date":
 return new Date().toString();
 case "hack":
 return "You didn't think that was actually going to work...did you?";
-case "callie":
-return `\n${ASCII_ART.callie}`;
+case "calliefornia":
+return `<pre>${ASCII_ART.callie}</pre>`;
 case "ping":
 launchPong();
 return "";
