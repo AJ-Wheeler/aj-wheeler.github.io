@@ -170,16 +170,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const helpCommands = [
     ["login", "authorized user access only"],
     ["help", "list of commands"],
-    ["hello", "returns a friendly message"],
     ["systems", "check status of rocket systems"],
-    ["date", "today's date"],
-    ["test", "run status check"],
     ["journal", "***private*** no peeking!"],
     ["ping", "server ping"],
-    ["pip", "show pip boy"],
     ["clear", "clear all prompts"]
   ];
-
+  
+  // --- Secret commands ---
   const secretCommands = [
     ["bloom", "a beautiful flower for you"],
     ["boyack", "plumpy dumpy boiii"],
@@ -188,6 +185,16 @@ document.addEventListener("DOMContentLoaded", () => {
     ["hack", "break into the mainframe"],
     ["leo", "meow big kitty"],
     ["lewis", "gross boy"]
+  ];
+
+    // --- Systems commands ---
+  const systemsCommands = [
+    ["status", "vessel status and system health"],
+    ["comms", "communications array and signal traffic"],
+    ["nav", "navigation data and course plotting"],
+    ["crew", "crew manifest and life-sign monitoring"],
+    ["alerts", "active warnings and system notices"],
+    ["reboot", "restart onboard systems"]
   ];
 
   // --- Helper for appending text and auto-scrolling ---
@@ -299,6 +306,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return { type: "html", header: "Available commands:", content: buildCommandGrid(helpCommands) };
       case "secretmenu":
         return { type: "html", header: "Secret commands:", content: buildCommandGrid(secretCommands) };
+      case "systems":
+        return { type: "html", header: "Systems commands:", content: buildCommandGrid(systemCommands) };
       case "hack":
         runHackSequence();
         return null;
@@ -310,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return "Enter password:";
       case "hello":
         return "Howdy, partner!";
-      case "systems":
+      case "status":
         return ASCII_ART.rocket;
       case "journal":
         awaitingJournalSelection = true;
