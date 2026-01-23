@@ -305,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
       case "help":
         return { type: "html", header: "*** MAIN MENU ***", content: buildCommandGrid(helpCommands) };
       case "secretmenu":
-        return { type: "html", header: "*** SECRET MENU ***:", content: buildCommandGrid(secretCommands) };
+        return { type: "html", header: "*** SECRET MENU ***", content: buildCommandGrid(secretCommands) };
       case "systems":
         return { type: "html", header: "*** SYSTEMS MENU ***", content: buildCommandGrid(systemsCommands) };
       case "hack":
