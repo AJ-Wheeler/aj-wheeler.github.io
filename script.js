@@ -312,9 +312,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const handlePassword = (inputValue) => {
     awaitingPassword = false;
     if (inputValue === CORRECT_PASSWORD) {
-      output.innerHTML += "<b>Access granted.</b>\nWelcome back, admin.\n";
+      output.innerHTML += "<b>Access granted.</b>\nWelcome back, admin. Access to <b>secretmenu</b> now authorized.\n";
     } else {
-      output.innerHTML += "<b>Access denied.</b>\nInvalid credentials.\n";
+      output.innerHTML += "<b>Access denied.</b>\nInvalid credentials. You'll never find my password! <p>Surely I'd never store it somewhere obvious like my journal...\n";
     }
   };
 
