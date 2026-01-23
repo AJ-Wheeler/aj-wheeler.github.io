@@ -133,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Terminal state flags ---
   let awaitingPassword = false;
   const CORRECT_PASSWORD = "rosebud";
-
   let awaitingJournalSelection = false;
 
   // --- Journal entries ---
@@ -270,7 +269,7 @@ function typeText(text, speed = 25, callback = null) {
       case "date":
         return new Date().toString();
       case "hack":
-        return "You didn't think that was actually going to work...did you?";
+        return typeText("You didn't think that was actually going to work...did you?");
       case "calliefornia":
         return `<pre>${ASCII_ART.callie}</pre>`;
       case "ping":
