@@ -1,26 +1,4 @@
-  let isTyping = false;
-
-function typeText(text, speed = 25, callback = null) {
-  if (isTyping) return;
-
-  isTyping = true;
-  const output = document.getElementById("output");
-  let index = 0;
-
-  function typeChar() {
-    if (index < text.length) {
-      output.innerHTML += text[index];
-      index++;
-      output.scrollTop = output.scrollHeight;
-      setTimeout(typeChar, speed);
-    } else {
-      isTyping = false;
-      if (callback) callback();
-    }
-  }
-
-  typeChar();
-}const ASCII_ART = {
+const ASCII_ART = {
   rocket: `
          ^
         /^\\
@@ -155,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Terminal state flags ---
   let awaitingPassword = false;
   const CORRECT_PASSWORD = "rosebud";
+
   let awaitingJournalSelection = false;
 
   // --- Journal entries ---
@@ -208,46 +187,47 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  function runHackSequence() {
-  clearScreen();
+  let isTyping = false;
 
-  const steps = [
-    "Initializing breach protocol...\n",
-    "Bypassing firewall...\n",
-    "Accessing secure node...\n",
-    "Decrypting credentials...\n",
-    "Uploading payload...\n"
-  ];
+function typeText(text, speed = 20, callback) {
+  isTyping = true;
+  let i = 0;
 
-  let index = 0;
-
-  function nextStep() {
-    if (index < steps.length) {
-      typeText(steps[index], 20, () => {
-        index++;
-        setTimeout(nextStep, 600);
-      });
+  function step() {
+    if (i < text.length) {
+      output.innerHTML += text[i];
+      i++;
+      output.scrollTop = output.scrollHeight;
+      setTimeout(step, speed);
     } else {
-      setTimeout(() => {
-        typeText(
-          "\nACCESS DENIED.\n\nSecurity countermeasures activated.\n",
-          25
-        );
-      }, 800);
+      isTyping = false;
+      if (callback) callback();
     }
   }
 
-  nextStep();
+  step();
 }
 
 
-
   // --- Command processor ---
-  const processCommand = (command) => {
-    const response = getCommandResponse(command);
-    output.innerHTML += `> ${command}\n${response}\n`;
-    output.scrollTop = output.scrollHeight;
-  };
+const processCommand = (command) => {
+  if (isTyping) return;
+
+  const response = getCommandResponse(command);
+
+  // If command triggers its own action
+  if (typeof response === "object" && response.action) {
+    response.action();
+    return;
+  }
+
+  typeText(`> ${command}\n`, 10, () => {
+    if (response) {
+      typeText(response + "\n", 15);
+    }
+  });
+};
+
 
   // --- Command grid builder ---
   const buildCommandGrid = (commands) => {
@@ -277,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
       case "hello":
         return "Howdy, partner!";
       case "systems":
-        return `<pre>${ASCII_ART.rocket}</pre>`;
+        return `\n${ASCII_ART.rocket}`;
       case "journal":
         awaitingJournalSelection = true;
         output.innerHTML = ""; // Clear screen before showing journal menu
@@ -298,9 +278,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "lewis":
         return `<pre>${ASCII_ART.lewis}</pre>`;
       case "date":
-        return new Date().toString();  
+        return new Date().toString();
       case "hack":
-        return {action: runHackSequence};
+        return "You didn't think that was actually going to work...did you?";
       case "calliefornia":
         return `<pre>${ASCII_ART.callie}</pre>`;
       case "ping":
@@ -321,9 +301,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const handlePassword = (inputValue) => {
     awaitingPassword = false;
     if (inputValue === CORRECT_PASSWORD) {
-     typeText("<b>Access granted.</b><br>\nWelcome back, admin. Access to <b>secretmenu</b> now authorized.\n");
+      output.innerHTML += "<b>Access granted.</b><br>\nWelcome back, admin. Access to <b>secretmenu</b> now authorized.\n";
     } else {
-      typeText("<b>Access denied.</b>\nInvalid credentials.\n");
+      output.innerHTML += "<b>Access denied.</b>\nInvalid credentials.\n";
     }
     output.scrollTop = output.scrollHeight;
   };
@@ -339,7 +319,7 @@ const handleJournalSelection = (inputValue) => {
     output.innerHTML = "";
 
     // Optionally, you can add a welcome line back
-    typeText("Exited journal mode.\n");
+    output.innerHTML += "Exited journal mode.\n";
     output.scrollTop = output.scrollHeight;
     return;
   }
@@ -359,7 +339,7 @@ const handleJournalSelection = (inputValue) => {
   if (entryText) {
     output.innerHTML += `\n${entryText}\n`;
   } else {
-    typeText("Entry not found. Try again or type 'exit' to leave.\n");
+    output.innerHTML += "Entry not found. Try again or type 'exit' to leave.\n";
   }
 
   output.scrollTop = output.scrollHeight;
@@ -437,7 +417,7 @@ const handleJournalSelection = (inputValue) => {
       input.disabled = false;
       input.focus();
 
-     typeText("Exited pong.\n");
+      output.innerHTML += "Exited pong.\n";
     }
   });
 
