@@ -352,6 +352,12 @@ document.addEventListener("DOMContentLoaded", () => {
           header: "*** COMMUNICATIONS ARRAY ***",
           content: `Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications`
   };
+      case "crew":
+        return {
+          type: "html",
+          header: "*** CREW ROSTER ***",
+          content: `Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie Costian<br>Security: BoJack Costian<br><br>Janitorial: Lewis Costian<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members`
+  };
       case "calliefornia":
         return ASCII_ART.callie;
       case "drpepper":
