@@ -290,19 +290,19 @@ const processCommand = (command) => {
         menu += "\nType the entry name or number:";
         return menu;
       case "bloom":
-        return `<pre>${ASCII_ART.rose}</pre>`;
+        return ASCII_ART.rose;
       case "gemini":
-        return `<pre>${ASCII_ART.gemini}</pre>`;
+        return ASCII_ART.gemini;
        case "leo":
-        return `<pre>${ASCII_ART.leo}</pre>`;
+        return ASCII_ART.leo;
       case "lewis":
-        return `<pre>${ASCII_ART.lewis}</pre>`;
+        return ASCII_ART.lewis;
       case "date":
         return new Date().toString();
       case "hack":
         return "You didn't think that was actually going to work...did you?";
       case "calliefornia":
-        return `<pre>${ASCII_ART.callie}</pre>`;
+        return ASCII_ART.callie;
       case "ping":
         launchPong();
         return "";
