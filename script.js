@@ -179,6 +179,17 @@ document.addEventListener("DOMContentLoaded", () => {
     ["lewis", "gross boy"]
   ];
 
+  // --- Helper for appending text and auto-scrolling ---
+  const appendOutput = (text) => {
+    output.innerHTML += text;
+    output.scrollTop = output.scrollHeight; // scroll to bottom
+  };
+
+  const appendOutputHTML = (html) => {
+    output.innerHTML += html;
+    output.scrollTop = output.scrollHeight;
+  };
+
   // --- Input listener ---
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
@@ -203,8 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
       isTyping = true;
       let i = 0;
       const interval = setInterval(() => {
-        output.innerHTML += text.charAt(i);
-        output.scrollTop = output.scrollHeight;
+        appendOutput(text.charAt(i));
         i++;
         if (i >= text.length) {
           clearInterval(interval);
@@ -215,12 +225,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  // Updated typeTextToElement to always scroll the main terminal
   const typeTextToElement = (el, text, speed = 15) => {
     return new Promise((resolve) => {
       let i = 0;
       const interval = setInterval(() => {
         el.innerHTML += text.charAt(i);
-        output.scrollTop = output.scrollHeight;
+        output.scrollTop = output.scrollHeight; // scroll main terminal
         i++;
         if (i >= text.length) {
           clearInterval(interval);
@@ -245,11 +256,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const response = getCommandResponse(command);
     if (response === null) return;
 
-    output.innerHTML += `> ${command}\n`;
+    appendOutput(`> ${command}\n`);
 
     if (typeof response === "object" && response.type === "html") {
       await typeText(response.header + "\n");
-      output.innerHTML += response.content + "\n";
+      appendOutputHTML(response.content + "\n");
     } else {
       await typeText(response + "\n");
     }
@@ -325,9 +336,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const handlePassword = (inputValue) => {
     awaitingPassword = false;
     if (inputValue === CORRECT_PASSWORD) {
-      output.innerHTML += "<b>Access granted.</b>\nWelcome back, admin. Access to <b>secretmenu</b> now authorized.\n";
+      appendOutput("<b>Access granted.</b>\nWelcome back, admin. Access to <b>secretmenu</b> now authorized.\n");
     } else {
-      output.innerHTML += "<b>Access denied.</b>\nInvalid credentials. You'll never find my password! <p>Surely I'd never store it somewhere obvious like my journal...\n";
+      appendOutput("<b>Access denied.</b>\nInvalid credentials. You'll never find my password! <p>Surely I'd never store it somewhere obvious like my journal...\n");
     }
   };
 
@@ -335,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const handleJournalSelection = (inputValue) => {
     if (inputValue.toLowerCase() === "exit") {
       awaitingJournalSelection = false;
-      output.innerHTML = "Exited journal mode.\n";
+      appendOutput("Exited journal mode.\n");
       return;
     }
 
@@ -345,9 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
       entryText = journalEntries[key];
     }
 
-    output.innerHTML += entryText
-      ? `\n${entryText}\n`
-      : "Entry not found.\n";
+    appendOutput(entryText ? `\n${entryText}\n` : "Entry not found.\n");
   };
 
   // --- Pip ---
@@ -356,6 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
     img.src = "https://gifdb.com/images/high/black-background-pip-boy-v3z1j9i2auvwgcz8.webp";
     img.style.width = "75px";
     output.appendChild(img);
+    output.scrollTop = output.scrollHeight;
   };
 
   // --- FIXED Hack sequence ---
@@ -446,7 +456,7 @@ document.addEventListener("DOMContentLoaded", () => {
       input.disabled = false;
       input.focus();
 
-      output.innerHTML += "Exited pong.\n";
+      appendOutput("Exited pong.\n");
     }
   });
 
