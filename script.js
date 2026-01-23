@@ -186,13 +186,46 @@ document.addEventListener("DOMContentLoaded", () => {
       input.value = "";
     }
   });
+let isTyping = false;
+
+function typeText(text, speed = 20, callback) {
+  isTyping = true;
+  let i = 0;
+
+  function step() {
+    if (i < text.length) {
+      output.innerHTML += text[i];
+      i++;
+      output.scrollTop = output.scrollHeight;
+      setTimeout(step, speed);
+    } else {
+      isTyping = false;
+      if (callback) callback();
+    }
+  }
+
+  step();
+}
 
   // --- Command processor ---
-  const processCommand = (command) => {
-    const response = getCommandResponse(command);
-    output.innerHTML += `> ${command}\n${response}\n`;
-    output.scrollTop = output.scrollHeight;
-  };
+const processCommand = (command) => {
+  if (isTyping) return;
+
+  const response = getCommandResponse(command);
+
+  // If command triggers its own action
+  if (typeof response === "object" && response.action) {
+    response.action();
+    return;
+  }
+
+  typeText(`> ${command}\n`, 10, () => {
+    if (response) {
+      typeText(response + "\n", 15);
+    }
+  });
+};
+
 
   // --- Command grid builder ---
   const buildCommandGrid = (commands) => {
@@ -221,8 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return "Enter password:";
       case "hello":
         return "Howdy, partner!";
-      case "systems":
-        return `<pre>${ASCII_ART.rocket}</pre>`;
+     case "systems":
+  return ASCII_ART.rocket;
       case "journal":
         awaitingJournalSelection = true;
         output.innerHTML = ""; // Clear screen before showing journal menu
