@@ -215,12 +215,25 @@ const processCommand = (command) => {
 
   const response = getCommandResponse(command);
 
-  // If command triggers its own action
+  // Custom actions
   if (typeof response === "object" && response.action) {
     response.action();
     return;
   }
 
+  // HTML-aware response
+  if (typeof response === "object" && response.type === "html") {
+    typeText(`> ${command}\n`, 10, () => {
+      typeText(response.header, 15, () => {
+        output.innerHTML += response.content;
+        output.innerHTML += "\n";
+        output.scrollTop = output.scrollHeight;
+      });
+    });
+    return;
+  }
+
+  // Plain text fallback
   typeText(`> ${command}\n`, 10, () => {
     if (response) {
       typeText(response + "\n", 15);
@@ -248,9 +261,17 @@ const processCommand = (command) => {
   const getCommandResponse = (command) => {
     switch (command.toLowerCase()) {
       case "help":
-        return `Available commands:\n${buildCommandGrid(helpCommands)}`;
-      case "secretmenu":
-        return `Secret commands:\n${buildCommandGrid(secretCommands)}`;
+  return {
+    type: "html",
+    header: "Available commands:\n",
+    content: buildCommandGrid(helpCommands)
+  };
+case "secretmenu":
+  return {
+    type: "html",
+    header: "Secret commands:\n",
+    content: buildCommandGrid(secretCommands)
+  };
       case "login":
         awaitingPassword = true;
         return "Enter password:";
