@@ -28,16 +28,6 @@ body {
 	white-space: nowrap;
 }
 
-.hack-fail {
-  color: red;
-  font-weight: bold;
-  animation: flash 0.15s steps(1) infinite;
-}
-
-@keyframes flash {
-  50% { opacity: 0; }
-}
-
 .command-grid .desc {
 	opacity: 0.85;
 }
