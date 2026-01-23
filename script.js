@@ -340,12 +340,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return ASCII_ART.lewis;
       case "date":
         return new Date().toString();
-        case "nav":
-  return {
-    type: "html",
-    header: "*** NAVIGATION CONTROL ***",
-    content: `Current Sector: ECHO-7<br>Destination: Rosewater Mission Control<br><br><b>navplot</b> Select a location to navigate to<br><b>navscan</b> Find nearby objects
-    `
+      case "nav":
+        return {
+          type: "html",
+          header: "*** NAVIGATION CONTROL ***",
+          content: `Current Sector: ECHO-7<br>Destination: Rosewater Mission Control<br><br><b>navplot</b> Select a location to navigate to<br><b>navscan</b> Find nearby objects`
+  };
+        case "comms":
+        return {
+          type: "html",
+          header: "*** COMMUNICATIONS ARRAY ***",
+          content: `Status: Degraded<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications`
   };
       case "calliefornia":
         return ASCII_ART.callie;
