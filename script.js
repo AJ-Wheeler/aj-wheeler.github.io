@@ -64,7 +64,7 @@ const ASCII_ART = {
          ▒▒░░░░▓██████▒████▓                      
       ▒▓▒░ ▒▓████████▓░▓▒░                        
          ░▒▓▓▓░▒▒▒▓██▓██▒                         `,
-  2849: `                 _ _
+  home: `                 _ _
                 ( Y )
                  \ /  
                   \          /^\
@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
       case "leo":
         return ASCII_ART.leo;
       case "2849":
-        return ASCII_ART.2849;
+        return ASCII_ART.home;
       case "lewis":
         return ASCII_ART.lewis;
       case "date":
