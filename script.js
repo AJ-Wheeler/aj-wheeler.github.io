@@ -392,7 +392,7 @@ const handleJournalSelection = (inputValue) => {
     output.appendChild(img);
   };
 
-  const runHackSequence = () => {
+const runHackSequence = () => {
   const block = document.createElement("div");
   output.appendChild(block);
 
@@ -413,19 +413,19 @@ const handleJournalSelection = (inputValue) => {
 
       typeTextToElement(lineEl, lines[index], 20, () => {
         lineEl.innerHTML += "<br>";
-});
-      index++;
-
-      setTimeout(typeNextLine, 700);
+        index++;
+        // Wait a short moment before typing the next line
+        setTimeout(typeNextLine, 200); 
+      });
     } else {
       // Final dramatic failure
-      setTimeout(showHackFailure, 1500);
+      setTimeout(showHackFailure, 1000);
     }
   };
 
   typeNextLine();
 };
-  
+
   const showHackFailure = () => {
   const failEl = document.createElement("div");
   failEl.className = "hack-fail";
@@ -435,7 +435,7 @@ const handleJournalSelection = (inputValue) => {
 
   // Optional follow-up message
   setTimeout(() => {
-    output.innerHTML += "<br>Request failed. Authorities have not been notified. Probably.";
+    output.innerHTML += "<br>Request failed. Authorities have not been notified.";
   }, 800);
 };
 
