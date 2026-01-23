@@ -1,4 +1,4 @@
-const ASCII_ART = {
+aconst ASCII_ART = {
   rocket: `
          ^
         /^\\
@@ -303,11 +303,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const getCommandResponse = (command) => {
     switch (command.toLowerCase()) {
       case "help":
-        return { type: "html", header: "Available commands:", content: buildCommandGrid(helpCommands) };
+        return { type: "html", header: "*** MAIN MENU ***", content: buildCommandGrid(helpCommands) };
       case "secretmenu":
-        return { type: "html", header: "Secret commands:", content: buildCommandGrid(secretCommands) };
+        return { type: "html", header: "*** SECRET MENU ***:", content: buildCommandGrid(secretCommands) };
       case "systems":
-        return { type: "html", header: "Systems commands:", content: buildCommandGrid(systemsCommands) };
+        return { type: "html", header: "*** SYSTEMS MENU ***", content: buildCommandGrid(systemsCommands) };
       case "hack":
         runHackSequence();
         return null;
