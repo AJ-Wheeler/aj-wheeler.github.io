@@ -210,6 +210,39 @@ function typeText(text, speed = 25, callback = null) {
   typeChar();
 }
 
+  function runHackSequence() {
+  clearScreen();
+
+  const steps = [
+    "Initializing breach protocol...\n",
+    "Bypassing firewall...\n",
+    "Accessing secure node...\n",
+    "Decrypting credentials...\n",
+    "Uploading payload...\n"
+  ];
+
+  let index = 0;
+
+  function nextStep() {
+    if (index < steps.length) {
+      typeText(steps[index], 20, () => {
+        index++;
+        setTimeout(nextStep, 600);
+      });
+    } else {
+      setTimeout(() => {
+        typeText(
+          "\nACCESS DENIED.\n\nSecurity countermeasures activated.\n",
+          25
+        );
+      }, 800);
+    }
+  }
+
+  nextStep();
+}
+
+
 
   // --- Command processor ---
   const processCommand = (command) => {
@@ -267,9 +300,9 @@ function typeText(text, speed = 25, callback = null) {
       case "lewis":
         return `<pre>${ASCII_ART.lewis}</pre>`;
       case "date":
-        return new Date().toString();
+        return new Date().toString();  
       case "hack":
-        return typeText("You didn't think that was actually going to work...did you?");
+        return {action: runHackSequence};
       case "calliefornia":
         return `<pre>${ASCII_ART.callie}</pre>`;
       case "ping":
