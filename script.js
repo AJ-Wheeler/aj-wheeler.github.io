@@ -273,67 +273,68 @@ const processCommand = (command) => {
   };
 
   // --- Command responses ---
-  const getCommandResponse = (command) => {
-    switch (command.toLowerCase()) {
-     case "help":
-        return {
-          type: "html",
-          header: "Available commands:\n",
-          content: buildCommandGrid(helpCommands)
-  };
-      case "secretmenu":
-        return {
-          type: "html",
-          header: "Secret commands:\n",
-          content: buildCommandGrid(secretCommands)
-  };
-      case "hack":
-        runHackSequence();
-        return "";
+const getCommandResponse = (command) => {
+  switch (command.toLowerCase()) {
+    case "help":
+      return {
+        type: "html",
+        header: "Available commands:\n",
+        content: buildCommandGrid(helpCommands)
+      };
 
-      case "login":
-        awaitingPassword = true;
-        return "Enter password:";
-      case "hello":
-        return "Howdy, partner!";
-     case "systems":
-  return ASCII_ART.rocket;
-      case "journal":
-        awaitingJournalSelection = true;
-        output.innerHTML = ""; // Clear screen before showing journal menu
-        let menu = "Journal Menu (type entry name or number, 'exit' to leave):\n";
-        Object.keys(journalEntries).forEach((key, index) => {
-          menu += `${index + 1}. ${key}\n`;
-  });
-  menu += "\nType the entry name or number:";
-  return menu;
-        menu += "\nType the entry name or number:";
-        return menu;
-      case "bloom":
-        return ASCII_ART.rose;
-      case "gemini":
-        return ASCII_ART.gemini;
-       case "leo":
-        return ASCII_ART.leo;
-      case "lewis":
-        return ASCII_ART.lewis;
-      case "date":
-        return new Date().toString();
-      case "calliefornia":
-        return ASCII_ART.callie;
-      case "ping":
-        launchPong();
-        return "";
-      case "pip":
-        displayPip();
-        return "";
-      case "clear":
-        output.innerHTML = "";
-        return "";
-      default:
-        return `'${command}' is not recognized as a command. Type 'help' for a list of available commands.`;
-    }
-  };
+    case "secretmenu":
+      return {
+        type: "html",
+        header: "Secret commands:\n",
+        content: buildCommandGrid(secretCommands)
+      };
+
+    case "hack":
+      runHackSequence();
+      return null; // <-- return null to skip any fallback typing
+
+    case "login":
+      awaitingPassword = true;
+      return "Enter password:";
+    case "hello":
+      return "Howdy, partner!";
+    case "systems":
+      return ASCII_ART.rocket;
+    case "journal":
+      awaitingJournalSelection = true;
+      output.innerHTML = ""; // Clear screen before showing journal menu
+      let menu = "Journal Menu (type entry name or number, 'exit' to leave):\n";
+      Object.keys(journalEntries).forEach((key, index) => {
+        menu += `${index + 1}. ${key}\n`;
+      });
+      menu += "\nType the entry name or number:";
+      return menu;
+    case "bloom":
+      return ASCII_ART.rose;
+    case "gemini":
+      return ASCII_ART.gemini;
+    case "leo":
+      return ASCII_ART.leo;
+    case "lewis":
+      return ASCII_ART.lewis;
+    case "date":
+      return new Date().toString();
+    case "calliefornia":
+      return ASCII_ART.callie;
+    case "ping":
+      launchPong();
+      return null; // skip fallback typing
+    case "pip":
+      displayPip();
+      return null; // skip fallback typing
+    case "clear":
+      output.innerHTML = "";
+      return null; // skip fallback typing
+
+    default:
+      return `'${command}' is not recognized as a command. Type 'help' for a list of available commands.`;
+  }
+};
 
   // --- Password handler ---
   const handlePassword = (inputValue) => {
@@ -426,18 +427,52 @@ const runHackSequence = () => {
   typeNextLine();
 };
 
-  const showHackFailure = () => {
+const runHackSequence = () => {
+  const block = document.createElement("div");
+  output.appendChild(block);
+
+  const lines = [
+    "Initializing exploit framework...",
+    "Loading payload modules...",
+    "Establishing secure connection...",
+    "Bypassing firewall...",
+    "Escalating privileges..."
+  ];
+
+  let index = 0;
+
+  const typeNextLine = () => {
+    if (index < lines.length) {
+      const lineEl = document.createElement("div");
+      block.appendChild(lineEl);
+
+      // Type the entire line, then move to next
+      typeTextToElement(lineEl, lines[index] + "\n", 20, () => {
+        index++;
+        setTimeout(typeNextLine, 200); 
+      });
+    } else {
+      // After all lines finish, show failure
+      setTimeout(showHackFailure, 500);
+    }
+  };
+
+  // Start typing with a leading prompt
+  typeText("> hack\n", 10, typeNextLine);
+};
+
+const showHackFailure = () => {
   const failEl = document.createElement("div");
   failEl.className = "hack-fail";
   failEl.innerHTML = "ACCESS DENIED";
-
   output.appendChild(failEl);
 
-  // Optional follow-up message
   setTimeout(() => {
-    output.innerHTML += "<br>Request failed. Authorities have not been notified.";
-  }, 800);
+    output.innerHTML += "<br>Request failed. Admin has been notified.\n";
+    output.scrollTop = output.scrollHeight;
+  }, 500);
 };
+
 
   // --- Pong ---
   const launchPong = () => {
