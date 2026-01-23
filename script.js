@@ -340,8 +340,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return ASCII_ART.lewis;
       case "date":
         return new Date().toString();
-      case "nav":
-        return "NAVIGATIONS CONTROL<p>Current Sector: ECHO-7<br></br>";
+        case "nav":
+  return {
+    type: "html",
+    header: "NAVIGATION CONTROL",
+    content: `
+      <p><strong>Current Sector:</strong> ECHO-7</p>
+      <p><strong>Destination:</strong> UNKNOWN</p>
+      <br>
+      <p><strong>NavPlot</strong> Select a location to navigate to</p>
+      <p><strong>NavScan</strong> Find nearby objects</p>
+    `
+  };
       case "calliefornia":
         return ASCII_ART.callie;
       case "drpepper":
