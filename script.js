@@ -340,6 +340,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return ASCII_ART.lewis;
       case "date":
         return new Date().toString();
+      case "nav":
+        return "NAVIGATIONS CONTROL<p>Current Sector: ECHO-7<br></br>";
       case "calliefornia":
         return ASCII_ART.callie;
       case "drpepper":
