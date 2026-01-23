@@ -224,17 +224,14 @@ function typeText(text, speed = 50, callback) {
 }
 
 
-  // --- Command processor ---
+// --- Command processor ---
 const processCommand = (command) => {
   if (isTyping) return;
 
   const response = getCommandResponse(command);
 
-  // Custom actions
-  if (typeof response === "object" && response.action) {
-    response.action();
-    return;
-  }
+  // Skip fallback typing if command handled output itself
+  if (response === null) return;
 
   // HTML-aware response
   if (typeof response === "object" && response.type === "html") {
@@ -248,7 +245,7 @@ const processCommand = (command) => {
     return;
   }
 
-  // Plain text fallback
+  // Plain text response
   typeText(`> ${command}\n`, 10, () => {
     if (response) {
       typeText(response + "\n", 15);
@@ -272,7 +269,7 @@ const processCommand = (command) => {
     return html;
   };
 
-  // --- Command responses ---
+// --- Command responses ---
 const getCommandResponse = (command) => {
   switch (command.toLowerCase()) {
     case "help":
@@ -281,18 +278,15 @@ const getCommandResponse = (command) => {
         header: "Available commands:\n",
         content: buildCommandGrid(helpCommands)
       };
-
     case "secretmenu":
       return {
         type: "html",
         header: "Secret commands:\n",
         content: buildCommandGrid(secretCommands)
       };
-
     case "hack":
       runHackSequence();
-      return null; // <-- return null to skip any fallback typing
-
+      return null; // handled internally, skip fallback
     case "login":
       awaitingPassword = true;
       return "Enter password:";
@@ -323,14 +317,13 @@ const getCommandResponse = (command) => {
       return ASCII_ART.callie;
     case "ping":
       launchPong();
-      return null; // skip fallback typing
+      return null; // handled internally
     case "pip":
       displayPip();
-      return null; // skip fallback typing
+      return null; // handled internally
     case "clear":
       output.innerHTML = "";
-      return null; // skip fallback typing
-
+      return null; // handled internally
     default:
       return `'${command}' is not recognized as a command. Type 'help' for a list of available commands.`;
   }
