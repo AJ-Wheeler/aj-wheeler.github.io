@@ -1,4 +1,26 @@
-const ASCII_ART = {
+  let isTyping = false;
+
+function typeText(text, speed = 25, callback = null) {
+  if (isTyping) return;
+
+  isTyping = true;
+  const output = document.getElementById("output");
+  let index = 0;
+
+  function typeChar() {
+    if (index < text.length) {
+      output.innerHTML += text[index];
+      index++;
+      output.scrollTop = output.scrollHeight;
+      setTimeout(typeChar, speed);
+    } else {
+      isTyping = false;
+      if (callback) callback();
+    }
+  }
+
+  typeChar();
+}const ASCII_ART = {
   rocket: `
          ^
         /^\\
@@ -185,30 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
       input.value = "";
     }
   });
-
-  let isTyping = false;
-
-function typeText(text, speed = 25, callback = null) {
-  if (isTyping) return;
-
-  isTyping = true;
-  const output = document.getElementById("output");
-  let index = 0;
-
-  function typeChar() {
-    if (index < text.length) {
-      output.innerHTML += text[index];
-      index++;
-      output.scrollTop = output.scrollHeight;
-      setTimeout(typeChar, speed);
-    } else {
-      isTyping = false;
-      if (callback) callback();
-    }
-  }
-
-  typeChar();
-}
 
   function runHackSequence() {
   clearScreen();
