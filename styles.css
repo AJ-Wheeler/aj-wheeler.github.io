@@ -20,7 +20,7 @@ body {
 	display: grid;
 	grid-template-columns: 120px 1fr 120px 1fr;
 	gap: 4px 24px;
-	font-family: monospace;
+	font-family: inherit; 
 }
 
 .command-grid .cmd {
@@ -53,12 +53,26 @@ body {
   flex: 1;
   overflow-y: auto;
   white-space: pre-wrap;
+  font-family: inherit; 
 }
 
 #output pre {
   margin: 0;
   white-space: pre;
   font-family: inherit;
+}
+
+.terminal-output {
+  font-family: inherit;
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+.nav-panel {
+  font-family: inherit;
+  border-left: 2px solid #00ff00;
+  padding-left: 10px;
+  margin: 4px 0;
 }
 
 #input-line {
