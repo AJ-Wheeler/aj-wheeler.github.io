@@ -1,4 +1,4 @@
-aconst ASCII_ART = {
+const ASCII_ART = {
   rocket: `
          ^
         /^\\
