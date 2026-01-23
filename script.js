@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 let isTyping = false;
 
-function typeText(text, speed = 20, callback) {
+function typeText(text, speed = 50, callback) {
   isTyping = true;
   let i = 0;
 
