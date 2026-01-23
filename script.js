@@ -380,7 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return new Date().toString();
       case "calliefornia":
         return ASCII_ART.callie;
-      case "dr. pepper":
+      case "dr pepper":
         return ASCII_ART.drp;
       case "home":
         return ASCII_ART.home;
