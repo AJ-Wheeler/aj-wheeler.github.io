@@ -163,6 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["hello", "returns a friendly message"],
     ["systems", "check status of rocket systems"],
     ["date", "today's date"],
+    ["test", "run status check"],
     ["journal", "***private*** no peeking!"],
     ["ping", "server ping"],
     ["pip", "show pip boy"],
@@ -291,6 +292,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "hack":
         runHackSequence();
         return null;
+        case "test":
+        runTest();
+        return null;
       case "login":
         awaitingPassword = true;
         return "Enter password:";
@@ -368,7 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
     output.scrollTop = output.scrollHeight;
   };
 
-  // --- FIXED Hack sequence ---
+  // --- Hack sequence ---
   const runHackSequence = async () => {
     const wait = (ms) => new Promise(r => setTimeout(r, ms));
 
@@ -392,6 +396,31 @@ document.addEventListener("DOMContentLoaded", () => {
     await wait(400);
     await typeText("Your personal data has successfully been uploaded to the dark-web, thanks!\n", 15);
   };
+
+    // --- Test sequence ---
+  const runTest = async () => {
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+    await typeText("> test\n");
+
+    const lines = [
+      "Calibrating sensors...",
+      "Activating power modules...",
+      "Establishing location...",
+      "Checking Dr. Pepper levels..."
+    ];
+
+    for (const line of lines) {
+      await typeText(line + "\n", 20);
+      await wait(500);
+    }
+
+    await wait(700);
+    await typeText("PROCESS CANCELLED\n", 30);
+    await wait(400);
+    await typeText("Dr. Pepper levels insufficient for function. Add more Dr. Pepper to complete testing.\n", 15);
+  };
+
 
  // --- Pong ---
   const launchPong = () => {
