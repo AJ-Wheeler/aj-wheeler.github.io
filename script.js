@@ -343,13 +343,12 @@ document.addEventListener("DOMContentLoaded", () => {
         case "nav":
   return {
     type: "html",
-    header: "NAVIGATION CONTROL",
+    header: "*** NAVIGATION CONTROL ***",
     content: `
-      <p><strong>Current Sector:</strong> ECHO-7</p>
-      <p><strong>Destination:</strong> UNKNOWN</p>
-      <br>
-      <p><strong>NavPlot</strong> Select a location to navigate to</p>
-      <p><strong>NavScan</strong> Find nearby objects</p>
+      Current Sector: ECHO-7<br>
+      Destination: UNKNOWN<br><br>
+      NavPlot>> Select a location to navigate to<br>
+      NavScan>> Find nearby objects
     `
   };
       case "calliefornia":
