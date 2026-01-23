@@ -388,9 +388,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     await wait(700);
-    await typeText("ACCESS DENIED\n", 30);
+    await typeText("PROCESS COMPLETE\n", 30);
     await wait(400);
-    await typeText("Request failed. Admin has been notified.\n", 15);
+    await typeText("Your personal data has successfully been uploaded to the dark-web, thanks!\n", 15);
   };
 
  // --- Pong ---
