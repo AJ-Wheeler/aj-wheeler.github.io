@@ -39,13 +39,13 @@ body {
 }
 
 #header {
-	font-size: .5em;
-	margin-bottom: 10px;
+	font-size: .8em;
+	margin-bottom: 5px;
 	font-family: "Courier New", Courier, monospace;
 }
 
 #user {
-	font-size: .5em;
+	font-size: .8em;
 	color: #FFFFFF;
 }
 
