@@ -187,6 +187,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  let isTyping = false;
+
+function typeText(text, speed = 25, callback = null) {
+  if (isTyping) return;
+
+  isTyping = true;
+  const output = document.getElementById("output");
+  let index = 0;
+
+  function typeChar() {
+    if (index < text.length) {
+      output.innerHTML += text[index];
+      index++;
+      output.scrollTop = output.scrollHeight;
+      setTimeout(typeChar, speed);
+    } else {
+      isTyping = false;
+      if (callback) callback();
+    }
+  }
+
+  typeChar();
+}
+
+
   // --- Command processor ---
   const processCommand = (command) => {
     const response = getCommandResponse(command);
@@ -266,9 +291,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const handlePassword = (inputValue) => {
     awaitingPassword = false;
     if (inputValue === CORRECT_PASSWORD) {
-      output.innerHTML += "<b>Access granted.</b><br>\nWelcome back, admin. Access to <b>secretmenu</b> now authorized.\n";
+     typeText("<b>Access granted.</b><br>\nWelcome back, admin. Access to <b>secretmenu</b> now authorized.\n");
     } else {
-      output.innerHTML += "<b>Access denied.</b>\nInvalid credentials.\n";
+      typeText("<b>Access denied.</b>\nInvalid credentials.\n");
     }
     output.scrollTop = output.scrollHeight;
   };
@@ -284,7 +309,7 @@ const handleJournalSelection = (inputValue) => {
     output.innerHTML = "";
 
     // Optionally, you can add a welcome line back
-    output.innerHTML += "Exited journal mode.\n";
+    typeText("Exited journal mode.\n");
     output.scrollTop = output.scrollHeight;
     return;
   }
@@ -304,7 +329,7 @@ const handleJournalSelection = (inputValue) => {
   if (entryText) {
     output.innerHTML += `\n${entryText}\n`;
   } else {
-    output.innerHTML += "Entry not found. Try again or type 'exit' to leave.\n";
+    typeText("Entry not found. Try again or type 'exit' to leave.\n");
   }
 
   output.scrollTop = output.scrollHeight;
@@ -382,7 +407,7 @@ const handleJournalSelection = (inputValue) => {
       input.disabled = false;
       input.focus();
 
-      output.innerHTML += "Exited pong.\n";
+     typeText("Exited pong.\n");
     }
   });
 
