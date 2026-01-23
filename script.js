@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const helpCommands = [
     ["login", "authorized user access only"],
     ["help", "list of commands"],
-    ["systems", "check status of rocket systems"],
+    ["systems", "check status of onboard systems"],
     ["journal", "***private*** no peeking!"],
     ["ping", "server ping"],
     ["clear", "clear all prompts"]
