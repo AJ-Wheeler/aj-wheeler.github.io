@@ -18,7 +18,7 @@ rocket: `
    /_|_____|_\\   ▰▰▰▰▰▰▰▰▰▰ 100%
      /_____\\  
      '  '  ' `,
-gemini: `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀
+gemini: ` ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀
 ⠀⠀⢸⣿⣷⣶⣦⣤⣤⣤⣀⣀⣀⣀⣀⣀⣀⣀⣀⣤⣤⣤⣴⣶⣾⣿⣿⡇⠀⠀
 ⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀
 ⠀⠀⠘⠻⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠟⠛⠁⠀⠀
@@ -33,7 +33,7 @@ gemini: `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀�
 ⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀
 ⠀⠀⢸⣿⠿⠿⠛⠛⠛⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠙⠛⠛⠿⠿⣿⣿⡇⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀`,
-leo: `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+leo:` ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣷⣦⣄⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⠋⠁⠈⠙⢿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀
@@ -48,7 +48,7 @@ leo: `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀�
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⢿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀`,
-rose: `                                                  
+rose:`                                                   
                                                  
             ░▓█████████░                         
            ░▒▒▒░░░▒███▓▒░                        
@@ -64,7 +64,7 @@ rose: `
         ▒▒░░░░▓██████▒████▓                      
      ▒▓▒░ ▒▓████████▓░▓▒░                        
         ░▒▓▓▓░▒▒▒▓██▓██▒                         `,
-callie: `                ░▒▓█████▓▒   ▒█████████████████▓▓▒           
+callie:`                 ░▒▓█████▓▒   ▒█████████████████▓▓▒           
            ░█████████████████████████████████▓░▒▒░ ░        
           ▒████████████████████████████████████▒ ░░  ░      
          ▒█████████████████████████████████████▓░   ░       
@@ -123,7 +123,7 @@ lewis:`                                 ░▒░░░
                          ▒██████████▓▓▒▒░░░░░░░░░ ░░░░░░░     
                             ░▒▓████▓▓▓▓▓▒▒▒▒░░░░░░ ░░░░░      
                                   ░░▓▓███▓▒▒▒▒░░░░░░░░        
-                                       ░▒▒▒▒▒▒▒░░░░░          `
+                                       ░▒▒▒▒▒▒▒░░░░░   `       
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -224,7 +224,7 @@ return;
 
   // HTML-aware response
   if (typeof response === "object" && response.type === "html") {
-    typeText(`> ${command}\n`, 10, () => {
+    typeText(> ${command}\n, 10, () => {
       typeText(response.header, 15, () => {
         output.innerHTML += response.content;
         output.innerHTML += "\n";
@@ -235,7 +235,7 @@ return;
   }
 
   // Plain text fallback
-typeText(`> ${command}\n`, 10, () => {
+typeText(> ${command}\n, 10, () => {
 if (response) {
 typeText(response + "\n", 15);
 }
@@ -245,16 +245,16 @@ typeText(response + "\n", 15);
 
 // --- Command grid builder ---
 const buildCommandGrid = (commands) => {
-let html = `<div class="command-grid">`;
+let html = <div class="command-grid">;
 for (let i = 0; i < commands.length; i += 2) {
-html += `<div class="cmd">${commands[i][0]}</div><div class="desc">${commands[i][1]}</div>`;
+html += <div class="cmd">${commands[i][0]}</div><div class="desc">${commands[i][1]}</div>;
 if (commands[i + 1]) {
-html += `<div class="cmd">${commands[i + 1][0]}</div><div class="desc">${commands[i + 1][1]}</div>`;
+html += <div class="cmd">${commands[i + 1][0]}</div><div class="desc">${commands[i + 1][1]}</div>;
 } else {
-html += `<div></div><div></div>`;
+html += <div></div><div></div>;
 }
 }
-html += `</div>`;
+html += </div>;
 return html;
 };
 
@@ -262,9 +262,9 @@ return html;
 const getCommandResponse = (command) => {
 switch (command.toLowerCase()) {
 case "help":
-        return `Available commands:\n${buildCommandGrid(helpCommands)}`;
+        return Available commands:\n${buildCommandGrid(helpCommands)};
       case "secretmenu":
-        return `Secret commands:\n${buildCommandGrid(secretCommands)}`;
+        return Secret commands:\n${buildCommandGrid(secretCommands)};
   return {
     type: "html",
     header: "Available commands:\n",
@@ -282,30 +282,32 @@ return "Enter password:";
 case "hello":
 return "Howdy, partner!";
 case "systems":
-return `\n${ASCII_ART.rocket}`;
+return \n${ASCII_ART.rocket};
 case "journal":
 awaitingJournalSelection = true;
 output.innerHTML = ""; // Clear screen before showing journal menu
 let menu = "Journal Menu (type entry name or number, 'exit' to leave):\n";
 Object.keys(journalEntries).forEach((key, index) => {
-menu += `${index + 1}. ${key}\n`;
+menu += ${index + 1}. ${key}\n;
 });
 menu += "\nType the entry name or number:";
 return menu;
+menu += "\nType the entry name or number:";
+return menu;
 case "bloom":
-return `<pre>${ASCII_ART.rose}</pre>`;
+return <pre>${ASCII_ART.rose}</pre>;
 case "gemini":
-return `<pre>${ASCII_ART.gemini}</pre>`;
+return <pre>${ASCII_ART.gemini}</pre>;
 case "leo":
-return `<pre>${ASCII_ART.leo}</pre>`;
+return <pre>${ASCII_ART.leo}</pre>;
 case "lewis":
-return `<pre>${ASCII_ART.lewis}</pre>`;
+return <pre>${ASCII_ART.lewis}</pre>;
 case "date":
 return new Date().toString();
 case "hack":
 return "You didn't think that was actually going to work...did you?";
 case "calliefornia":
-return `<pre>${ASCII_ART.callie}</pre>`;
+return <pre>${ASCII_ART.callie}</pre>;
 case "ping":
 launchPong();
 return "";
@@ -316,7 +318,7 @@ case "clear":
 output.innerHTML = "";
 return "";
 default:
-return `'${command}' is not recognized as a command. Type 'help' for a list of available commands.`;
+return '${command}' is not recognized as a command. Type 'help' for a list of available commands.;
 }
 };
 
@@ -360,7 +362,7 @@ if (journalEntries[inputValue]) entryText = journalEntries[inputValue];
 }
 
 if (entryText) {
-output.innerHTML += `\n${entryText}\n`;
+output.innerHTML += \n${entryText}\n;
 } else {
 output.innerHTML += "Entry not found. Try again or type 'exit' to leave.\n";
 }
