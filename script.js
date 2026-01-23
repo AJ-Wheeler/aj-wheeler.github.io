@@ -18,6 +18,13 @@ const ASCII_ART = {
     /_|_____|_\\   ▰▰▰▰▰▰▰▰▰▰ 100%
       /_____\\  
       '  '  ' `,
+  home: `  
+  ____||____
+ ///////////\
+///////////  \
+|    _    |  |
+|[] | | []|[]|
+|   | |   |  |`,
   gemini: `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀
 ⠀⠀⢸⣿⣷⣶⣦⣤⣤⣤⣀⣀⣀⣀⣀⣀⣀⣀⣀⣤⣤⣤⣴⣶⣾⣿⣿⡇⠀⠀
 ⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀
@@ -298,6 +305,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return new Date().toString();
       case "calliefornia":
         return ASCII_ART.callie;
+      case "home":
+        return ASCII_ART.home;
       case "ping":
         launchPong();
         return null;
