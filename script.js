@@ -206,6 +206,23 @@ function typeText(text, speed = 50, callback) {
 
   step();
 }
+  function typeTextToElement(el, text, speed = 50, callback) {
+  let i = 0;
+
+  function step() {
+    if (i < text.length) {
+      el.innerHTML += text[i];
+      i++;
+      output.scrollTop = output.scrollHeight;
+      setTimeout(step, speed);
+    } else if (callback) {
+      callback();
+    }
+  }
+
+  step();
+}
+
 
   // --- Command processor ---
 const processCommand = (command) => {
@@ -302,8 +319,6 @@ const processCommand = (command) => {
         return ASCII_ART.lewis;
       case "date":
         return new Date().toString();
-      case "hack":
-        return "You didn't think that was actually going to work...did you?";
       case "calliefornia":
         return ASCII_ART.callie;
       case "ping":
@@ -396,7 +411,9 @@ const handleJournalSelection = (inputValue) => {
       const lineEl = document.createElement("div");
       block.appendChild(lineEl);
 
-      typeText(lineEl, lines[index] + "<br>", 20);
+      typeTextToElement(lineEl, lines[index], 20, () => {
+        lineEl.innerHTML += "<br>";
+});
       index++;
 
       setTimeout(typeNextLine, 700);
