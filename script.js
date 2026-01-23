@@ -43,11 +43,7 @@ const ASCII_ART = {
 ⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀
 ⠀⠀⢸⣿⠿⠿⠛⠛⠛⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠙⠛⠛⠿⠿⣿⣿⡇⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀`,
-    drp: `                                                                   
-                                                                   
-                                                                   
-                                                                   
-                                                                   
+    drp: `                                                                                                                   
               ░▒░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░▒▒▒▒           
               ▒████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████▓           
               ▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████░          
@@ -380,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return new Date().toString();
       case "calliefornia":
         return ASCII_ART.callie;
-      case "dr pepper":
+      case "drpepper":
         return ASCII_ART.drp;
       case "home":
         return ASCII_ART.home;
