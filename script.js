@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "*** COMMUNICATIONS ARRAY ***",
-          content: `Status: Degraded<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications`
+          content: `Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications`
   };
       case "calliefornia":
         return ASCII_ART.callie;
