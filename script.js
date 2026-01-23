@@ -356,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "*** CREW ROSTER ***",
-          content: `Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie Costian<br>Security: BoJack Costian<br><br>Janitorial: Lewis Costian<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members`
+          content: `Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members`
   };
       case "calliefornia":
         return ASCII_ART.callie;
