@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("input");
   const output = document.getElementById("output");
 
-  // --- Terminal state flags ---
+  // --- Terminal state ---
   let awaitingPassword = false;
   let awaitingJournalSelection = false;
   let isTyping = false;
@@ -145,224 +145,62 @@ document.addEventListener("DOMContentLoaded", () => {
     "Saturday": "Saturday: ...the humans are starting to notice, I must be more inconspicuous..."
   };
 
-  // --- Help commands ---
-  const helpCommands = [
-    ["login", "authorized user access only"],
-    ["help", "list of commands"],
-    ["hello", "returns a friendly message"],
-    ["systems", "check status of rocket systems"],
-    ["date", "today's date"],
-    ["journal", "***private*** no peeking!"],
-    ["ping", "server ping"],
-    ["pip", "show pip boy"],
-    ["clear", "clear all prompts"]
-  ];
-
-  const secretCommands = [
-    ["bloom", "a beautiful flower for you"],
-    ["boyack", "plumpy dumpy boiii"],
-    ["calliefornia", "aww...sweet fluffy girl"],
-    ["gemini", "now this appears to be a good sign..."],
-    ["hack", "break into the mainframe"],
-    ["leo", "meow big kitty"],
-    ["lewis", "gross boy"]
-  ];
-
-  // --- Input listener ---
+  // --- Input handling ---
   input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      const value = input.value.trim();
-      if (!value) return;
+    if (e.key !== "Enter") return;
 
-      if (awaitingPassword) {
-        handlePassword(value);
-      } else if (awaitingJournalSelection) {
-        handleJournalSelection(value);
-      } else {
-        processCommand(value);
-      }
+    const value = input.value.trim();
+    if (!value) return;
 
-      input.value = "";
+    if (awaitingPassword) {
+      handlePassword(value);
+    } else if (awaitingJournalSelection) {
+      handleJournalSelection(value);
+    } else {
+      processCommand(value);
     }
+
+    input.value = "";
   });
 
-  // --- Typing functions ---
-  const typeText = (text, speed = 15) => {
-    return new Promise((resolve) => {
+  // --- Typing helpers (PROMISE-BASED) ---
+  function typeText(text, speed = 30) {
+    return new Promise(resolve => {
       isTyping = true;
       let i = 0;
-      const interval = setInterval(() => {
-        output.innerHTML += text.charAt(i);
-        output.scrollTop = output.scrollHeight;
-        i++;
-        if (i >= text.length) {
-          clearInterval(interval);
+
+      function step() {
+        if (i < text.length) {
+          output.innerHTML += text[i++];
+          output.scrollTop = output.scrollHeight;
+          setTimeout(step, speed);
+        } else {
           isTyping = false;
           resolve();
         }
-      }, speed);
+      }
+      step();
     });
-  };
+  }
 
-  const typeTextToElement = (el, text, speed = 15) => {
-    return new Promise((resolve) => {
+  function typeTextToElement(el, text, speed = 30) {
+    return new Promise(resolve => {
       let i = 0;
-      const interval = setInterval(() => {
-        el.innerHTML += text.charAt(i);
-        output.scrollTop = output.scrollHeight;
-        i++;
-        if (i >= text.length) {
-          clearInterval(interval);
+      function step() {
+        if (i < text.length) {
+          el.innerHTML += text[i++];
+          output.scrollTop = output.scrollHeight;
+          setTimeout(step, speed);
+        } else {
           resolve();
         }
-      }, speed);
-    });
-  };
-
-  // --- Command processor ---
-  const processCommand = async (command) => {
-    const lower = command.toLowerCase();
-    const instantCommands = ["clear", "ping", "pip", "hack", "exit"];
-
-    if (isTyping && !instantCommands.includes(lower)) return;
-
-    output.innerHTML += `> ${command}\n`;
-
-    if (lower === "clear") {
-      output.innerHTML = "";
-      return;
-    }
-
-    const response = getCommandResponse(command);
-
-    if (response === null) return; // handled internally
-
-    if (typeof response === "object" && response.type === "html") {
-      await typeText(response.header + "\n");
-      output.innerHTML += response.content + "\n";
-      output.scrollTop = output.scrollHeight;
-    } else {
-      await typeText(response + "\n");
-    }
-  };
-
-  // --- Command grid builder ---
-  const buildCommandGrid = (commands) => {
-    let html = `<div class="command-grid">`;
-    for (let i = 0; i < commands.length; i += 2) {
-      html += `<div class="cmd">${commands[i][0]}</div><div class="desc">${commands[i][1]}</div>`;
-      if (commands[i + 1]) {
-        html += `<div class="cmd">${commands[i + 1][0]}</div><div class="desc">${commands[i + 1][1]}</div>`;
-      } else {
-        html += `<div></div><div></div>`;
       }
-    }
-    html += `</div>`;
-    return html;
-  };
+      step();
+    });
+  }
 
-  // --- Command responses ---
-  const getCommandResponse = (command) => {
-    switch (command.toLowerCase()) {
-      case "help":
-        return { type: "html", header: "Available commands:", content: buildCommandGrid(helpCommands) };
-      case "secretmenu":
-        return { type: "html", header: "Secret commands:", content: buildCommandGrid(secretCommands) };
-      case "hack":
-        runHackSequence();
-        return null;
-      case "login":
-        awaitingPassword = true;
-        return "Enter password:";
-      case "hello":
-        return "Howdy, partner!";
-      case "systems":
-        return ASCII_ART.rocket;
-      case "journal":
-        awaitingJournalSelection = true;
-        output.innerHTML = "";
-        let menu = "Journal Menu (type entry name or number, 'exit' to leave):\n";
-        Object.keys(journalEntries).forEach((key, index) => {
-          menu += `${index + 1}. ${key}\n`;
-        });
-        menu += "\nType the entry name or number:";
-        return menu;
-      case "bloom":
-        return ASCII_ART.rose;
-      case "gemini":
-        return ASCII_ART.gemini;
-      case "leo":
-        return ASCII_ART.leo;
-      case "lewis":
-        return ASCII_ART.lewis;
-      case "date":
-        return new Date().toString();
-      case "calliefornia":
-        return ASCII_ART.callie;
-      case "ping":
-        launchPong();
-        return null;
-      case "pip":
-        displayPip();
-        return null;
-      default:
-        return `'${command}' is not recognized as a command. Type 'help' for a list of available commands.`;
-    }
-  };
-
-  // --- Password handler ---
-  const handlePassword = (inputValue) => {
-    awaitingPassword = false;
-    if (inputValue === CORRECT_PASSWORD) {
-      output.innerHTML += "<b>Access granted.</b><br>\nWelcome back, admin. Access to <b>secretmenu</b> now authorized.\n";
-    } else {
-      output.innerHTML += "<b>Access denied.</b>\nInvalid credentials.\n";
-    }
-    output.scrollTop = output.scrollHeight;
-  };
-
-  // --- Journal selection handler ---
-  const handleJournalSelection = (inputValue) => {
-    if (inputValue.toLowerCase() === "exit" || inputValue.toLowerCase() === "back") {
-      awaitingJournalSelection = false;
-      output.innerHTML = "Exited journal mode.\n";
-      output.scrollTop = output.scrollHeight;
-      return;
-    }
-
-    let entryText = "";
-
-    if (!isNaN(inputValue)) {
-      const index = parseInt(inputValue) - 1;
-      const keys = Object.keys(journalEntries);
-      if (keys[index]) entryText = journalEntries[keys[index]];
-    } else {
-      if (journalEntries[inputValue]) entryText = journalEntries[inputValue];
-    }
-
-    if (entryText) {
-      output.innerHTML += `\n${entryText}\n`;
-    } else {
-      output.innerHTML += "Entry not found. Try again or type 'exit' to leave.\n";
-    }
-    output.scrollTop = output.scrollHeight;
-  };
-
-  // --- Pip display ---
-  const displayPip = () => {
-    const img = document.createElement("img");
-    img.src = "https://gifdb.com/images/high/black-background-pip-boy-v3z1j9i2auvwgcz8.webp";
-    img.alt = "Pip Boy";
-    img.style.width = "75px";
-    img.style.height = "100px";
-    output.appendChild(img);
-  };
-
-  // --- Hack sequence ---
-  const runHackSequence = () => {
-    const block = document.createElement("div");
-    output.appendChild(block);
-
+  // --- Hack sequence (FIXED) ---
+  async function runHackSequence() {
     const lines = [
       "Initializing exploit framework...",
       "Loading payload modules...",
@@ -371,98 +209,102 @@ document.addEventListener("DOMContentLoaded", () => {
       "Escalating privileges..."
     ];
 
-    let index = 0;
+    const wait = ms => new Promise(r => setTimeout(r, ms));
 
-    const typeNextLine = async () => {
-      if (index < lines.length) {
-        const lineEl = document.createElement("div");
-        block.appendChild(lineEl);
-        await typeTextToElement(lineEl, lines[index] + "\n");
-        index++;
-        setTimeout(typeNextLine, 200);
-      } else {
-        setTimeout(showHackFailure, 500);
-      }
-    };
+    await typeText("> hack\n", 10);
 
-    typeText("> hack\n").then(typeNextLine);
-  };
+    for (const line of lines) {
+      const lineEl = document.createElement("div");
+      output.appendChild(lineEl);
+      await typeTextToElement(lineEl, line + "\n", 20);
+      await wait(500);
+    }
 
-  const showHackFailure = () => {
+    await wait(600);
+    showHackFailure();
+  }
+
+  function showHackFailure() {
     const failEl = document.createElement("div");
     failEl.className = "hack-fail";
-    failEl.innerHTML = "ACCESS DENIED";
+    failEl.textContent = "ACCESS DENIED";
     output.appendChild(failEl);
 
     setTimeout(() => {
-      output.innerHTML += "<br>Request failed. Admin has been notified.\n";
+      output.innerHTML += "\nRequest failed. Admin has been notified.\n";
       output.scrollTop = output.scrollHeight;
-    }, 500);
-  };
+    }, 600);
+  }
 
-  // --- Pong ---
-  const launchPong = () => {
-    const gameContainer = document.getElementById("game-container");
-    const canvas = document.getElementById("pong");
-    const ctx = canvas.getContext("2d");
+  // --- Command processor ---
+  async function processCommand(command) {
+    if (isTyping) return;
 
-    gameContainer.style.display = "block";
-    input.disabled = true;
+    const lower = command.toLowerCase();
 
-    startPong(ctx, canvas);
-  };
-
-  let pongInterval;
-
-  const startPong = (ctx, canvas) => {
-    const paddleHeight = 80;
-    const paddleWidth = 10;
-    let leftY = canvas.height / 2 - paddleHeight / 2;
-    let rightY = leftY;
-    let ballX = canvas.width / 2;
-    let ballY = canvas.height / 2;
-    let ballVX = 4;
-    let ballVY = 3;
-    const keys = {};
-
-    document.addEventListener("keydown", e => keys[e.key] = true);
-    document.addEventListener("keyup", e => keys[e.key] = false);
-
-    pongInterval = setInterval(() => {
-      if (keys["ArrowLeft"]) leftY -= 5;
-      if (keys["ArrowRight"]) leftY += 5;
-      if (keys["ArrowUp"]) rightY -= 5;
-      if (keys["ArrowDown"]) rightY += 5;
-
-      ballX += ballVX;
-      ballY += ballVY;
-
-      if (ballY <= 0 || ballY >= canvas.height) ballVY *= -1;
-      if (ballX <= paddleWidth && ballY > leftY && ballY < leftY + paddleHeight) ballVX *= -1;
-      if (ballX >= canvas.width - paddleWidth && ballY > rightY && ballY < rightY + paddleHeight) ballVX *= -1;
-
-      if (ballX < 0 || ballX > canvas.width) {
-        ballX = canvas.width / 2;
-        ballY = canvas.height / 2;
-      }
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#00ff00";
-      ctx.fillRect(0, leftY, paddleWidth, paddleHeight);
-      ctx.fillRect(canvas.width - paddleWidth, rightY, paddleWidth, paddleHeight);
-      ctx.fillRect(ballX, ballY, 8, 8);
-    }, 1000 / 60);
-  };
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && pongInterval) {
-      clearInterval(pongInterval);
-      pongInterval = null;
-      document.getElementById("game-container").style.display = "none";
-      input.disabled = false;
-      input.focus();
-      output.innerHTML += "Exited pong.\n";
+    if (lower === "clear") {
+      output.innerHTML = "";
+      return;
     }
-  });
-});
 
+    if (lower === "hack") {
+      await runHackSequence();
+      return;
+    }
+
+    output.innerHTML += `> ${command}\n`;
+
+    const response = getCommandResponse(command);
+    if (response === null) return;
+
+    await typeText(response + "\n");
+  }
+
+  // --- Command responses ---
+  function getCommandResponse(command) {
+    switch (command.toLowerCase()) {
+      case "login":
+        awaitingPassword = true;
+        return "Enter password:";
+      case "hello":
+        return "Howdy, partner!";
+      case "date":
+        return new Date().toString();
+      case "journal":
+        awaitingJournalSelection = true;
+        output.innerHTML = "";
+        return Object.keys(journalEntries)
+          .map((k, i) => `${i + 1}. ${k}`)
+          .join("\n") + "\n\nType entry name, number, or 'exit'";
+      default:
+        return `'${command}' is not recognized. Type 'help'.`;
+    }
+  }
+
+  // --- Password handler ---
+  function handlePassword(value) {
+    awaitingPassword = false;
+    output.innerHTML += value === CORRECT_PASSWORD
+      ? "Access granted.\n"
+      : "Access denied.\n";
+  }
+
+  // --- Journal handler ---
+  function handleJournalSelection(value) {
+    if (value.toLowerCase() === "exit") {
+      awaitingJournalSelection = false;
+      output.innerHTML = "";
+      return;
+    }
+
+    let entry = journalEntries[value];
+    if (!entry && !isNaN(value)) {
+      const keys = Object.keys(journalEntries);
+      entry = journalEntries[keys[value - 1]];
+    }
+
+    output.innerHTML += entry
+      ? `\n${entry}\n`
+      : "\nEntry not found.\n";
+  }
+});
