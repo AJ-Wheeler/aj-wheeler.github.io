@@ -302,16 +302,22 @@ const typeHTML = async (container, html, speed = 10) => {
 
   for (const chunk of chunks) {
     if (chunk.startsWith("<")) {
+      // Insert tags directly, preserving structure
       container.insertAdjacentHTML("beforeend", chunk);
     } else {
+      // Animate text inside the CURRENT DOM context
+      const textNode = document.createTextNode("");
+      container.appendChild(textNode);
+
       for (let i = 0; i < chunk.length; i++) {
-        container.innerHTML += chunk.charAt(i);
+        textNode.textContent += chunk.charAt(i);
         await new Promise(r => setTimeout(r, speed));
       }
     }
     output.scrollTop = output.scrollHeight;
   }
 };
+
 
 
 
