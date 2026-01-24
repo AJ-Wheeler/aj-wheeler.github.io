@@ -298,26 +298,21 @@ if (awaitingPassword) {
 
 // Animate HTML content but preserve tags
 const typeHTML = async (container, html, speed = 10) => {
-  // Split the content into chunks: either a tag or text
   const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
 
   for (const chunk of chunks) {
     if (chunk.startsWith("<")) {
-      // It's an HTML tag — insert immediately
-      const temp = document.createElement("span");
-      temp.innerHTML = chunk;
-      container.appendChild(temp);
-      output.scrollTop = output.scrollHeight;
+      container.insertAdjacentHTML("beforeend", chunk);
     } else {
-      // It's text — animate character by character
       for (let i = 0; i < chunk.length; i++) {
         container.innerHTML += chunk.charAt(i);
-        output.scrollTop = output.scrollHeight;
         await new Promise(r => setTimeout(r, speed));
       }
     }
+    output.scrollTop = output.scrollHeight;
   }
 };
+
 
 
 
