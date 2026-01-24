@@ -391,13 +391,8 @@ const typeHTML = async (container, html, speed = 20) => {
 };
 
 
-
-
-
-
-
-  // --- Command processor ---
-  const processCommand = async (command) => {
+// --- Command processor ---
+const processCommand = async (command) => {
   const lower = command.toLowerCase();
   if (isTyping) return;
 
@@ -412,6 +407,15 @@ const typeHTML = async (container, html, speed = 20) => {
 
   const response = getCommandResponse(command);
   if (response === null) return;
+
+  // -------------------------
+  // ASCII-ONLY OBJECT (optional speed)
+  // -------------------------
+  if (typeof response === "object" && response.ascii && !response.type) {
+    const speed = response.typingSpeed ?? TYPING_SPEEDS.normal;
+    await typeText(response.ascii + "\n", speed);
+    return;
+  }
 
   // -------------------------
   // OBJECT RESPONSES
@@ -444,7 +448,7 @@ const typeHTML = async (container, html, speed = 20) => {
       if (response.instant) {
         container.innerHTML = response.content + "\n";
       } else {
-        await typeText(response + "\n", TYPING_SPEEDS.normal);
+        await typeHTML(container, response.content + "\n", speed);
       }
       return;
     }
@@ -455,6 +459,7 @@ const typeHTML = async (container, html, speed = 20) => {
   // -------------------------
   await typeText(response + "\n", TYPING_SPEEDS.normal);
 };
+
 
   // --- Command grid builder ---
   const buildCommandGrid = (commands) => {
@@ -554,8 +559,11 @@ case "crewvitals":
           header: "",
           content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
   };
-      case "navmap":
-        return ASCII_ART.navmap;
+ case "navmap":
+  return {
+    ascii: ASCII_ART.navmap,
+    typingSpeed: TYPING_SPEEDS.fast
+  };
       case "comms":
         return {
           type: "html",
