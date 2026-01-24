@@ -330,12 +330,15 @@ const typeHTML = (el, html, speed = 10) => {
     appendOutput(`> ${command}\n`);
 
 if (typeof response === "object" && response.type === "html") {
+  // Animate header if it exists
   if (response.header) {
     await typeText(response.header + "\n");
   }
+  // Append the HTML content fully so formatting works
   const container = document.createElement("div");
+  container.innerHTML = response.content + "\n"; // full HTML at once
   output.appendChild(container);
-  await typeHTML(container, response.content + "\n", 5); // animated HTML
+  output.scrollTop = output.scrollHeight;
 } else {
   await typeText(response + "\n");
 }
