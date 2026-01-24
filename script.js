@@ -112,7 +112,7 @@ const ASCII_ART = {
      .    .       '                '          .               
        .     .  .     +       .      +     o    ' .  .  o   * 
        
-Select coordinates to navigate to:
+Select sector to navigate to:
 1A: Alterion Sector
 2A: Boregian Sector
 3A: Zygoxon Sector`,
@@ -363,6 +363,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "2a":
         run2A();
         return null;
+      case "3a":
+        run3A();
+        return null;
       case "login":
         awaitingPassword = true;
         return "Enter password:";
@@ -591,7 +594,28 @@ document.addEventListener("DOMContentLoaded", () => {
     await wait(400);
     await typeText("Estimated time to location, 5 lightyears\n", 15);
   };
+ // --- 3A Nav sequence ---
+    const run3A = async () => {
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
 
+    await typeText("> 3A\n");
+
+    const lines = [
+      "Establishing coordinates...",
+      "Running threat detection protocols...",
+      "Initializing fuel systems...",
+    ];
+
+    for (const line of lines) {
+      await typeText(line + "\n", 20);
+      await wait(500);
+    }
+
+    await wait(700);
+    await typeText("ERROR: NAVIGATION PROCESS CANCELLED\n", 30);
+    await wait(400);
+    await typeText("Unable to establish connection due to high level threat detection.\n", 15);
+  };
 
  // --- Pong ---
   const launchPong = () => {
