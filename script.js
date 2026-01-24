@@ -446,7 +446,8 @@ document.addEventListener("DOMContentLoaded", () => {
       case "callie":
         return {
           type: "html",
-          content: `<br><b>*** CREW MEMBER: CALLIE ***></b><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68`
+          header: "",
+          content: `<br><b>*** CREW MEMBER: CALLIE ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68`
   };
       case "calliefornia":
         return ASCII_ART.callie;
