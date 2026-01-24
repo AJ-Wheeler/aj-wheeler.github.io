@@ -85,6 +85,7 @@ const ASCII_ART = {
       ▒▓▒░ ▒▓████████▓░▓▒░                        
          ░▒▓▓▓░▒▒▒▓██▓██▒                         `,
   navmap: `
+  generating star map...
   .  +    +  +           '   '     +  .       '          .  +   
                 .              '        o       o  + .        
  .  '      +  +   .    +     .             '               . .
@@ -110,7 +111,10 @@ const ASCII_ART = {
      .    .       '                '          .               
        .     .  .     +       .      +     o    ' .  .  o   * 
        
-Select coordinates to navigate to`,
+Select coordinates to navigate to:
+1A: Alterion Sector
+2A: Boregian Sector
+3A: Zygoxon Sector`,
   
   callie: `                ░▒▓█████▓▒   ▒█████████████████▓▓▒           
             ░█████████████████████████████████▓░▒▒░ ░        
