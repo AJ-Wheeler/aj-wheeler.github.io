@@ -542,13 +542,7 @@ case "lewis":
     type: "ascii+html",
     ascii: ASCII_ART.lewis,
     html: `
-      <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>
-      Oxygen Levels: Poor<br>
-      C02 Levels: Poor<br>
-      H20 Levels: Poor<br>
-      Blood Pressure: !HIGH!<br>
-      Heart Rate: 77
-    `
+      <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77`
   };
 
       case "callie":
