@@ -362,20 +362,38 @@ const typeHTML = async (container, html, speed = 20) => {
 
     appendOutput(`> ${command}\n`);
 
-if (typeof response === "object" && response.type === "html") {
-  if (response.header) {
-    await typeText(response.header + "\n");
+if (typeof response === "object") {
+
+  // ASCII + HTML combo
+  if (response.type === "ascii+html") {
+    if (response.ascii) {
+      await typeText(response.ascii + "\n");
+    }
+
+    const container = document.createElement("div");
+    output.appendChild(container);
+
+    await typeHTML(container, response.html + "\n", 8);
+    return;
   }
 
-  const container = document.createElement("div");
-  output.appendChild(container);
+  // Existing HTML-only behavior
+  if (response.type === "html") {
+    if (response.header) {
+      await typeText(response.header + "\n");
+    }
 
-  if (response.instant) {
-    container.innerHTML = response.content + "\n";
-  } else {
-    await typeHTML(container, response.content + "\n", 8);
+    const container = document.createElement("div");
+    output.appendChild(container);
+
+    if (response.instant) {
+      container.innerHTML = response.content + "\n";
+    } else {
+      await typeHTML(container, response.content + "\n", 8);
+    }
   }
 }
+
 
  else {
   await typeText(response + "\n");
@@ -519,18 +537,28 @@ case "crewvitals":
           header: "",
           content: `<br><b>*** CREW MEMBER: BOJACK ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67`
   };
-        case "lewis":
-        return {
-          type: "html",
-          header: "",
-          content: `<br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77`
+case "lewis":
+  return {
+    type: "ascii+html",
+    ascii: ASCII_ART.lewis,
+    html: `
+      <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>
+      Oxygen Levels: Poor<br>
+      C02 Levels: Poor<br>
+      H20 Levels: Poor<br>
+      Blood Pressure: !HIGH!<br>
+      Heart Rate: 77
+    `
   };
+
       case "callie":
-        return ASCII_ART.callie {
+        return {
           type: "html",
           header: "",
           content: `<br><b>*** CREW MEMBER: CALLIE ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68`
   };
+      case "calliefornia":
+        return ASCII_ART.callie;
       case "refuel":
         return ASCII_ART.drp;
       case "home":
