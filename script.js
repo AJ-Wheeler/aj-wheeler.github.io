@@ -410,8 +410,8 @@ document.addEventListener("DOMContentLoaded", () => {
       case "commscan":
         return {
           type: "html",
-          header: "*** INCOMING MESSAGES ***",
-          content: `Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br><b>comms</b> Return to comms menu`
+          header: "*** 2 NEW INCOMING MESSAGES ***",
+          content: `<br>Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br><b>comms</b> Return to comms menu`
   };
       case "crew":
         return {
@@ -422,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
       case "cosmiccostian":
         return {
           type: "html",
-          header: "CREW MEMBER: COSMIC COSTIAN",
+          header: "<b>*** CREW MEMBER: COSMIC COSTIAN ***</b>",
           content: `Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
   };
       case "cuddlescostian":
