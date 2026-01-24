@@ -241,6 +241,18 @@ document.addEventListener("DOMContentLoaded", () => {
   normal: 15
 };
 
+// Convert HTML bios → terminal-safe text
+const htmlToTerminalText = (html) => {
+  return html
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/b>/gi, "")
+    .replace(/<b>/gi, "")
+    .replace(/<[^>]+>/g, "");
+};
+
+
+};
+
 
   // --- Journal entries ---
   const journalEntries = {
@@ -429,15 +441,11 @@ if (response.ascii && !response.type) {
       await typeText(response.ascii + "\n", asciiSpeed);
     }
 
-    const container = document.createElement("div");
-    output.appendChild(container);
+// Animate HTML as terminal text for consistent feel
+const terminalText = htmlToTerminalText(response.html);
 
-    const normalizedHTML = response.html
-      .replace(/\n\s+/g, "")
-      .trim();
-
-    await typeHTML(container, normalizedHTML + "\n", htmlSpeed);
-    return;
+await typeText(terminalText + "\n", htmlSpeed);
+return;
   }
 
   // -------- HTML ONLY --------
