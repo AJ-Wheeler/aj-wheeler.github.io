@@ -276,20 +276,25 @@ if (awaitingPassword) {
 
   // --- Typing functions ---
   const typeText = (text, speed = 10) => {
-    return new Promise((resolve) => {
-      isTyping = true;
-      let i = 0;
-      const interval = setInterval(() => {
-        appendOutput(text.charAt(i));
-        i++;
-        if (i >= text.length) {
-          clearInterval(interval);
-          isTyping = false;
-          resolve();
-        }
-      }, speed);
-    });
-  };
+  return new Promise((resolve) => {
+    if (isTyping) return resolve();
+
+    isTyping = true;
+    let i = 0;
+
+    const interval = setInterval(() => {
+      appendOutput(text.charAt(i));
+      i++;
+
+      if (i >= text.length) {
+        clearInterval(interval);
+        isTyping = false;
+        resolve();
+      }
+    }, speed);
+  });
+};
+
 
   // Updated typeTextToElement to always scroll the main terminal
   const typeTextToElement = (el, text, speed = 10) => {
