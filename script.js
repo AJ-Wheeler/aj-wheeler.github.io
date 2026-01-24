@@ -363,6 +363,12 @@ document.addEventListener("DOMContentLoaded", () => {
           header: "*** COMMUNICATIONS ARRAY ***",
           content: `Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications`
   };
+      case "commscan":
+        return {
+          type: "html",
+          header: "*** INCOMING MESSAGE ***",
+          content: `Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br><b>comms</b> Return to comms menu`
+  };
       case "crew":
         return {
           type: "html",
