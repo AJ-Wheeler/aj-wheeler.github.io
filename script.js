@@ -185,7 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Terminal state flags ---
   let awaitingPassword = false;
   let awaitingJournalSelection = false;
-  let awaitingCommsSelection = false;
   let isTyping = false;
   const CORRECT_PASSWORD = "rosebud";
 
@@ -198,15 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "Friday": "Friday: Made a new discovery...this Dr. Pepper guy knows what he's doing!",
     "Saturday": "Saturday: ...the humans are starting to notice, I must be more inconspicuous...",
     "Sunday": "Sunday: Discovered a new source of natural gas concentrated in a place called Taco Bell..."
-  };
-
- // --- Comms Logs ---
-  const CommsLogs = {
-    "Launch Day": "Monday: Today I woke up early and enjoyed some donuts. The sunrise was beautiful...",
-    "First Contact": "Tuesday: Had a strange encounter with a cat that followed me around the block...",
-    "System Failure": "Wednesday: Got hacked again...I guess 'rosewater' was too easy a password...I'll make my new one 'rosebud'",
-    "Crew Discrepency": "Thursday: Went for a walk and thought about the Rosewater Lane project...",
-    "Festivities": "Friday: Made a new discovery...this Dr. Pepper guy knows what he's doing!",
   };
 
   // --- Menu commands ---
@@ -386,13 +376,6 @@ document.addEventListener("DOMContentLoaded", () => {
         Object.keys(journalEntries).forEach((key, index) => {
           menu += `${index + 1}. ${key}\n`;
         });
-      case "commslogs":
-        awaitingCommsSelection = true;
-        output.innerHTML = "";
-        let menu = "Comms Log (type entry name or number, 'exit' to leave):\n";
-        Object.keys(CommsEntries).forEach((key, index) => {
-          menu += `${index + 1}. ${key}\n`;
-        });
         menu += "\nType the entry name or number:";
         return menu;
       case "bloom":
@@ -500,23 +483,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!entryText && !isNaN(inputValue)) {
       const key = Object.keys(journalEntries)[inputValue - 1];
       entryText = journalEntries[key];
-    }
-
-    appendOutput(entryText ? `\n${entryText}\n` : "Entry not found.\n");
-  };
-
-  // --- Comms Log handler ---
-  const handleCommsSelection = (inputValue) => {
-    if (inputValue.toLowerCase() === "exit") {
-      awaitingCommsSelection = false;
-      appendOutput("Exited comms log.\n");
-      return;
-    }
-
-    let entryText = CommsEntries[inputValue];
-    if (!entryText && !isNaN(inputValue)) {
-      const key = Object.keys(CommsEntries)[inputValue - 1];
-      entryText = CommsEntries[key];
     }
 
     appendOutput(entryText ? `\n${entryText}\n` : "Entry not found.\n");
