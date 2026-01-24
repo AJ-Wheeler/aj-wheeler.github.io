@@ -412,7 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members<br><br>`
+          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
   };
       case "cosmiccostian":
         return {
