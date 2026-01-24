@@ -275,7 +275,7 @@ if (awaitingPassword) {
   });
 
   // --- Typing functions ---
-  const typeText = (text, speed = 10) => {
+  const typeText = (text, speed = 20) => {
   return new Promise((resolve) => {
     if (isTyping) return resolve();
 
@@ -297,7 +297,7 @@ if (awaitingPassword) {
 
 
 // Animate HTML content but preserve tags
-const typeHTML = async (container, html, speed = 10) => {
+const typeHTML = async (container, html, speed = 20) => {
   const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
 
   let currentParent = container;
