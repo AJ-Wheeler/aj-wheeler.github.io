@@ -84,6 +84,31 @@ const ASCII_ART = {
          ▒▒░░░░▓██████▒████▓                      
       ▒▓▒░ ▒▓████████▓░▓▒░                        
          ░▒▓▓▓░▒▒▒▓██▓██▒                         `,
+  navmap: `
+  .  +    +  +           '   '     +  .       '          .  +   
+                .              '        o       o  + .        
+ .  '      +  +   .    +     .             '               . .
+       + '      *          .     .    o        +  .  .   +    
+             *    * . +        o    .      ' '             '  
+  o    .  .    .           +                      .    |      
+    .        +    '    '      . .      +  + +         -o-     
+        .       .   '                           '      |   '  
+.    '       '            . ' .   .          .    . '         
+       *  o           .             +           .             
+.  '         .      +      + .           . +               +  
+               . .              *    '        . .     .  '   *
+   '       .        .   * o o                      '          
+.      .        '                 '   . '    +           .  * 
+     .      +                   '   .            .            
+.  *                    .    .                '      '        
+          . .   *   *            |     ' o .           .  .   
+              '   .   * . '  + --o-- +                       *
+*        +                       |            * +   *     .   
+  '    .    _|_  *                     +  *       '          .
+     '   +   |     .  '     +       .                ' *      
+*  *   *                 '       .    '         '          +  
+     .    .       '                '          .               
+       .     .  .     +       .      +     o    ' .  .  o   * `,
   
   callie: `                ░▒▓█████▓▒   ▒█████████████████▓▓▒           
             ░█████████████████████████████████▓░▒▒░ ░        
@@ -355,9 +380,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "*** NAVIGATION CONTROL ***",
-          content: `Current Sector: ECHO-7<br>Destination: Rosewater Mission Control<br><br><b>navplot</b> Select a location to navigate to<br><b>navscan</b> Find nearby objects`
+          content: `Current Sector: ECHO-7<br>Destination: Rosewater Mission Control<br><br><b>navplot</b> Select a location to navigate to<br><b>navmap</b> View star map`
   };
-        case "comms":
+      case "navmap":
+        return ASCII_ART.navmap;
+      case "comms":
         return {
           type: "html",
           header: "*** COMMUNICATIONS ARRAY ***",
