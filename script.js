@@ -428,26 +428,25 @@ document.addEventListener("DOMContentLoaded", () => {
       case "cuddlescostian":
         return {
           type: "html",
-          header: "CREW MEMBER: CUDDLES COSTIAN",
-          content: `Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67`
+          header: "*** CREW MEMBER: CUDDLES COSTIAN ***",
+          content: `<br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67`
   };
       case "bojack":
         return {
           type: "html",
-          header: "CREW MEMBER: BOJACK",
-          content: `Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67`
+          header: "*** CREW MEMBER: BOJACK ***",
+          content: `<br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67`
   };
         case "lewis":
         return {
           type: "html",
-          header: "CREW MEMBER: LEWIS",
-          content: `Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77`
+          header: "*** CREW MEMBER: LEWIS ***",
+          content: `<br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77`
   };
       case "callie":
         return {
           type: "html",
-          header: "CREW MEMBER: CALLIE",
-          content: `Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68`
+          content: `<br><b>*** CREW MEMBER: CALLIE ***></b><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68`
   };
       case "calliefornia":
         return ASCII_ART.callie;
