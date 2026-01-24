@@ -603,7 +603,7 @@ case "crewvitals":
 case "lewis":
   return {
     type: "ascii+html",
-    typingSpeed: TYPING_SPEEDS.fast,
+    typingSpeed: TYPING_SPEEDS.ultra,
     ascii: ASCII_ART.lewis,
     typingSpeed: TYPING_SPEEDS.normal,
     html: `
