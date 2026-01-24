@@ -251,9 +251,6 @@ const htmlToTerminalText = (html) => {
 };
 
 
-};
-
-
   // --- Journal entries ---
   const journalEntries = {
     "Monday": "Monday: Today I woke up early and enjoyed some donuts. The sunrise was beautiful...",
