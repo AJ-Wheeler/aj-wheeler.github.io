@@ -618,9 +618,9 @@ const handleCommsLogSelection = (inputValue) => {
     }
 
     await wait(700);
-    await typeText("NOW ROUTING TO BOREGIAN SECTOR\n", 30);
+    await typeText("ERROR: NAVIGATION PROCESS CANCELLED\n", 30);
     await wait(400);
-    await typeText("Estimated time to location, 5 lightyears\n", 15);
+    await typeText("Insufficient fuel levels for selected destinatioin. Check fuel levels in <b>status</b>.\n", 15);
   };
  // --- 3A Nav sequence ---
     const run3A = async () => {
