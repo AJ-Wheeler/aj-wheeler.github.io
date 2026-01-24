@@ -52,7 +52,9 @@ const ASCII_ART = {
          !______!   
          :      : 
          :      :  
-          ''''''`,
+          ''''''
+  Mmm yum...Oh you wanted rocket fuel? 
+Sorry, we don't have any of that laying around...`,
   leo: `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣷⣦⣄⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀
@@ -530,7 +532,7 @@ case "crewvitals":
   };
       case "calliefornia":
         return ASCII_ART.callie;
-      case "drpepper":
+      case "refuel":
         return ASCII_ART.drp;
       case "home":
         return ASCII_ART.home;
