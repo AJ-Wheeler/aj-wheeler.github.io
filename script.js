@@ -424,17 +424,21 @@ const processCommand = async (command) => {
     const speed = response.typingSpeed ?? TYPING_SPEEDS.normal;
 
     // ASCII + HTML combo
-    if (response.type === "ascii+html") {
-      if (response.ascii) {
-        await typeText(response.ascii + "\n", speed);
-      }
+if (response.type === "ascii+html") {
+  // ASCII speed override
+  const asciiSpeed = response.asciiSpeed ?? speed;
+  if (response.ascii) {
+    await typeText(response.ascii + "\n", asciiSpeed);
+  }
 
-      const container = document.createElement("div");
-      output.appendChild(container);
+  // HTML speed override
+  const htmlSpeed = response.htmlSpeed ?? speed;
+  const container = document.createElement("div");
+  output.appendChild(container);
 
-      await typeHTML(container, response.html + "\n", speed);
-      return;
-    }
+  await typeHTML(container, response.html + "\n", htmlSpeed);
+  return;
+}
 
     // HTML-only
     if (response.type === "html") {
@@ -603,10 +607,12 @@ case "crewvitals":
 case "lewis":
   return {
     type: "ascii+html",
-    typingSpeed: TYPING_SPEEDS.ultra,
     ascii: ASCII_ART.lewis,
+    asciiSpeed: TYPING_SPEEDS.ultra,
+    
     html: `
-      <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77<br><br>Assignment: Eliminating all foreign organic waste`
+      <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77<br><br>Assignment: Eliminating all foreign organic waste`,  
+    htmlSpeed: TYPING_SPEEDS.normal
   };
 
       case "callie":
