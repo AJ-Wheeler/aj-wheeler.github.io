@@ -340,9 +340,13 @@ if (typeof response === "object" && response.type === "html") {
   const container = document.createElement("div");
   output.appendChild(container);
 
-  // ✅ THIS is the missing call
-  await typeHTML(container, response.content + "\n", 8);
+  if (response.instant) {
+    container.innerHTML = response.content + "\n";
+  } else {
+    await typeHTML(container, response.content + "\n", 8);
+  }
 }
+
  else {
   await typeText(response + "\n");
 }
@@ -367,12 +371,30 @@ if (typeof response === "object" && response.type === "html") {
   // --- Command responses ---
   const getCommandResponse = (command) => {
     switch (command.toLowerCase()) {
-      case "menu":
-        return { type: "html", header: "*** MAIN MENU ***", content: buildCommandGrid(menuCommands) };
-      case "secretmenu":
-        return { type: "html", header: "*** SECRET MENU ***", content: buildCommandGrid(secretCommands) };
-      case "crewvitals":
-        return { type: "html", header: "*** CREW VITALS ***   select individual to view", content: buildCommandGrid(crewvitalsCommands) };
+case "menu":
+  return {
+    type: "html",
+    header: "*** MAIN MENU ***",
+    content: buildCommandGrid(menuCommands),
+    instant: true
+  };
+
+case "secretmenu":
+  return {
+    type: "html",
+    header: "*** SECRET MENU ***",
+    content: buildCommandGrid(secretCommands),
+    instant: true
+  };
+
+case "crewvitals":
+  return {
+    type: "html",
+    header: "*** CREW VITALS ***   select individual to view",
+    content: buildCommandGrid(crewvitalsCommands),
+    instant: true
+  };
+
       case "hack":
         runHackSequence();
         return null;
