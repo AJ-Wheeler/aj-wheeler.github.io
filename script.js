@@ -360,6 +360,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "1a":
         run1A();
         return null;
+      case "2a":
+        run2A();
+        return null;
       case "login":
         awaitingPassword = true;
         return "Enter password:";
@@ -565,6 +568,28 @@ document.addEventListener("DOMContentLoaded", () => {
     await typeText("NOW ROUTING TO ALTERION SECTOR\n", 30);
     await wait(400);
     await typeText("Estimated time to location, 3 lightyears\n", 15);
+  };
+    // --- 2A Nav sequence ---
+    const run2A = async () => {
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+    await typeText("> 2A\n");
+
+    const lines = [
+      "Establishing coordinates...",
+      "Running threat detection protocols...",
+      "Initializing fuel systems...",
+    ];
+
+    for (const line of lines) {
+      await typeText(line + "\n", 20);
+      await wait(500);
+    }
+
+    await wait(700);
+    await typeText("NOW ROUTING TO BOREGIAN SECTOR\n", 30);
+    await wait(400);
+    await typeText("Estimated time to location, 5 lightyears\n", 15);
   };
 
 
