@@ -366,8 +366,8 @@ document.addEventListener("DOMContentLoaded", () => {
       case "commscan":
         return {
           type: "html",
-          header: "*** INCOMING MESSAGE ***",
-          content: `Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br><b>comms</b> Return to comms menu`
+          header: "*** INCOMING MESSAGES ***",
+          content: `Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br><b>comms</b> Return to comms menu`
   };
       case "crew":
         return {
