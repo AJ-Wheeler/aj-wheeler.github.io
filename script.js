@@ -235,6 +235,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let awaitingCommsLogSelection = false;
   let isTyping = false;
   const CORRECT_PASSWORD = "rosebud";
+  const TYPING_SPEEDS = {
+  asciiFast: 5,
+  htmlSlow: 25,
+  normal: 15
+};
+
 
   // --- Journal entries ---
   const journalEntries = {
@@ -408,23 +414,32 @@ const typeHTML = async (container, html, speed = 20) => {
 
 if (typeof response === "object") {
 
-  // ASCII + HTML combo
+  // -------- ASCII + HTML (fast ASCII → slow HTML) --------
   if (response.type === "ascii+html") {
+
+    const asciiSpeed = response.asciiSpeed ?? TYPING_SPEEDS.asciiFast;
+    const htmlSpeed  = response.htmlSpeed  ?? TYPING_SPEEDS.htmlSlow;
+
     if (response.ascii) {
-      await typeText(response.ascii + "\n");
+      await typeText(response.ascii + "\n", asciiSpeed);
     }
 
     const container = document.createElement("div");
     output.appendChild(container);
 
-    await typeHTML(container, response.html + "\n", 8);
+    const normalizedHTML = response.html
+      .replace(/\n\s+/g, "")
+      .trim();
+
+    await typeHTML(container, normalizedHTML + "\n", htmlSpeed);
     return;
   }
 
-  // Existing HTML-only behavior
+  // -------- HTML ONLY --------
   if (response.type === "html") {
+
     if (response.header) {
-      await typeText(response.header + "\n");
+      await typeText(response.header + "\n", TYPING_SPEEDS.normal);
     }
 
     const container = document.createElement("div");
@@ -433,8 +448,14 @@ if (typeof response === "object") {
     if (response.instant) {
       container.innerHTML = response.content + "\n";
     } else {
-      await typeHTML(container, response.content + "\n", 8);
+      const normalizedHTML = response.content
+        .replace(/\n\s+/g, "")
+        .trim();
+
+      await typeHTML(container, normalizedHTML + "\n", TYPING_SPEEDS.htmlSlow);
     }
+
+    return;
   }
 }
 
@@ -543,8 +564,11 @@ case "crewvitals":
           header: "",
           content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
   };
-      case "navmap":
-        return ASCII_ART.navmap;
+case "navmap":
+  return {
+    ascii: ASCII_ART.navmap,
+    asciiSpeed: TYPING_SPEEDS.asciiFast
+  };
       case "comms":
         return {
           type: "html",
@@ -585,6 +609,8 @@ case "lewis":
   return {
     type: "ascii+html",
     ascii: ASCII_ART.lewis,
+    asciiSpeed: TYPING_SPEEDS.asciiFast,
+    htmlSpeed: TYPING_SPEEDS.htmlSlow,
     html: `
       <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77<br><br>Assignment: Eliminating all foreign organic waste`
   };
