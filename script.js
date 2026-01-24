@@ -201,12 +201,12 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- Communications Logs ---
-  const commsLogs = {
-    "LOG-001": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
-    "LOG-002": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
-    "LOG-003": "[INBOUND]\nFrom: Unknown Source\nStatus: DEGRADED\nMessage: .......DO NOT TRUST....",
-    "LOG-004": "[OUTBOUND]\nTo: Mission Control\nStatus: FAILED\nMessage: Navigation anomaly detected. Requesting guidance."
-  };
+const commsLogs = {
+  "LOG-001": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
+  "LOG-002": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
+  "LOG-003": "[INBOUND]\nFrom: Unknown Source\nStatus: DEGRADED\nMessage: .......DO NOT TRUST....",
+  "LOG-004": "[OUTBOUND]\nTo: Mission Control\nStatus: FAILED\nMessage: Navigation anomaly detected. Requesting guidance."
+};
 
   // --- Menu commands ---
   const menuCommands = [
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["clear", "clear all prompts"],
     ["reboot", "restart onboard systems"]
   ];
-
+  
   // --- Secret commands ---
   const secretCommands = [
     ["bloom", "a beautiful flower for you"],
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["ewlewis", "gross boy"]
   ];
 
-  // --- Crew Vitals ---
+    // --- Crew Vitals ---
   const crewvitalsCommands = [
     ["cosmiccostian", "Captain Cosmic Costian"],
     ["cuddlescostian", "Co-Captain Cuddles Costian"],
@@ -246,66 +246,77 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Helper for appending text and auto-scrolling ---
   const appendOutput = (text) => {
     output.innerHTML += text;
+    output.scrollTop = output.scrollHeight; // scroll to bottom
+  };
+
+  const appendOutputHTML = (html) => {
+    output.innerHTML += html;
     output.scrollTop = output.scrollHeight;
   };
 
-  // --- Typing functions ---
-  const typeText = (text, speed = 10) => {
-    return new Promise((resolve) => {
-      if (isTyping) return resolve();
-
-      isTyping = true;
-      let i = 0;
-      const interval = setInterval(() => {
-        appendOutput(text.charAt(i));
-        i++;
-        if (i >= text.length) {
-          clearInterval(interval);
-          isTyping = false;
-          resolve();
-        }
-      }, speed);
-    });
-  };
-
-  const typeHTML = (el, html, speed = 10) => {
-    return new Promise((resolve) => {
-      let i = 0;
-      const interval = setInterval(() => {
-        el.innerHTML += html.charAt(i);
-        output.scrollTop = output.scrollHeight;
-        i++;
-        if (i >= html.length) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, speed);
-    });
-  };
-
   // --- Input listener ---
-  input.addEventListener("keydown", async (e) => {
+  input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       const value = input.value.trim();
       if (!value) return;
 
-      if (awaitingPassword) {
-        await handlePassword(value);
-      } else if (awaitingJournalSelection) {
-        await handleJournalSelection(value);
-      } else if (awaitingCommsLogSelection) {
-        await handleCommsLogSelection(value);
-      } else {
-        await processCommand(value);
-      }
+if (awaitingPassword) {
+  handlePassword(value);
+} else if (awaitingJournalSelection) {
+  handleJournalSelection(value);
+} else if (awaitingCommsLogSelection) {
+  handleCommsLogSelection(value);
+} else {
+  processCommand(value);
+}
 
       input.value = "";
     }
   });
 
+  // --- Typing functions ---
+  const typeText = (text, speed = 10) => {
+  return new Promise((resolve) => {
+    if (isTyping) return resolve();
+
+    isTyping = true;
+    let i = 0;
+
+    const interval = setInterval(() => {
+      appendOutput(text.charAt(i));
+      i++;
+
+      if (i >= text.length) {
+        clearInterval(interval);
+        isTyping = false;
+        resolve();
+      }
+    }, speed);
+  });
+};
+
+
+  // Updated typeTextToElement to always scroll the main terminal
+const typeHTML = (el, html, speed = 10) => {
+  return new Promise((resolve) => {
+    let i = 0;
+    const interval = setInterval(() => {
+      el.innerHTML += html.charAt(i);
+      output.scrollTop = output.scrollHeight; // scroll main terminal
+      i++;
+      if (i >= html.length) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, speed);
+  });
+};
+
+
   // --- Command processor ---
   const processCommand = async (command) => {
     const lower = command.toLowerCase();
+    const instantCommands = ["clear", "ping", "pip", "exit"];
     if (isTyping) return;
 
     if (lower === "clear") {
@@ -316,18 +327,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const response = getCommandResponse(command);
     if (response === null) return;
 
-    await typeText(`> ${command}\n`);
+    appendOutput(`> ${command}\n`);
 
-    if (typeof response === "object" && response.type === "html") {
-      if (response.header) {
-        await typeText(response.header + "\n");
-      }
-      const container = document.createElement("div");
-      output.appendChild(container);
-      await typeHTML(container, response.content + "\n", 5);
-    } else {
-      await typeText(response + "\n");
-    }
+if (typeof response === "object" && response.type === "html") {
+  if (response.header) {
+    await typeText(response.header + "\n");
+  }
+  const container = document.createElement("div");
+  output.appendChild(container);
+  await typeHTML(container, response.content + "\n", 5); // animated HTML
+} else {
+  await typeText(response + "\n");
+}
+
   };
 
   // --- Command grid builder ---
@@ -357,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
       case "hack":
         runHackSequence();
         return null;
-      case "test":
+        case "test":
         runTest();
         return null;
       case "1a":
@@ -385,13 +397,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         menu += "\nType the entry name or number:";
         return menu;
-      case "commslog":
+    case "commslog":
         awaitingCommsLogSelection = true;
         output.innerHTML = "";
         let commsMenu = "COMMUNICATIONS LOG (select log or type 'exit'):\n";
         Object.keys(commsLogs).forEach((key, index) => {
           commsMenu += `${index + 1}. ${key}\n`;
-        });
+  });
         commsMenu += "\nType log name or number:";
         return commsMenu;
       case "bloom":
@@ -408,103 +420,58 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>
-          Current Sector: ECHO-7<br>
-          Current Destination: Rosewater Mission Control<br><br>
-          <b>navmap</b> View star map and set navigation destination<br><br>`
-        };
+          content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
+  };
       case "navmap":
         return ASCII_ART.navmap;
       case "comms":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>
-          Status: Optimal<br>
-          Last Signal: 04/05/2025<br>
-          Origin: 32.7574624,-97.1500809<br><br>
-          <b>uplink</b> Retrieve new communication data<br>
-          <b>commslog</b> Show received communications<br><br>`
-        };
+          content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>uplink</b> Retrieve new communication data<br><b>commslog</b> Show received communications<br><br>`
+  };
       case "uplink":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** 2 NEW INCOMING MESSAGES ***</b><br><br>
-          Origin: 32.8887704,-96.958692<br>
-          Date: 02/28/2026<br>
-          Message: P I Z Z A<br><br>
-          Origin: 33.148969,-96.8191008<br>
-          Date: 04/04/2026<br>
-          Message: T A C O S<br><br>`
-        };
+          content: `<br><b>*** 2 NEW INCOMING MESSAGES ***</b><br><br>Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br>`
+  };
       case "crew":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW ROSTER ***</b><br><br>
-          Captain: Cosmic Costian<br>
-          Co-Captain: Cuddles Costian<br>
-          Supervisor: Callie<br>
-          Security: BoJack<br>
-          Janitorial: Lewis<br><br>
-          <b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
-        };
+          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
+  };
       case "cosmiccostian":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW MEMBER: COSMIC COSTIAN ***</b><br><br>
-          Oxygen Levels: Good<br>
-          C02 Levels: Fair<br>
-          H20 Levels: Poor<br>
-          Blood Pressure: !Warning Over Limit!<br>
-          Heart Rate: 65`
-        };
+          content: `<br><b>*** CREW MEMBER: COSMIC COSTIAN ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
+  };
       case "cuddlescostian":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW MEMBER: CUDDLES COSTIAN ***</b><br><br>
-          Oxygen Levels: Fair<br>
-          C02 Levels: Good<br>
-          H20 Levels: Excellent<br>
-          Blood Pressure: Good<br>
-          Heart Rate: 67`
-        };
+          content: `<br><b>*** CREW MEMBER: CUDDLES COSTIAN ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67`
+  };
       case "bojack":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW MEMBER: BOJACK ***</b><br><br>
-          Oxygen Levels: Fair<br>
-          C02 Levels: !HIGH!<br>
-          H20 Levels: !HIGH!<br>
-          Blood Pressure: Fair<br>
-          Heart Rate: 67`
-        };
-      case "lewis":
+          content: `<br><b>*** CREW MEMBER: BOJACK ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67`
+  };
+        case "lewis":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW MEMBER: LEWIS ***</b><br><br>
-          Oxygen Levels: Poor<br>
-          C02 Levels: Poor<br>
-          H20 Levels: Poor<br>
-          Blood Pressure: !HIGH!<br>
-          Heart Rate: 77`
-        };
+          content: `<br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77`
+  };
       case "callie":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW MEMBER: CALLIE ***</b><br><br>
-          Oxygen Levels: Good<br>
-          C02 Levels: Good<br>
-          H20 Levels: Excellent<br>
-          Blood Pressure: Fair<br>
-          Heart Rate: 68`
-        };
+          content: `<br><b>*** CREW MEMBER: CALLIE ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68`
+  };
       case "calliefornia":
         return ASCII_ART.callie;
       case "drpepper":
@@ -524,47 +491,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Password handler ---
   const handlePassword = async (inputValue) => {
-    awaitingPassword = false;
-    if (inputValue === CORRECT_PASSWORD) {
-      await typeText("Access granted.\nWelcome back, admin. Access to secretmenu now authorized\n");
-    } else {
-      await typeText("Access denied.\nInvalid credentials. You'll never find my password! Surely I'd never store it somewhere obvious like my journal...\n");
-    }
+  awaitingPassword = false;
+  if (inputValue === CORRECT_PASSWORD) {
+    await typeText("Access granted.\nWelcome back, admin. Access to secretmenu now authorized\n");
+  } else {
+    await typeText("Access denied.\nInvalid credentials. You'll never find my password! Surely I'd never store it somewhere obvious like my journal...\n");
+  }
   };
 
   // --- Journal handler ---
-  const handleJournalSelection = async (inputValue) => {
-    if (inputValue.toLowerCase() === "exit") {
-      awaitingJournalSelection = false;
-      await typeText("Exited journal mode.\n");
-      return;
-    }
+ const handleJournalSelection = async (inputValue) => {
+  if (inputValue.toLowerCase() === "exit") {
+    awaitingJournalSelection = false;
+    await typeText("Exited journal mode.\n");
+    return;
+  }
+  let entryText = journalEntries[inputValue];
+  if (!entryText && !isNaN(inputValue)) {
+    const key = Object.keys(journalEntries)[inputValue - 1];
+    entryText = journalEntries[key];
+  }
+  await typeText(entryText ? `\n${entryText}\n` : "Entry not found.\n");
+};
 
-    let entryText = journalEntries[inputValue];
-    if (!entryText && !isNaN(inputValue)) {
-      const key = Object.keys(journalEntries)[inputValue - 1];
-      entryText = journalEntries[key];
-    }
-
-    await typeText(entryText ? `\n${entryText}\n` : "Entry not found.\n");
-  };
 
   // --- Comms Log handler ---
-  const handleCommsLogSelection = async (inputValue) => {
-    if (inputValue.toLowerCase() === "exit") {
-      awaitingCommsLogSelection = false;
-      await typeText("Exited communications log.\n");
-      return;
-    }
+const handleCommsLogSelection = async (inputValue) => {
+  if (inputValue.toLowerCase() === "exit") {
+    awaitingCommsLogSelection = false;
+    await typeText("Exited communications log.\n");
+    return;
+  }
+  let logText = commsLogs[inputValue];
+  if (!logText && !isNaN(inputValue)) {
+    const key = Object.keys(commsLogs)[inputValue - 1];
+    logText = commsLogs[key];
+  }
+  await typeText(logText ? `\n${logText}\n` : "Log not found.\n");
+};
 
-    let logText = commsLogs[inputValue];
-    if (!logText && !isNaN(inputValue)) {
-      const key = Object.keys(commsLogs)[inputValue - 1];
-      logText = commsLogs[key];
-    }
-
-    await typeText(logText ? `\n${logText}\n` : "Log not found.\n");
-  };
 
   // --- Pip ---
   const displayPip = () => {
