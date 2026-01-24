@@ -397,7 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><b>systems</b> Return to systems menu<br><br>`
+          content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
   };
       case "navmap":
         return ASCII_ART.navmap;
@@ -405,19 +405,19 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications<br><b>systems</b> Return to systems menu<br><br>`
+          content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications<br><br>`
   };
       case "commscan":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** 2 NEW INCOMING MESSAGES ***</b><br><br>Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br><b>comms</b> Return to comms menu<br><b>systems</b> Return to systems menu<br><br>`
+          content: `<br><b>*** 2 NEW INCOMING MESSAGES ***</b><br><br>Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br><b>comms</b> Return to comms menu<br><br>`
   };
       case "crew":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members<br><b>systems</b> Return to systems menu<br><br>`
+          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members<br><br>`
   };
       case "cosmiccostian":
         return {
