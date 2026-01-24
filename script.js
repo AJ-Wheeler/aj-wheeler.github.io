@@ -358,7 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
         runTest();
         return null;
         case "1A":
-        runA1();
+        run1A();
         return null;
       case "login":
         awaitingPassword = true;
