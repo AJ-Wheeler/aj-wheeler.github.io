@@ -338,16 +338,17 @@ const typeHTML = async (container, html, speed = 10) => {
     appendOutput(`> ${command}\n`);
 
 if (typeof response === "object" && response.type === "html") {
-  // Animate header if it exists
   if (response.header) {
     await typeText(response.header + "\n");
   }
-  // Append the HTML content fully so formatting works
+
   const container = document.createElement("div");
-  container.innerHTML = response.content + "\n"; // full HTML at once
   output.appendChild(container);
-  output.scrollTop = output.scrollHeight;
-} else {
+
+  // ✅ THIS is the missing call
+  await typeHTML(container, response.content + "\n", 8);
+}
+ else {
   await typeText(response + "\n");
 }
 
