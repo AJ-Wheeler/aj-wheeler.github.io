@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
         case "test":
         runTest();
         return null;
-        case "1A":
+      case "1a":
         run1A();
         return null;
       case "login":
@@ -548,7 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const run1A = async () => {
     const wait = (ms) => new Promise(r => setTimeout(r, ms));
 
-    await typeText("> nav\n");
+    await typeText("> 1A\n");
 
     const lines = [
       "Establishing coordinates...",
