@@ -396,52 +396,52 @@ document.addEventListener("DOMContentLoaded", () => {
       case "nav":
         return {
           type: "html",
-          header: "*** NAVIGATION CONTROL ***",
-          content: `<br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination`
+          header: "",
+          content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination`
   };
       case "navmap":
         return ASCII_ART.navmap;
       case "comms":
         return {
           type: "html",
-          header: "*** COMMUNICATIONS ARRAY ***",
-          content: `<br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications`
+          header: "",
+          content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications`
   };
       case "commscan":
         return {
           type: "html",
-          header: "*** 2 NEW INCOMING MESSAGES ***",
-          content: `<br>Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br><b>comms</b> Return to comms menu`
+          header: "",
+          content: `<br><b>*** 2 NEW INCOMING MESSAGES ***</b><br><br>Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br><b>comms</b> Return to comms menu`
   };
       case "crew":
         return {
           type: "html",
-          header: "*** CREW ROSTER ***",
-          content: `<br>Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members`
+          header: "",
+          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members`
   };
       case "cosmiccostian":
         return {
           type: "html",
-          header: "*** CREW MEMBER: COSMIC COSTIAN ***",
-          content: `<br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
+          header: "",
+          content: `<br><b>*** CREW MEMBER: COSMIC COSTIAN ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
   };
       case "cuddlescostian":
         return {
           type: "html",
-          header: "*** CREW MEMBER: CUDDLES COSTIAN ***",
-          content: `<br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67`
+          header: "",
+          content: `<br><b>*** CREW MEMBER: CUDDLES COSTIAN ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67`
   };
       case "bojack":
         return {
           type: "html",
-          header: "*** CREW MEMBER: BOJACK ***",
-          content: `<br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67`
+          header: "",
+          content: `<br><b>*** CREW MEMBER: BOJACK ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67`
   };
         case "lewis":
         return {
           type: "html",
-          header: "*** CREW MEMBER: LEWIS ***",
-          content: `<br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77`
+          header: "",
+          content: `<br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77`
   };
       case "callie":
         return {
