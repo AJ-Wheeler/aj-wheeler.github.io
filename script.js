@@ -86,6 +86,7 @@ const ASCII_ART = {
          ░▒▓▓▓░▒▒▒▓██▓██▒                         `,
   navmap: `
   generating star map...
+  
   .  +    +  +           '   '     +  .       '          .  +   
                 .              '        o       o  + .        
  .  '      +  +   .    +     .             '               . .
@@ -356,6 +357,9 @@ document.addEventListener("DOMContentLoaded", () => {
         case "test":
         runTest();
         return null;
+        case "1A":
+        runA1();
+        return null;
       case "login":
         awaitingPassword = true;
         return "Enter password:";
@@ -538,6 +542,29 @@ document.addEventListener("DOMContentLoaded", () => {
     await typeText("PROCESS CANCELLED\n", 30);
     await wait(400);
     await typeText("Dr. Pepper levels insufficient for function. Add more Dr. Pepper to complete testing.\n", 15);
+  };
+
+      // --- 1A Nav sequence ---
+    const run1A = async () => {
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+    await typeText("> nav\n");
+
+    const lines = [
+      "Establishing coordinates...",
+      "Running threat detection protocols...",
+      "Initializing fuel systems...",
+    ];
+
+    for (const line of lines) {
+      await typeText(line + "\n", 20);
+      await wait(500);
+    }
+
+    await wait(700);
+    await typeText("NOW ROUTING TO ALTERION SECTOR\n", 30);
+    await wait(400);
+    await typeText("Estimated time to location, 3 lightyears\n", 15);
   };
 
 
