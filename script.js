@@ -235,12 +235,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let awaitingCommsLogSelection = false;
   let isTyping = false;
   const CORRECT_PASSWORD = "rosebud";
-  const TYPING_SPEEDS = {
-  normal: 20,
-  fast: 8,
-  ultra: 3
-};
-
 
   // --- Journal entries ---
   const journalEntries = {
@@ -351,15 +345,13 @@ if (awaitingPassword) {
 
 // Animate HTML content but preserve tags
 const typeHTML = async (container, html, speed = 20) => {
-  if (isTyping) return;
-  isTyping = true;
-
   const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
+
   let currentParent = container;
 
   for (const chunk of chunks) {
 
-    // Closing tag
+    // Closing tag → return to container
     if (chunk.startsWith("</")) {
       container.insertAdjacentHTML("beforeend", chunk);
       currentParent = container;
@@ -369,117 +361,89 @@ const typeHTML = async (container, html, speed = 20) => {
     else if (chunk.startsWith("<")) {
       container.insertAdjacentHTML("beforeend", chunk);
 
+      // Only change parent if this tag can contain text
       const tagName = chunk.match(/^<([a-zA-Z0-9]+)/)?.[1];
+
       if (tagName && tagName !== "br") {
         currentParent = container.lastElementChild || container;
       }
     }
 
-    // Text node → animated typing
+    // Text node → animate
     else {
       const textNode = document.createTextNode("");
       currentParent.appendChild(textNode);
 
       for (let i = 0; i < chunk.length; i++) {
         textNode.textContent += chunk.charAt(i);
-
-        // 👇 enforce visible frame pacing
         await new Promise(r => setTimeout(r, speed));
       }
     }
 
     output.scrollTop = output.scrollHeight;
   }
-
-  isTyping = false;
 };
 
 
 
-// --- Command processor ---
-const processCommand = async (command) => {
-  const lower = command.toLowerCase();
-  if (isTyping) return;
 
-  // Echo command
-  appendOutput(`> ${command}\n`);
 
-  // Instant commands
-  if (lower === "clear") {
-    output.innerHTML = "";
-    return;
-  }
 
-  const response = getCommandResponse(command);
-  if (response === null) return;
 
-  // -------------------------
-  // ASCII-ONLY OBJECT (optional speed)
-  // -------------------------
-  if (typeof response === "object" && response.ascii && !response.type) {
-    const speed = response.typingSpeed ?? TYPING_SPEEDS.normal;
-    await typeText(response.ascii + "\n", speed);
-    return;
-  }
+  // --- Command processor ---
+  const processCommand = async (command) => {
+    const lower = command.toLowerCase();
+    const instantCommands = ["clear", "ping", "pip", "exit"];
+    if (isTyping) return;
 
-  // -------------------------
-  // OBJECT RESPONSES
-  // -------------------------
-if (typeof response === "object") {
-  const speed = response.typingSpeed ?? TYPING_SPEEDS.normal;
-
-  // --- ASCII + HTML combo ---
-  if (response.type === "ascii+html") {
-    // Type ASCII first
-    const asciiSpeed = response.asciiSpeed ?? speed;
-    if (response.ascii) {
-      await typeText(response.ascii + "\n", asciiSpeed);
+    if (lower === "clear") {
+      output.innerHTML = "";
+      return;
     }
 
-    // Then type HTML
-    const htmlSpeed = response.htmlSpeed ?? speed;
+    const response = getCommandResponse(command);
+    if (response === null) return;
+
+    appendOutput(`> ${command}\n`);
+
+if (typeof response === "object") {
+
+  // ASCII + HTML combo
+  if (response.type === "ascii+html") {
+    if (response.ascii) {
+      await typeText(response.ascii + "\n");
+    }
+
     const container = document.createElement("div");
     output.appendChild(container);
 
-    const normalizedHTML = response.html
-      .replace(/\n\s+/g, "")
-      .trim();
-
-    await typeHTML(container, normalizedHTML + "\n", htmlSpeed);
+    await typeHTML(container, response.html + "\n", 8);
     return;
   }
 
-  // --- HTML-only ---
+  // Existing HTML-only behavior
   if (response.type === "html") {
     if (response.header) {
-      await typeText(response.header + "\n", speed);
+      await typeText(response.header + "\n");
     }
 
     const container = document.createElement("div");
     output.appendChild(container);
 
     if (response.instant) {
-      // Instant render
       container.innerHTML = response.content + "\n";
     } else {
-      // Animate character-by-character
-      const normalizedHTML = response.content
-        .replace(/\n\s+/g, "")
-        .trim();
-
-      await typeHTML(container, normalizedHTML + "\n", speed);
+      await typeHTML(container, response.content + "\n", 8);
     }
-    return;
   }
 }
 
 
-  // -------------------------
-  // STRING RESPONSES
-  // -------------------------
-  await typeText(response + "\n", TYPING_SPEEDS.normal);
-};
+ else {
+  await typeText(response + "\n");
+}
 
+  };
 
   // --- Command grid builder ---
   const buildCommandGrid = (commands) => {
@@ -579,11 +543,8 @@ case "crewvitals":
           header: "",
           content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
   };
- case "navmap":
-  return {
-    ascii: ASCII_ART.navmap,
-    typingSpeed: TYPING_SPEEDS.ultra
-  };
+      case "navmap":
+        return ASCII_ART.navmap;
       case "comms":
         return {
           type: "html",
@@ -624,11 +585,8 @@ case "lewis":
   return {
     type: "ascii+html",
     ascii: ASCII_ART.lewis,
-    asciiSpeed: TYPING_SPEEDS.ultra,
-    
     html: `
-      <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77<br><br>Assignment: Eliminating all foreign organic waste`,  
-    htmlSpeed: TYPING_SPEEDS.normal
+      <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77<br><br>Assignment: Eliminating all foreign organic waste`
   };
 
       case "callie":
