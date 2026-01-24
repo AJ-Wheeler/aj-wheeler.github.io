@@ -417,7 +417,7 @@ if (awaitingPassword) {
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications<br><br>`
+          content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commslog</b> Show received communications<br><br>`
   };
       case "commscan":
         return {
