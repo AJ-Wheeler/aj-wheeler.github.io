@@ -550,7 +550,6 @@ case "crewvitals":
           content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
   };
       case "navmap":
-        typingSpeed: TYPING_SPEEDS.ultra,
         return ASCII_ART.navmap;
       case "comms":
         return {
