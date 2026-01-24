@@ -441,7 +441,12 @@ if (response.type === "ascii+html") {
   const container = document.createElement("div");
   output.appendChild(container);
 
-  await typeHTML(container, response.html + "\n", htmlSpeed);
+  const normalizedHTML = response.html
+  .replace(/\n\s+/g, "")
+  .trim();
+
+await typeHTML(container, normalizedHTML + "\n", htmlSpeed);
+
   return;
 }
 
@@ -457,7 +462,12 @@ if (response.type === "ascii+html") {
       if (response.instant) {
         container.innerHTML = response.content + "\n";
       } else {
-        await typeHTML(container, response.content + "\n", speed);
+        const normalizedHTML = response.html
+  .replace(/\n\s+/g, "")
+  .trim();
+
+await typeHTML(container, normalizedHTML + "\n", htmlSpeed);
+
       }
       return;
     }
