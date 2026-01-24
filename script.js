@@ -197,6 +197,15 @@ document.addEventListener("DOMContentLoaded", () => {
     ["reboot", "restart onboard systems"]
   ];
 
+    // --- Crew Vitals ---
+  const crewvitalsCommands = [
+    ["cosmiccostian", "Captain Cosmic Costian"],
+    ["cuddlescostian", "Co-Captain Cuddles Costian"],
+    ["callie", "Supervisor Callie"],
+    ["bojack", "Security BoJack"],
+    ["lewis", "Janitorial Lewis"],
+  ];
+
   // --- Helper for appending text and auto-scrolling ---
   const appendOutput = (text) => {
     output.innerHTML += text;
@@ -308,6 +317,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return { type: "html", header: "*** SECRET MENU ***", content: buildCommandGrid(secretCommands) };
       case "systems":
         return { type: "html", header: "*** SYSTEMS MENU ***", content: buildCommandGrid(systemsCommands) };
+      case "crewvitals":
+        return { type: "html", header: "*** CREW VITALS ***   select individual to view", content: buildCommandGrid(systemsCommands) };
       case "hack":
         runHackSequence();
         return null;
