@@ -391,59 +391,65 @@ const typeHTML = async (container, html, speed = 20) => {
 
 
   // --- Command processor ---
-  const processCommand = async (command) => {
-    const lower = command.toLowerCase();
-    const instantCommands = ["clear", "ping", "pip", "exit"];
-    if (isTyping) return;
+const processCommand = async (command) => {
+  const lower = command.toLowerCase();
+  if (isTyping) return;
 
-    if (lower === "clear") {
-      output.innerHTML = "";
-      return;
-    }
+  // Echo command
+  appendOutput(`> ${command}\n`);
 
-    const response = getCommandResponse(command);
-    if (response === null) return;
-
-    appendOutput(`> ${command}\n`);
-
-if (typeof response === "object") {
-
-  // ASCII + HTML combo
-  if (response.type === "ascii+html") {
-    if (response.ascii) {
-      await typeText(response.ascii + "\n");
-    }
-
-    const container = document.createElement("div");
-    output.appendChild(container);
-
-    await typeHTML(container, response.html + "\n", 8);
+  // Instant commands
+  if (lower === "clear") {
+    output.innerHTML = "";
     return;
   }
 
-  // Existing HTML-only behavior
-  if (response.type === "html") {
-    if (response.header) {
-      await typeText(response.header + "\n");
+  const response = getCommandResponse(command);
+  if (response === null) return;
+
+  // -------------------------
+  // OBJECT RESPONSES
+  // -------------------------
+  if (typeof response === "object") {
+    const speed = response.typingSpeed ?? TYPING_SPEEDS.normal;
+
+    // ASCII + HTML combo
+    if (response.type === "ascii+html") {
+      if (response.ascii) {
+        await typeText(response.ascii + "\n", speed);
+      }
+
+      const container = document.createElement("div");
+      output.appendChild(container);
+
+      await typeHTML(container, response.html + "\n", speed);
+      return;
     }
 
-    const container = document.createElement("div");
-    output.appendChild(container);
+    // HTML-only
+    if (response.type === "html") {
+      if (response.header) {
+        await typeText(response.header + "\n", speed);
+      }
 
-    if (response.instant) {
-      container.innerHTML = response.content + "\n";
-    } else {
-      await typeHTML(container, response.content + "\n", 8);
+      const container = document.createElement("div");
+      output.appendChild(container);
+
+      if (response.instant) {
+        container.innerHTML = response.content + "\n";
+      } else {
+        await typeHTML(container, response.content + "\n", speed);
+      }
+      return;
     }
   }
-}
 
+  // -------------------------
+  // STRING RESPONSES
+  // -------------------------
+  await typeText(response + "\n", TYPING_SPEEDS.normal);
+};
 
- else {
-  await typeText(response + "\n");
-}
-
-  };
 
   // --- Command grid builder ---
   const buildCommandGrid = (commands) => {
@@ -544,6 +550,7 @@ case "crewvitals":
           content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
   };
       case "navmap":
+        typingSpeed: TYPING_SPEEDS.ultra,
         return ASCII_ART.navmap;
       case "comms":
         return {
@@ -566,12 +573,14 @@ case "crewvitals":
       case "cosmic":
         return {
           type: "ascii+html",
+          typingSpeed: TYPING_SPEEDS.ultra,
           ascii: ASCII_ART.cosmic,
           html: `<br><b>*** CREW MEMBER: CAPTAIN COSMIC ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 69<br><br>Assignment: Navigate the cosmos with superb parallel parking skills`
   };
       case "cuddles":
         return {
           type: "ascii+html",
+          typingSpeed: TYPING_SPEEDS.ultra,
           ascii: ASCII_ART.cuddles,
           html: `<br><b>*** CREW MEMBER: CO-CAPTAIN CUDDLES ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67<br><br>Assignment: Distribute superior emotional support and soft skills`
   };
@@ -584,6 +593,7 @@ case "crewvitals":
 case "lewis":
   return {
     type: "ascii+html",
+    typingSpeed: TYPING_SPEEDS.ultra,
     ascii: ASCII_ART.lewis,
     html: `
       <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77<br><br>Assignment: Eliminating all foreign organic waste`
@@ -592,6 +602,7 @@ case "lewis":
       case "callie":
         return {
           type: "ascii+html",
+          typingSpeed: TYPING_SPEEDS.ultra,
           ascii: ASCII_ART.callie,
           html: `
           <br><b>*** CREW MEMBER: CALLIE ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68<br><br>Assignment: Supervising all lower-level employees`
