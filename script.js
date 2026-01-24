@@ -562,7 +562,7 @@ case "crewvitals":
  case "navmap":
   return {
     ascii: ASCII_ART.navmap,
-    typingSpeed: TYPING_SPEEDS.fast
+    typingSpeed: TYPING_SPEEDS.ultra
   };
       case "comms":
         return {
