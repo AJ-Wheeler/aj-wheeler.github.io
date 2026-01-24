@@ -620,7 +620,7 @@ const handleCommsLogSelection = (inputValue) => {
     await wait(700);
     await typeText("ERROR: NAVIGATION PROCESS CANCELLED\n", 30);
     await wait(400);
-    await typeText("Insufficient fuel levels for selected destinatioin. Check fuel levels in STATUS.\n", 15);
+    await typeText("Insufficient fuel levels for selected destination. Check fuel levels in STATUS.\n", 15);
   };
  // --- 3A Nav sequence ---
     const run3A = async () => {
