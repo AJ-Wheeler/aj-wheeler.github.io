@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Wednesday": "Wednesday: Got hacked again...I guess 'rosewater' was too easy a password...I'll make my new one 'rosebud'",
     "Thursday": "Thursday: Went for a walk and thought about the Rosewater Lane project...",
     "Friday": "Friday: Made a new discovery...this Dr. Pepper guy knows what he's doing!",
-    "Saturday": "Saturday: ...the humans are starting to notice, I must be more inconspicuous..."
+    "Saturday": "Saturday: ...the humans are starting to notice, I must be more inconspicuous...",
     "Sunday": "Sunday: Discovered a new source of natural gas concentrated in a place called Taco Bell..."
   };
 
