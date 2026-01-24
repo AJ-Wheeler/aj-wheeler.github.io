@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Terminal state flags ---
   let awaitingPassword = false;
   let awaitingJournalSelection = false;
+  let awaitingCommsLogSelection = false;
   let isTyping = false;
   const CORRECT_PASSWORD = "rosebud";
 
@@ -198,6 +199,14 @@ document.addEventListener("DOMContentLoaded", () => {
     "Saturday": "Saturday: ...the humans are starting to notice, I must be more inconspicuous...",
     "Sunday": "Sunday: Discovered a new source of natural gas concentrated in a place called Taco Bell..."
   };
+
+  // --- Communications Logs ---
+const commsLogs = {
+  "LOG-001": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
+  "LOG-002": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
+  "LOG-003": "[INBOUND]\nFrom: Unknown Source\nStatus: DEGRADED\nMessage: .......DO NOT TRUST....",
+  "LOG-004": "[OUTBOUND]\nTo: Mission Control\nStatus: FAILED\nMessage: Navigation anomaly detected. Requesting guidance."
+};
 
   // --- Menu commands ---
   const menuCommands = [
@@ -251,13 +260,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const value = input.value.trim();
       if (!value) return;
 
-      if (awaitingPassword) {
-        handlePassword(value);
-      } else if (awaitingJournalSelection) {
-        handleJournalSelection(value);
-      } else {
-        processCommand(value);
-      }
+if (awaitingPassword) {
+  handlePassword(value);
+} else if (awaitingJournalSelection) {
+  handleJournalSelection(value);
+} else if (awaitingCommsLogSelection) {
+  handleCommsLogSelection(value);
+} else {
+  processCommand(value);
+}
 
       input.value = "";
     }
@@ -378,6 +389,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         menu += "\nType the entry name or number:";
         return menu;
+    case "commslog":
+  awaitingCommsLogSelection = true;
+  output.innerHTML = "";
+
+  let commsMenu = "COMMUNICATIONS LOG (select log or type 'exit'):\n";
+  Object.keys(commsLogs).forEach((key, index) => {
+    commsMenu += `${index + 1}. ${key}\n`;
+  });
+  commsMenu += "\nType log name or number:";
+
+  return menu;
       case "bloom":
         return ASCII_ART.rose;
       case "gemini":
@@ -487,6 +509,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     appendOutput(entryText ? `\n${entryText}\n` : "Entry not found.\n");
   };
+
+  // --- Comms Log handler ---
+const handleCommsLogSelection = (inputValue) => {
+  if (inputValue.toLowerCase() === "exit") {
+    awaitingCommsLogSelection = false;
+    output.innerHTML = "";
+    appendOutput("Exited communications log.\n");
+    return;
+  }
+
+  let logText = commsLogs[inputValue];
+
+  if (!logText && !isNaN(inputValue)) {
+    const key = Object.keys(commsLogs)[inputValue - 1];
+    logText = commsLogs[key];
+  }
+
+  appendOutput(logText ? `\n${logText}\n` : "Log not found.\n");
+};
 
   // --- Pip ---
   const displayPip = () => {
