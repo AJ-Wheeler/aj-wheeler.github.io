@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- Communications Logs ---
-const commsLog = {
+const commsLogs = {
   "LOG-001": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
   "LOG-002": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
   "LOG-003": "[INBOUND]\nFrom: Unknown Source\nStatus: DEGRADED\nMessage: .......DO NOT TRUST....",
@@ -310,9 +310,8 @@ if (awaitingPassword) {
   // --- Command processor ---
   const processCommand = async (command) => {
     const lower = command.toLowerCase();
-    const instantCommands = ["clear", "ping", "pip", "hack", "exit"];
-
-    if (isTyping && !instantCommands.includes(lower)) return;
+    const instantCommands = ["clear", "ping", "pip", "exit"];
+    if (isTyping) return;
 
     if (lower === "clear") {
       output.innerHTML = "";
@@ -354,8 +353,6 @@ if (awaitingPassword) {
         return { type: "html", header: "*** MAIN MENU ***", content: buildCommandGrid(menuCommands) };
       case "secretmenu":
         return { type: "html", header: "*** SECRET MENU ***", content: buildCommandGrid(secretCommands) };
-      case "systems":
-        return { type: "html", header: "*** SYSTEMS MENU ***", content: buildCommandGrid(systemsCommands) };
       case "crewvitals":
         return { type: "html", header: "*** CREW VITALS ***   select individual to view", content: buildCommandGrid(crewvitalsCommands) };
       case "hack":
@@ -538,9 +535,6 @@ const handleCommsLogSelection = (inputValue) => {
   // --- Hack sequence ---
   const runHackSequence = async () => {
     const wait = (ms) => new Promise(r => setTimeout(r, ms));
-
-    await typeText("> hack\n");
-
     const lines = [
       "Initializing exploit framework...",
       "Loading payload modules...",
