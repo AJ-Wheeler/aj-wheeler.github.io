@@ -489,28 +489,27 @@ if (awaitingPassword) {
   };
 
   // --- Journal handler ---
-  const handleJournalSelection = (inputValue) => {
-    if (inputValue.toLowerCase() === "exit") {
-      awaitingJournalSelection = false;
-      appendOutput("Exited journal mode.\n");
-      return;
-    }
+ const handleJournalSelection = async (inputValue) => {
+  if (inputValue.toLowerCase() === "exit") {
+    awaitingJournalSelection = false;
+    await typeText("Exited journal mode.\n");
+    return;
+  }
 
-    let entryText = journalEntries[inputValue];
-    if (!entryText && !isNaN(inputValue)) {
-      const key = Object.keys(journalEntries)[inputValue - 1];
-      entryText = journalEntries[key];
-    }
+  let entryText = journalEntries[inputValue];
+  if (!entryText && !isNaN(inputValue)) {
+    const key = Object.keys(journalEntries)[inputValue - 1];
+    entryText = journalEntries[key];
+  }
 
-    appendOutput(entryText ? `\n${entryText}\n` : "Entry not found.\n");
-  };
+  await typeText(entryText ? `\n${entryText}\n` : "Entry not found.\n");
+};
 
   // --- Comms Log handler ---
-const handleCommsLogSelection = (inputValue) => {
+const handleCommsLogSelection = async (inputValue) => {
   if (inputValue.toLowerCase() === "exit") {
     awaitingCommsLogSelection = false;
-    output.innerHTML = "";
-    appendOutput("Exited communications log.\n");
+    await typeText("Exited communications log.\n");
     return;
   }
 
@@ -519,8 +518,8 @@ const handleCommsLogSelection = (inputValue) => {
     const key = Object.keys(commsLogs)[inputValue - 1];
     logText = commsLogs[key];
   }
+  await typeText(logText ? `\n${logText}\n` : "Log not found.\n");
 
-  appendOutput(logText ? `\n${logText}\n` : "Log not found.\n");
 };
 
   // --- Pip ---
