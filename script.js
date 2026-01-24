@@ -239,8 +239,8 @@ const commsLogs = {
 
     // --- Crew Vitals ---
   const crewvitalsCommands = [
-    ["cosmiccostian", "Captain Cosmic Costian"],
-    ["cuddlescostian", "Co-Captain Cuddles Costian"],
+    ["cosmic", "Captain Cosmic"],
+    ["cuddles", "Co-Captain Cuddles"],
     ["callie", "Supervisor Callie"],
     ["bojack", "Security BoJack"],
     ["lewis", "Janitorial Lewis"],
@@ -499,19 +499,19 @@ case "crewvitals":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
+          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic<br>Co-Captain: Cuddles<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
   };
-      case "cosmiccostian":
+      case "cosmic":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW MEMBER: COSMIC COSTIAN ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
+          content: `<br><b>*** CREW MEMBER: CAPTAIN COSMIC ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
   };
-      case "cuddlescostian":
+      case "cuddles":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW MEMBER: CUDDLES COSTIAN ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67`
+          content: `<br><b>*** CREW MEMBER: CO-CAPTAIN CUDDLES ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67`
   };
       case "bojack":
         return {
