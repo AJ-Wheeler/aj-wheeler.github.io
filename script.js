@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- Communications Logs ---
-const commsLogs = {
+const commsLog = {
   "LOG-001": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
   "LOG-002": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
   "LOG-003": "[INBOUND]\nFrom: Unknown Source\nStatus: DEGRADED\nMessage: .......DO NOT TRUST....",
@@ -219,7 +219,7 @@ const commsLogs = {
     ["alerts", "active warnings and system notices"],
     ["ping", "server ping"],
     ["login", "authorized user access only"],
-    ["clear", "clear all prompts"]
+    ["clear", "clear all prompts"],
     ["reboot", "restart onboard systems"]
   ];
   
@@ -390,16 +390,14 @@ if (awaitingPassword) {
         menu += "\nType the entry name or number:";
         return menu;
     case "commslog":
-  awaitingCommsLogSelection = true;
-  output.innerHTML = "";
-
-  let commsMenu = "COMMUNICATIONS LOG (select log or type 'exit'):\n";
-  Object.keys(commsLogs).forEach((key, index) => {
-    commsMenu += `${index + 1}. ${key}\n`;
+        awaitingCommsLogSelection = true;
+        output.innerHTML = "";
+        let commsMenu = "COMMUNICATIONS LOG (select log or type 'exit'):\n";
+        Object.keys(commsLogs).forEach((key, index) => {
+          commsMenu += `${index + 1}. ${key}\n`;
   });
-  commsMenu += "\nType log name or number:";
-
-  return menu;
+        commsMenu += "\nType log name or number:";
+        return commsMenu;
       case "bloom":
         return ASCII_ART.rose;
       case "gemini":
@@ -520,7 +518,6 @@ const handleCommsLogSelection = (inputValue) => {
   }
 
   let logText = commsLogs[inputValue];
-
   if (!logText && !isNaN(inputValue)) {
     const key = Object.keys(commsLogs)[inputValue - 1];
     logText = commsLogs[key];
