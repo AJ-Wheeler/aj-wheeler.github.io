@@ -196,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Thursday": "Thursday: Went for a walk and thought about the Rosewater Lane project...",
     "Friday": "Friday: Made a new discovery...this Dr. Pepper guy knows what he's doing!",
     "Saturday": "Saturday: ...the humans are starting to notice, I must be more inconspicuous..."
+    "Sunday": "Sunday: Discovered a new source of natural gas concentrated in a place called Taco Bell..."
   };
 
   // --- Help commands ---
