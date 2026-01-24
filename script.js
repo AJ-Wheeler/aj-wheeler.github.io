@@ -351,13 +351,15 @@ if (awaitingPassword) {
 
 // Animate HTML content but preserve tags
 const typeHTML = async (container, html, speed = 20) => {
-  const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
+  if (isTyping) return;
+  isTyping = true;
 
+  const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
   let currentParent = container;
 
   for (const chunk of chunks) {
 
-    // Closing tag → return to container
+    // Closing tag
     if (chunk.startsWith("</")) {
       container.insertAdjacentHTML("beforeend", chunk);
       currentParent = container;
@@ -367,15 +369,13 @@ const typeHTML = async (container, html, speed = 20) => {
     else if (chunk.startsWith("<")) {
       container.insertAdjacentHTML("beforeend", chunk);
 
-      // Only change parent if this tag can contain text
       const tagName = chunk.match(/^<([a-zA-Z0-9]+)/)?.[1];
-
       if (tagName && tagName !== "br") {
         currentParent = container.lastElementChild || container;
       }
     }
 
-    // Text node → animate
+    // Text content → animate character-by-character
     else {
       const textNode = document.createTextNode("");
       currentParent.appendChild(textNode);
@@ -388,11 +388,9 @@ const typeHTML = async (container, html, speed = 20) => {
 
     output.scrollTop = output.scrollHeight;
   }
+
+  isTyping = false;
 };
-
-
-
-
 
 
 
@@ -413,6 +411,13 @@ const typeHTML = async (container, html, speed = 20) => {
     appendOutput(`> ${command}\n`);
 
 if (typeof response === "object") {
+
+  // -------- ASCII ONLY (navmap, etc.) --------
+if (response.ascii && !response.type) {
+  const speed = response.asciiSpeed ?? TYPING_SPEEDS.normal;
+  await typeText(response.ascii + "\n", speed);
+  return;
+}
 
   // -------- ASCII + HTML (fast ASCII → slow HTML) --------
   if (response.type === "ascii+html") {
