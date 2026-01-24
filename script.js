@@ -199,14 +199,19 @@ document.addEventListener("DOMContentLoaded", () => {
     "Sunday": "Sunday: Discovered a new source of natural gas concentrated in a place called Taco Bell..."
   };
 
-  // --- Help commands ---
-  const helpCommands = [
-    ["login", "authorized user access only"],
-    ["help", "list of commands"],
-    ["systems", "check status of onboard systems"],
+  // --- Menu commands ---
+  const menuCommands = [
+    ["menu", "list of commands"],
+    ["status", "vessel status and system health"],
+    ["nav", "navigation data and course plotting"],
+    ["crew", "crew manifest and life-sign monitoring"],
+    ["comms", "communications array and signal traffic"],
     ["journal", "***private*** no peeking!"],
+    ["alerts", "active warnings and system notices"],
     ["ping", "server ping"],
+    ["login", "authorized user access only"],
     ["clear", "clear all prompts"]
+    ["reboot", "restart onboard systems"]
   ];
   
   // --- Secret commands ---
@@ -218,16 +223,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ["hack", "break into the mainframe"],
     ["leo", "meow big kitty"],
     ["ewlewis", "gross boy"]
-  ];
-
-    // --- Systems commands ---
-  const systemsCommands = [
-    ["status", "vessel status and system health"],
-    ["comms", "communications array and signal traffic"],
-    ["nav", "navigation data and course plotting"],
-    ["crew", "crew manifest and life-sign monitoring"],
-    ["alerts", "active warnings and system notices"],
-    ["reboot", "restart onboard systems"]
   ];
 
     // --- Crew Vitals ---
@@ -344,8 +339,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Command responses ---
   const getCommandResponse = (command) => {
     switch (command.toLowerCase()) {
-      case "help":
-        return { type: "html", header: "*** MAIN MENU ***", content: buildCommandGrid(helpCommands) };
+      case "menu":
+        return { type: "html", header: "*** MAIN MENU ***", content: buildCommandGrid(menuCommands) };
       case "secretmenu":
         return { type: "html", header: "*** SECRET MENU ***", content: buildCommandGrid(secretCommands) };
       case "systems":
@@ -462,7 +457,7 @@ document.addEventListener("DOMContentLoaded", () => {
         displayPip();
         return null;
       default:
-        return `'${command}' is not recognized as a command. Type 'help' for a list of available commands.`;
+        return `'${command}' is not recognized as a command. Type 'menu' for a list of available commands.`;
     }
   };
 
