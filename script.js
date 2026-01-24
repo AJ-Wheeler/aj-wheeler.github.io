@@ -303,18 +303,27 @@ const typeHTML = async (container, html, speed = 10) => {
   let currentParent = container;
 
   for (const chunk of chunks) {
+
+    // Closing tag → return to container
     if (chunk.startsWith("</")) {
-      // Closing tag → move back to container
       container.insertAdjacentHTML("beforeend", chunk);
       currentParent = container;
-    } 
+    }
+
+    // Opening tag
     else if (chunk.startsWith("<")) {
-      // Opening tag → insert and track it
       container.insertAdjacentHTML("beforeend", chunk);
-      currentParent = container.lastElementChild || container;
-    } 
+
+      // Only change parent if this tag can contain text
+      const tagName = chunk.match(/^<([a-zA-Z0-9]+)/)?.[1];
+
+      if (tagName && tagName !== "br") {
+        currentParent = container.lastElementChild || container;
+      }
+    }
+
+    // Text node → animate
     else {
-      // Text → append INSIDE current tag
       const textNode = document.createTextNode("");
       currentParent.appendChild(textNode);
 
@@ -327,6 +336,7 @@ const typeHTML = async (container, html, speed = 10) => {
     output.scrollTop = output.scrollHeight;
   }
 };
+
 
 
 
