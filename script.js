@@ -17,7 +17,8 @@ const ASCII_ART = {
      /|\\___/|\\  -- Boosters
     /_|_____|_\\   ▰▰▰▰▰▰▰▰▰▰ 100%
       /_____\\  
-      '  '  ' `,
+      '  '  ' 
+Use command REFUEL to replenish fuel source`,
   home: `  
         ::.
     _________H ,%%&%,
