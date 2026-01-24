@@ -369,6 +369,12 @@ document.addEventListener("DOMContentLoaded", () => {
           header: "*** CREW ROSTER ***",
           content: `Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members`
   };
+      case "cosmiccostian":
+        return {
+          type: "html",
+          header: "COSMIC COSTIAN",
+          content: `Oxygen Levels: Good<br>C02 Levels: Fair<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65
+  };
       case "calliefornia":
         return ASCII_ART.callie;
       case "drpepper":
