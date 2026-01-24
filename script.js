@@ -235,6 +235,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let awaitingCommsLogSelection = false;
   let isTyping = false;
   const CORRECT_PASSWORD = "rosebud";
+  const TYPING_SPEEDS = {
+  normal: 20,
+  fast: 8,
+  ultra: 3
+};
+
 
   // --- Journal entries ---
   const journalEntries = {
@@ -438,7 +444,7 @@ const typeHTML = async (container, html, speed = 20) => {
       if (response.instant) {
         container.innerHTML = response.content + "\n";
       } else {
-        await typeHTML(container, response.content + "\n", speed);
+        await typeText(response + "\n", TYPING_SPEEDS.normal);
       }
       return;
     }
