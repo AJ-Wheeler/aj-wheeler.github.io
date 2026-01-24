@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["gemini", "now this appears to be a good sign..."],
     ["hack", "break into the mainframe"],
     ["leo", "meow big kitty"],
-    ["lewis", "gross boy"]
+    ["ewlewis", "gross boy"]
   ];
 
     // --- Systems commands ---
