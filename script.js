@@ -425,53 +425,54 @@ const processCommand = async (command) => {
   // -------------------------
   // OBJECT RESPONSES
   // -------------------------
-  if (typeof response === "object") {
-    const speed = response.typingSpeed ?? TYPING_SPEEDS.normal;
+if (typeof response === "object") {
+  const speed = response.typingSpeed ?? TYPING_SPEEDS.normal;
 
-    // ASCII + HTML combo
-if (response.type === "ascii+html") {
-  // ASCII speed override
-  const asciiSpeed = response.asciiSpeed ?? speed;
-  if (response.ascii) {
-    await typeText(response.ascii + "\n", asciiSpeed);
+  // --- ASCII + HTML combo ---
+  if (response.type === "ascii+html") {
+    // Type ASCII first
+    const asciiSpeed = response.asciiSpeed ?? speed;
+    if (response.ascii) {
+      await typeText(response.ascii + "\n", asciiSpeed);
+    }
+
+    // Then type HTML
+    const htmlSpeed = response.htmlSpeed ?? speed;
+    const container = document.createElement("div");
+    output.appendChild(container);
+
+    const normalizedHTML = response.html
+      .replace(/\n\s+/g, "")
+      .trim();
+
+    await typeHTML(container, normalizedHTML + "\n", htmlSpeed);
+    return;
   }
 
-  // HTML speed override
-  const htmlSpeed = response.htmlSpeed ?? speed;
-  const container = document.createElement("div");
-  output.appendChild(container);
+  // --- HTML-only ---
+  if (response.type === "html") {
+    if (response.header) {
+      await typeText(response.header + "\n", speed);
+    }
 
-  const normalizedHTML = response.html
-  .replace(/\n\s+/g, "")
-  .trim();
+    const container = document.createElement("div");
+    output.appendChild(container);
 
-await typeHTML(container, normalizedHTML + "\n", htmlSpeed);
+    if (response.instant) {
+      // Instant render
+      container.innerHTML = response.content + "\n";
+    } else {
+      // Animate character-by-character
+      const normalizedHTML = response.content
+        .replace(/\n\s+/g, "")
+        .trim();
 
-  return;
+      await typeHTML(container, normalizedHTML + "\n", speed);
+    }
+    return;
+  }
 }
 
-    // HTML-only
-    if (response.type === "html") {
-      if (response.header) {
-        await typeText(response.header + "\n", speed);
-      }
-
-      const container = document.createElement("div");
-      output.appendChild(container);
-
-      if (response.instant) {
-        container.innerHTML = response.content + "\n";
-      } else {
-        const normalizedHTML = response.html
-  .replace(/\n\s+/g, "")
-  .trim();
-
-await typeHTML(container, normalizedHTML + "\n", htmlSpeed);
-
-      }
-      return;
-    }
-  }
 
   // -------------------------
   // STRING RESPONSES
