@@ -347,7 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return ASCII_ART.gemini;
       case "leo":
         return ASCII_ART.leo;
-      case "lewis":
+      case "ewlewis":
         return ASCII_ART.lewis;
       case "date":
         return new Date().toString();
@@ -386,6 +386,12 @@ document.addEventListener("DOMContentLoaded", () => {
           type: "html",
           header: "BOJACK",
           content: `Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67`
+  };
+        case "lewis":
+        return {
+          type: "html",
+          header: "LEWIS",
+          content: `Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77`
   };
       case "callie":
         return {
