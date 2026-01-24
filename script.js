@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
       case "systems":
         return { type: "html", header: "*** SYSTEMS MENU ***", content: buildCommandGrid(systemsCommands) };
       case "crewvitals":
-        return { type: "html", header: "*** CREW VITALS ***   select individual to view", content: buildCommandGrid(systemsCommands) };
+        return { type: "html", header: "*** CREW VITALS ***   select individual to view", content: buildCommandGrid(crewvitalsCommands) };
       case "hack":
         runHackSequence();
         return null;
