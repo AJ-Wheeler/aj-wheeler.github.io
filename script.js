@@ -605,6 +605,7 @@ case "lewis":
     type: "ascii+html",
     typingSpeed: TYPING_SPEEDS.fast,
     ascii: ASCII_ART.lewis,
+    typingSpeed: TYPING_SPEEDS.normal,
     html: `
       <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77<br><br>Assignment: Eliminating all foreign organic waste`
   };
