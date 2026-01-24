@@ -300,23 +300,34 @@ if (awaitingPassword) {
 const typeHTML = async (container, html, speed = 10) => {
   const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
 
+  let currentParent = container;
+
   for (const chunk of chunks) {
-    if (chunk.startsWith("<")) {
-      // Insert tags directly, preserving structure
+    if (chunk.startsWith("</")) {
+      // Closing tag → move back to container
       container.insertAdjacentHTML("beforeend", chunk);
-    } else {
-      // Animate text inside the CURRENT DOM context
+      currentParent = container;
+    } 
+    else if (chunk.startsWith("<")) {
+      // Opening tag → insert and track it
+      container.insertAdjacentHTML("beforeend", chunk);
+      currentParent = container.lastElementChild || container;
+    } 
+    else {
+      // Text → append INSIDE current tag
       const textNode = document.createTextNode("");
-      container.appendChild(textNode);
+      currentParent.appendChild(textNode);
 
       for (let i = 0; i < chunk.length; i++) {
         textNode.textContent += chunk.charAt(i);
         await new Promise(r => setTimeout(r, speed));
       }
     }
+
     output.scrollTop = output.scrollHeight;
   }
 };
+
 
 
 
