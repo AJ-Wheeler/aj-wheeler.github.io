@@ -422,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
       case "cosmiccostian":
         return {
           type: "html",
-          header: "<b>*** CREW MEMBER: COSMIC COSTIAN ***</b>",
+          header: '<b>*** CREW MEMBER: COSMIC COSTIAN ***</b>',
           content: `Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
   };
       case "cuddlescostian":
