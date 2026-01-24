@@ -373,7 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "COSMIC COSTIAN",
-          content: `Oxygen Levels: Good<br>C02 Levels: Fair<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65
+          content: `Oxygen Levels: Good<br>C02 Levels: Fair<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
   };
       case "calliefornia":
         return ASCII_ART.callie;
