@@ -373,7 +373,25 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "COSMIC COSTIAN",
-          content: `Oxygen Levels: Good<br>C02 Levels: Fair<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
+          content: `Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 65`
+  };
+      case "cuddlescostian":
+        return {
+          type: "html",
+          header: "CUDDLES COSTIAN",
+          content: `Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67`
+  };
+      case "bojack":
+        return {
+          type: "html",
+          header: "BOJACK",
+          content: `Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67`
+  };
+      case "callie":
+        return {
+          type: "html",
+          header: "CALLIE",
+          content: `Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68`
   };
       case "calliefornia":
         return ASCII_ART.callie;
