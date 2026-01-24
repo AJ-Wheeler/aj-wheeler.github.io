@@ -397,7 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "*** NAVIGATION CONTROL ***",
-          content: `Current Sector: ECHO-7<br>Destination: Rosewater Mission Control<br><br><b>navplot</b> Select a location to navigate to<br><b>navmap</b> View star map`
+          content: `<br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination`
   };
       case "navmap":
         return ASCII_ART.navmap;
@@ -405,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "*** COMMUNICATIONS ARRAY ***",
-          content: `Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications`
+          content: `<br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>commscan</b> Retrieve new communication data<br><b>commlogs</b> Show received communications`
   };
       case "commscan":
         return {
@@ -417,7 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
           type: "html",
           header: "*** CREW ROSTER ***",
-          content: `Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members`
+          content: `<br>Captain: Cosmic Costian<br>Co-Captain: Cuddles Costian<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><b>crewlocate</b> Retrieve current location data for crew members`
   };
       case "cosmiccostian":
         return {
