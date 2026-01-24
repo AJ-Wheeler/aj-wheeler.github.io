@@ -479,13 +479,13 @@ if (awaitingPassword) {
   };
 
   // --- Password handler ---
-  const handlePassword = (inputValue) => {
-    awaitingPassword = false;
-    if (inputValue === CORRECT_PASSWORD) {
-      appendOutput("<b>Access granted.</b>\nWelcome back, admin. Access to <b>secretmenu</b> now authorized.\n");
-    } else {
-      appendOutput("<b>Access denied.</b>\nInvalid credentials. You'll never find my password! <p>Surely I'd never store it somewhere obvious like my journal...\n");
-    }
+  const handlePassword = async (inputValue) => {
+  awaitingPassword = false;
+  if (inputValue === CORRECT_PASSWORD) {
+    await typeText("Access granted.\nWelcome back, admin. Access to secretmenu now authorized\n");
+  } else {
+    await typeText("Access denied.\nInvalid credentials. You'll never find my password! Surely I'd never store it somewhere obvious like my journal...\n");
+  }
   };
 
   // --- Journal handler ---
