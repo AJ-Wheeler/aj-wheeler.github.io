@@ -391,7 +391,7 @@ const typeHTML = async (container, html, speed = 20) => {
 
 
   // --- Command processor ---
-const processCommand = async (command) => {
+  const processCommand = async (command) => {
   const lower = command.toLowerCase();
   if (isTyping) return;
 
@@ -449,7 +449,6 @@ const processCommand = async (command) => {
   // -------------------------
   await typeText(response + "\n", TYPING_SPEEDS.normal);
 };
-
 
   // --- Command grid builder ---
   const buildCommandGrid = (commands) => {
@@ -572,14 +571,12 @@ case "crewvitals":
       case "cosmic":
         return {
           type: "ascii+html",
-          typingSpeed: TYPING_SPEEDS.ultra,
           ascii: ASCII_ART.cosmic,
           html: `<br><b>*** CREW MEMBER: CAPTAIN COSMIC ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 69<br><br>Assignment: Navigate the cosmos with superb parallel parking skills`
   };
       case "cuddles":
         return {
           type: "ascii+html",
-          typingSpeed: TYPING_SPEEDS.ultra,
           ascii: ASCII_ART.cuddles,
           html: `<br><b>*** CREW MEMBER: CO-CAPTAIN CUDDLES ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67<br><br>Assignment: Distribute superior emotional support and soft skills`
   };
@@ -592,7 +589,7 @@ case "crewvitals":
 case "lewis":
   return {
     type: "ascii+html",
-    typingSpeed: TYPING_SPEEDS.ultra,
+    typingSpeed: TYPING_SPEEDS.fast,
     ascii: ASCII_ART.lewis,
     html: `
       <br><b>*** CREW MEMBER: LEWIS ***</b><br><br>Oxygen Levels: Poor<br>C02 Levels: Poor<br>H20 Levels: Poor<br>Blood Pressure: !HIGH!<br>Heart Rate: 77<br><br>Assignment: Eliminating all foreign organic waste`
@@ -601,7 +598,6 @@ case "lewis":
       case "callie":
         return {
           type: "ascii+html",
-          typingSpeed: TYPING_SPEEDS.ultra,
           ascii: ASCII_ART.callie,
           html: `
           <br><b>*** CREW MEMBER: CALLIE ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68<br><br>Assignment: Supervising all lower-level employees`
