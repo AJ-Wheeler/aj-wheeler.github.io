@@ -311,9 +311,9 @@ const htmlToTerminalText = (html) => {
 
   // --- Communications Logs ---
 const commsLogs = {
-  "LOG-001": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
-  "LOG-002": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
-  "LOG-003": "[INBOUND]\nFrom: Unknown Source\nStatus: DEGRADED\nMessage: .......DO NOT TRUST....",
+  "LOG-001": "[INBOUND]\nFrom: UNKNOWN Source\nStatus: DΞGRADΞD\nMessage: .....IT'S A̸ TR░P-",
+  "LOG-002": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
+  "LOG-003": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
   "LOG-004": "[OUTBOUND]\nTo: Mission Control\nStatus: FAILED\nMessage: Navigation anomaly detected. Requesting guidance."
 };
 
