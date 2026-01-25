@@ -348,7 +348,7 @@ const commsLogs = {
     ["cosmic", "Captain Cosmic"],
     ["cuddles", "Co-Captain Cuddles"],
     ["callie", "Supervisor Callie"],
-    ["bojack", "Security BoJack"],
+    ["bojack", "Security Bojack"],
     ["lewis", "Janitorial Lewis"],
   ];
 
@@ -642,7 +642,7 @@ case "navmap":
         return {
           type: "html",
           header: "",
-          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic<br>Co-Captain: Cuddles<br>Supervisor: Callie<br>Security: BoJack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
+          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic<br>Co-Captain: Cuddles<br>Supervisor: Callie<br>Security: Bojack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
   };
       case "cosmic":
         return {
@@ -660,7 +660,7 @@ case "navmap":
   case "bojack":
   return {
     type: "ascii+html",
-    ascii: ASCII_ART.lewis,
+    ascii: ASCII_ART.bojack,
     asciiSpeed: TYPING_SPEEDS.asciiFast,
     htmlSpeed: TYPING_SPEEDS.htmlSlow,
     html: `<br><b>*** CREW MEMBER: BOJACK ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67<br><br>Assignment: Securing the perimeter and handling all threats`
