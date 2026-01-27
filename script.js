@@ -337,8 +337,7 @@ const alertsLogs = {
     ["alerts", "active warnings and system notices"],
     ["ping", "server ping"],
     ["login", "authorized user access only"],
-    ["clear", "clear all prompts"],
-    ["reboot", "restart onboard systems"]
+    ["clear", "clear all prompts"]
   ];
   
   // --- Secret commands ---
