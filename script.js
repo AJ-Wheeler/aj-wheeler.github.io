@@ -335,12 +335,11 @@ const commsLogs = {
   // --- Secret commands ---
   const secretCommands = [
     ["bloom", "a beautiful flower for you"],
-    ["boyack", "plumpy dumpy boiii"],
-    ["calliefornia", "aww...sweet fluffy girl"],
     ["gemini", "now this appears to be a good sign..."],
     ["hack", "break into the mainframe"],
     ["leo", "meow big kitty"],
-    ["ewlewis", "gross boy"]
+    ["home", "there's no other place like it"]
+    ["refuel", "when you're running low on fuel"]
   ];
 
     // --- Crew Vitals ---
@@ -606,13 +605,20 @@ case "crewvitals":
         commsMenu += "\nType log name or number:";
         return commsMenu;
       case "bloom":
-        return ASCII_ART.rose;
+        return {
+          ascii: ASCII_ART.rose,
+    asciiSpeed: TYPING_SPEEDS.asciiFast
+  };
       case "gemini":
-        return ASCII_ART.gemini;
+        return {
+          ascii: ASCII_ART.gemini,
+    asciiSpeed: TYPING_SPEEDS.asciiFast
+  };
       case "leo":
-        return ASCII_ART.leo;
-      case "ewlewis":
-        return ASCII_ART.lewis;
+        return {
+          ascii: ASCII_ART.leo,
+    asciiSpeed: TYPING_SPEEDS.asciiFast
+  };
       case "date":
         return new Date().toString();
       case "nav":
