@@ -598,7 +598,7 @@ case "crewvitals":
       case "journal":
         awaitingJournalSelection = true;
         output.innerHTML = "";
-        let menu = "Journal Menu (type entry name or number, 'exit' to leave):\n";
+        let menu = "Journal Menu (type entry name or number, 'exit' to leave journal mode):\n";
         Object.keys(journalEntries).forEach((key, index) => {
           menu += `${index + 1}. ${key}\n`;
         });
@@ -607,7 +607,7 @@ case "crewvitals":
     case "commslog":
         awaitingCommsLogSelection = true;
         output.innerHTML = "";
-        let commsMenu = "COMMUNICATIONS LOG (select log or type 'exit'):\n";
+        let commsMenu = "COMMUNICATIONS LOG (select log or type 'exit' to leave communications log):\n";
         Object.keys(commsLogs).forEach((key, index) => {
           commsMenu += `${index + 1}. ${key}\n`;
   });
