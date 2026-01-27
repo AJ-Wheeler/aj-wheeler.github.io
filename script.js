@@ -777,21 +777,21 @@ const handleAlertsSelection = async (inputValue) => {
   );
 };
 
-
-    // --- Journal handler ---
- const handleJournalSelection = async (inputValue) => {
+  // --- Comms Log handler ---
+const handleCommsLogSelection = async (inputValue) => {
   if (inputValue.toLowerCase() === "exit") {
-    awaitingJournalSelection = false;
-    await typeText("Exited journal mode.\n");
+    awaitingCommsLogSelection = false;
+    await typeText("Exited communications log.\n");
     return;
   }
-  let entryText = journalEntries[inputValue];
-  if (!entryText && !isNaN(inputValue)) {
-    const key = Object.keys(journalEntries)[inputValue - 1];
-    entryText = journalEntries[key];
+  let logText = commsLogs[inputValue];
+  if (!logText && !isNaN(inputValue)) {
+    const key = Object.keys(commsLogs)[inputValue - 1];
+    logText = commsLogs[key];
   }
-  await typeText(entryText ? `\n${entryText}\n` : "Entry not found.\n");
+  await typeText(logText ? `\n${logText}\n` : "Log not found.\n");
 };
+
 
   // --- Pip ---
   const displayPip = () => {
