@@ -378,6 +378,58 @@ const alertsLogs = {
     output.scrollTop = output.scrollHeight;
   };
 
+  // --- Reboot sequence with animated loading bar (character-by-character) and fade-in welcome ---
+const runReboot = async () => {
+  if (isTyping) return;
+  isTyping = true;
+
+  // 1. Fade out existing terminal content
+  output.style.transition = "opacity 800ms";
+  output.style.opacity = 0;
+  await new Promise(r => setTimeout(r, 800));
+
+  // 2. Short pause before showing loading bar
+  await new Promise(r => setTimeout(r, 300));
+
+  // 3. Clear output and show "System rebooting..."
+  output.innerHTML = "";
+  output.style.opacity = 1;
+  appendOutput("System rebooting...\n\n");
+
+  // 4. Character-based loading bar
+  const totalChars = 40; // total characters in the loading bar
+  let bar = "[";
+  appendOutput(bar); // starting bracket
+  for (let i = 0; i < totalChars; i++) {
+    await new Promise(r => setTimeout(r, 60)); // small delay for each character
+    appendOutput("=");
+    output.scrollTop = output.scrollHeight; // ensure scroll follows
+  }
+  appendOutput("]\n"); // closing bracket
+  await new Promise(r => setTimeout(r, 300)); // pause at full bar
+
+  // 5. Clear terminal and prepare welcome message
+  output.innerHTML = "";
+  const welcomeText = document.createElement("div");
+  welcomeText.textContent = "*** WELCOME TO THE TERMINAL ***\nType 'menu' to begin...";
+  welcomeText.style.opacity = 0;
+  welcomeText.style.transition = "opacity 1500ms";
+  output.appendChild(welcomeText);
+
+  // 6. Fade in the welcome message
+  await new Promise(r => requestAnimationFrame(() => {
+    welcomeText.style.opacity = 1;
+  }));
+
+  output.scrollTop = output.scrollHeight;
+  isTyping = false;
+};
+
+// --- Add to command processor ---
+case "reboot":
+  runReboot();
+  return null;
+
   // --- Input listener ---
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
