@@ -425,11 +425,6 @@ const runReboot = async () => {
   isTyping = false;
 };
 
-// --- Add to command processor ---
-case "reboot":
-  runReboot();
-  return null;
-
   // --- Input listener ---
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
