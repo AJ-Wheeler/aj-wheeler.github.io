@@ -284,19 +284,20 @@ document.addEventListener("DOMContentLoaded", () => {
   let isTyping = false;
   const CORRECT_PASSWORD = "rosebud";
   const TYPING_SPEEDS = {
-    asciiFast: 5,
-    htmlSlow: 25,
-    normal: 15
-  };
+  asciiFast: 5,
+  htmlSlow: 25,
+  normal: 15
+};
 
-  // Convert HTML bios → terminal-safe text
-  const htmlToTerminalText = (html) => {
-    return html
-      .replace(/<br\s*\/?>/gi, "\n")
-      .replace(/<\/b>/gi, "")
-      .replace(/<b>/gi, "")
-      .replace(/<[^>]+>/g, "");
-  };
+// Convert HTML bios → terminal-safe text
+const htmlToTerminalText = (html) => {
+  return html
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/b>/gi, "")
+    .replace(/<b>/gi, "")
+    .replace(/<[^>]+>/g, "");
+};
+
 
   // --- Journal entries ---
   const journalEntries = {
@@ -310,20 +311,20 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- Communications Logs ---
-  const commsLogs = {
-    "LOG-001": "[INBOUND]\nFrom: ADM ÂCKB░R \nStatus: CO̴RR░PTΞD\nMessage: ...IT'S Â TR░P-",
-    "LOG-002": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
-    "LOG-003": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
-    "LOG-004": "[OUTBOUND]\nTo: Mission Control\nStatus: FAILED\nMessage: Navigation anomaly detected. Requesting guidance."
-  };
+const commsLogs = {
+  "LOG-001": "[INBOUND]\nFrom: ADM ÂCKB░R \nStatus: CO̴RR░PTΞD\nMessage: ...IT'S Â TR░P-",
+  "LOG-002": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
+  "LOG-003": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
+  "LOG-004": "[OUTBOUND]\nTo: Mission Control\nStatus: FAILED\nMessage: Navigation anomaly detected. Requesting guidance."
+};
 
-  // --- Alert Logs ---
-  const alertsLogs = {
-    "SYS-882": "[WARNING]\nCATEGORY: SYSTEM \nLOCATION: ENGINE BAY\nSTATUS: ESCALATED\nSUMMARY: Fuel reserves drained to 50% of capacity",
-    "SYS-031": "[CRITICAL]\nCATEGORY: SYSTEM \nLOCATION: VENTILATION\nSTATUS: RESOLVED\nSUMMARY: Dangerous biochemicals noted in crew cabin, further investigation determined Bojack just farted",
-    "THR-113": "[WARNING]\nCATEGORY: THREAT \nLOCATION: GLOBAL\nSTATUS: UNRESOLVED\nSUMMARY: Small furry predators 'cats' seem to be in charge of some humans",
-    "THR-004": "[CRITICAL]\nCATEGORY: DEFENSE \nLOCATION: ORBITAL OBSERVATION\nSTATUS: RESOLVED\nSUMMARY: Missile launch detected. Classified as human celebration of perceived liberty"
-  };
+ // --- Alert Logs ---
+const alertsLogs = {
+  "SYS-882": "[WARNING]\nCATEGORY: SYSTEM \nLOCATION: ENGINE BAY\nSTATUS: ESCALATED\nSUMMARY: Fuel reserves drained to 50% of capacity",
+  "SYS-031": "[CRITICAL]\nCATEGORY: SYSTEM \nLOCATION: VENTILATION\nSTATUS: RESOLVED\nSUMMARY: Dangerous biochemicals noted in crew cabin, further investigation determined Bojack just farted",
+  "THR-113": "[WARNING]\nCATEGORY: THREAT \nLOCATION: GLOBAL\nSTATUS: UNRESOLVED\nSUMMARY: Small furry predators 'cats' seem to be in charge of some humans",
+  "THR-004": "[CRITICAL]\nCATEGORY: DEFENSE \nLOCATION: ORBITAL OBSERVATION\nSTATUS: RESOLVED\nSUMMARY: Missile launch detected. Classified as human celebration of perceived liberty"
+};
 
   // --- Menu commands ---
   const menuCommands = [
@@ -339,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ["clear", "clear all prompts"],
     ["reboot", "restart onboard systems"]
   ];
-
+  
   // --- Secret commands ---
   const secretCommands = [
     ["bloom", "a beautiful flower for you"],
@@ -350,13 +351,13 @@ document.addEventListener("DOMContentLoaded", () => {
     ["refuel", "when you're running low on fuel"]
   ];
 
-  // --- Crew Vitals ---
+    // --- Crew Vitals ---
   const crewvitalsCommands = [
     ["cosmic", "Captain Cosmic"],
     ["cuddles", "Co-Captain Cuddles"],
     ["callie", "Supervisor Callie"],
     ["bojack", "Security Bojack"],
-    ["lewis", "Janitorial Lewis"]
+    ["lewis", "Janitorial Lewis"],
   ];
 
   // --- Helper for appending text and auto-scrolling ---
@@ -365,6 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
     output.scrollTop = output.scrollHeight; // scroll to bottom
   };
 
+    // --- Helper for scrolling ---
   const scrollToBottom = () => {
     requestAnimationFrame(() => {
       output.scrollTop = output.scrollHeight;
@@ -376,62 +378,23 @@ document.addEventListener("DOMContentLoaded", () => {
     output.scrollTop = output.scrollHeight;
   };
 
-  // --- Reboot sequence ---
-  const runReboot = async () => {
-    if (isTyping) return;
-    isTyping = true;
-
-    output.style.transition = "opacity 800ms";
-    output.style.opacity = 0;
-    await new Promise(r => setTimeout(r, 800));
-
-    await new Promise(r => setTimeout(r, 300));
-
-    output.innerHTML = "";
-    output.style.opacity = 1;
-    appendOutput("System rebooting...\n\n");
-
-    const totalChars = 40;
-    appendOutput("[");
-    for (let i = 0; i < totalChars; i++) {
-      await new Promise(r => setTimeout(r, 60));
-      appendOutput("=");
-    }
-    appendOutput("]\n");
-    await new Promise(r => setTimeout(r, 300));
-
-    output.innerHTML = "";
-    const welcomeText = document.createElement("div");
-    welcomeText.textContent = "*** WELCOME TO THE TERMINAL ***\nType 'menu' to begin...";
-    welcomeText.style.opacity = 0;
-    welcomeText.style.transition = "opacity 1500ms";
-    output.appendChild(welcomeText);
-
-    await new Promise(r => requestAnimationFrame(() => {
-      welcomeText.style.opacity = 1;
-    }));
-
-    output.scrollTop = output.scrollHeight;
-    isTyping = false;
-  };
-
   // --- Input listener ---
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       const value = input.value.trim();
       if (!value) return;
 
-      if (awaitingPassword) {
-        handlePassword(value);
-      } else if (awaitingJournalSelection) {
-        handleJournalSelection(value);
-      } else if (awaitingCommsLogSelection) {
-        handleCommsLogSelection(value);
-      } else if (awaitingAlertsSelection) {
-        handleAlertsSelection(value);
-      } else {
-        processCommand(value);
-      }
+if (awaitingPassword) {
+  handlePassword(value);
+} else if (awaitingJournalSelection) {
+  handleJournalSelection(value);
+} else if (awaitingCommsLogSelection) {
+  handleCommsLogSelection(value);
+} else if (awaitingAlertsSelection) {
+  handleAlertsSelection(value);
+} else {
+  processCommand(value);
+}
 
       input.value = "";
     }
@@ -439,59 +402,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Typing functions ---
   const typeText = (text, speed = 20) => {
-    return new Promise((resolve) => {
-      if (isTyping) return resolve();
+  return new Promise((resolve) => {
+    if (isTyping) return resolve();
 
-      isTyping = true;
-      let i = 0;
-
-      const interval = setInterval(() => {
-        appendOutput(text.charAt(i));
-        i++;
-
-        if (i >= text.length) {
-          clearInterval(interval);
-          isTyping = false;
-          resolve();
-        }
-      }, speed);
-    });
-  };
-
-  const typeHTML = async (container, html, speed = 20) => {
-    if (isTyping) return;
     isTyping = true;
+    let i = 0;
 
-    const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
-    let currentParent = container;
+    const interval = setInterval(() => {
+      appendOutput(text.charAt(i));
+      i++;
 
-    for (const chunk of chunks) {
-      if (chunk.startsWith("</")) {
-        container.insertAdjacentHTML("beforeend", chunk);
-        currentParent = container;
-      } else if (chunk.startsWith("<")) {
-        container.insertAdjacentHTML("beforeend", chunk);
-        const tagName = chunk.match(/^<([a-zA-Z0-9]+)/)?.[1];
-        if (tagName && tagName !== "br") {
-          currentParent = container.lastElementChild || container;
-        }
-      } else {
-        const textNode = document.createTextNode("");
-        currentParent.appendChild(textNode);
-        for (let i = 0; i < chunk.length; i++) {
-          textNode.textContent += chunk.charAt(i);
-          await new Promise(r => setTimeout(r, speed));
-        }
+      if (i >= text.length) {
+        clearInterval(interval);
+        isTyping = false;
+        resolve();
       }
-      output.scrollTop = output.scrollHeight;
+    }, speed);
+  });
+};
+
+
+// Animate HTML content but preserve tags
+const typeHTML = async (container, html, speed = 20) => {
+  if (isTyping) return;
+  isTyping = true;
+
+  const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
+  let currentParent = container;
+
+  for (const chunk of chunks) {
+
+    // Closing tag
+    if (chunk.startsWith("</")) {
+      container.insertAdjacentHTML("beforeend", chunk);
+      currentParent = container;
     }
 
-    isTyping = false;
-  };
+    // Opening tag
+    else if (chunk.startsWith("<")) {
+      container.insertAdjacentHTML("beforeend", chunk);
+
+      const tagName = chunk.match(/^<([a-zA-Z0-9]+)/)?.[1];
+      if (tagName && tagName !== "br") {
+        currentParent = container.lastElementChild || container;
+      }
+    }
+
+    // Text content → animate character-by-character
+    else {
+      const textNode = document.createTextNode("");
+      currentParent.appendChild(textNode);
+
+      for (let i = 0; i < chunk.length; i++) {
+        textNode.textContent += chunk.charAt(i);
+        await new Promise(r => setTimeout(r, speed));
+      }
+    }
+
+    output.scrollTop = output.scrollHeight;
+  }
+
+  isTyping = false;
+};
+
+
 
   // --- Command processor ---
   const processCommand = async (command) => {
     const lower = command.toLowerCase();
+    const instantCommands = ["clear", "ping", "pip", "exit"];
     if (isTyping) return;
 
     if (lower === "clear") {
@@ -504,106 +483,129 @@ document.addEventListener("DOMContentLoaded", () => {
 
     appendOutput(`> ${command}\n`);
 
-    if (typeof response === "object") {
-      if (response.ascii && !response.type) {
-        const speed = response.asciiSpeed ?? TYPING_SPEEDS.normal;
-        await typeText(response.ascii + "\n", speed);
-        return;
-      }
+if (typeof response === "object") {
 
-      if (response.type === "ascii+html") {
-        const asciiSpeed = response.asciiSpeed ?? TYPING_SPEEDS.asciiFast;
-        const htmlSpeed = response.htmlSpeed ?? TYPING_SPEEDS.htmlSlow;
+  // -------- ASCII ONLY (navmap, etc.) --------
+if (response.ascii && !response.type) {
+  const speed = response.asciiSpeed ?? TYPING_SPEEDS.normal;
+  await typeText(response.ascii + "\n", speed);
+  return;
+}
 
-        if (response.ascii) {
-          await typeText(response.ascii + "\n", asciiSpeed);
-        }
+  // -------- ASCII + HTML (fast ASCII → slow HTML) --------
+  if (response.type === "ascii+html") {
 
-        const terminalText = htmlToTerminalText(response.html);
-        await typeText(terminalText + "\n", htmlSpeed);
-        return;
-      }
+    const asciiSpeed = response.asciiSpeed ?? TYPING_SPEEDS.asciiFast;
+    const htmlSpeed  = response.htmlSpeed  ?? TYPING_SPEEDS.htmlSlow;
 
-      if (response.type === "html") {
-        if (response.header) {
-          await typeText(response.header + "\n", TYPING_SPEEDS.normal);
-        }
-
-        const container = document.createElement("div");
-        output.appendChild(container);
-
-        if (response.instant) {
-          container.innerHTML = response.content + "\n";
-          scrollToBottom();
-        } else {
-          const normalizedHTML = response.content.replace(/\n\s+/g, "").trim();
-          await typeHTML(container, normalizedHTML + "\n", TYPING_SPEEDS.htmlSlow);
-          scrollToBottom();
-        }
-
-        return;
-      }
-    } else {
-      await typeText(response + "\n");
+    if (response.ascii) {
+      await typeText(response.ascii + "\n", asciiSpeed);
     }
+
+// Animate HTML as terminal text for consistent feel
+const terminalText = htmlToTerminalText(response.html);
+
+await typeText(terminalText + "\n", htmlSpeed);
+return;
+  }
+
+  // -------- HTML ONLY --------
+  if (response.type === "html") {
+
+    if (response.header) {
+      await typeText(response.header + "\n", TYPING_SPEEDS.normal);
+    }
+
+    const container = document.createElement("div");
+    output.appendChild(container);
+
+    if (response.instant) {
+      container.innerHTML = response.content + "\n";
+      scrollToBottom();
+    } else {
+      const normalizedHTML = response.content
+        .replace(/\n\s+/g, "")
+        .trim();
+
+      await typeHTML(container, normalizedHTML + "\n", TYPING_SPEEDS.htmlSlow);
+      scrollToBottom();
+    }
+
+    return;
+  }
+}
+
+
+ else {
+  await typeText(response + "\n");
+}
+
   };
 
-  // --- Corrected getCommandResponse ---
+  // --- Command grid builder ---
+  const buildCommandGrid = (commands) => {
+    let html = `<div class="command-grid">`;
+    for (let i = 0; i < commands.length; i += 2) {
+      html += `<div class="cmd">${commands[i][0]}</div><div class="desc">${commands[i][1]}</div>`;
+      if (commands[i + 1]) {
+        html += `<div class="cmd">${commands[i + 1][0]}</div><div class="desc">${commands[i + 1][1]}</div>`;
+      } else {
+        html += `<div></div><div></div>`;
+      }
+    }
+    html += `</div>`;
+    return html;
+  };
+
+  // --- Command responses ---
   const getCommandResponse = (command) => {
-    const lower = command.toLowerCase();
-    if (isTyping) return null;
+    switch (command.toLowerCase()) {
+case "menu":
+  return {
+    type: "html",
+    header: "*** MAIN MENU ***",
+    content: buildCommandGrid(menuCommands),
+    instant: true
+  };
 
-    switch (lower) {
-      case "reboot":
-        runReboot();
-        return null;
+case "secretmenu":
+  return {
+    type: "html",
+    header: "*** SECRET MENU ***",
+    content: buildCommandGrid(secretCommands),
+    instant: true
+  };
 
-      case "secretmenu":
-        return {
-          type: "html",
-          header: "*** SECRET MENU ***",
-          content: buildCommandGrid(secretCommands),
-          instant: true
-        };
-
-      case "crewvitals":
-        return {
-          type: "html",
-          header: "*** CREW VITALS ***   select individual to view",
-          content: buildCommandGrid(crewvitalsCommands),
-          instant: true
-        };
+case "crewvitals":
+  return {
+    type: "html",
+    header: "*** CREW VITALS ***   select individual to view",
+    content: buildCommandGrid(crewvitalsCommands),
+    instant: true
+  };
 
       case "hack":
         runHackSequence();
         return null;
-
-      case "test":
+        case "test":
         runTest();
         return null;
-
       case "1a":
         run1A();
         return null;
-
       case "2a":
         run2A();
         return null;
-
       case "3a":
         run3A();
         return null;
-
       case "login":
         awaitingPassword = true;
         return "Enter password:";
-
       case "hello":
         return "Howdy, partner!";
-
       case "status":
         return ASCII_ART.rocket;
-
       case "journal":
         awaitingJournalSelection = true;
         output.innerHTML = "";
@@ -613,117 +615,112 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         menu += "\nType the entry name or number:";
         return menu;
-
-      case "commslog":
+    case "commslog":
         awaitingCommsLogSelection = true;
         output.innerHTML = "";
         let commsMenu = "COMMUNICATIONS LOG (select log or type 'exit' to leave communications log):\n";
         Object.keys(commsLogs).forEach((key, index) => {
           commsMenu += `${index + 1}. ${key}\n`;
-        });
+  });
         commsMenu += "\nType log name or number:";
         return commsMenu;
-
       case "alerts":
         awaitingAlertsSelection = true;
         output.innerHTML = "";
         let alertsMenu = "ALERTS LOG (select log or type 'exit' to leave alerts menu):\n";
         Object.keys(alertsLogs).forEach((key, index) => {
           alertsMenu += `${index + 1}. ${key}\n`;
-        });
+  });
         alertsMenu += "\nType log name or number:";
         return alertsMenu;
-
       case "bloom":
-        return { ascii: ASCII_ART.rose, asciiSpeed: TYPING_SPEEDS.asciiFast };
-
+        return {
+          ascii: ASCII_ART.rose,
+    asciiSpeed: TYPING_SPEEDS.asciiFast
+  };
       case "gemini":
-        return { ascii: ASCII_ART.gemini, asciiSpeed: TYPING_SPEEDS.asciiFast };
-
+        return {
+          ascii: ASCII_ART.gemini,
+    asciiSpeed: TYPING_SPEEDS.asciiFast
+  };
       case "leo":
-        return { ascii: ASCII_ART.leo, asciiSpeed: TYPING_SPEEDS.asciiFast };
-
+        return {
+          ascii: ASCII_ART.leo,
+    asciiSpeed: TYPING_SPEEDS.asciiFast
+  };
       case "date":
         return new Date().toString();
-
       case "nav":
         return {
           type: "html",
           header: "",
           content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
-        };
-
-      case "navmap":
-        return { ascii: ASCII_ART.navmap, asciiSpeed: TYPING_SPEEDS.asciiFast };
-
+  };
+case "navmap":
+  return {
+    ascii: ASCII_ART.navmap,
+    asciiSpeed: TYPING_SPEEDS.asciiFast
+  };
       case "comms":
         return {
           type: "html",
           header: "",
           content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>uplink</b> Retrieve new communication data<br><b>commslog</b> Show received communications<br><br>`
-        };
-
+  };
       case "uplink":
         return {
           type: "html",
           header: "",
           content: `<br><b>*** 2 NEW INCOMING MESSAGES ***</b><br><br>Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br>`
-        };
-
+  };
       case "crew":
         return {
           type: "html",
           header: "",
           content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic<br>Co-Captain: Cuddles<br>Supervisor: Callie<br>Security: Bojack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
-        };
-
+  };
       case "cosmic":
         return {
           type: "ascii+html",
           ascii: ASCII_ART.cosmic,
           html: `<br><b>*** CREW MEMBER: CAPTAIN COSMIC ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 69<br><br>Assignment: Navigate the cosmos with superb parallel parking skills`
-        };
-
+  };
       case "cuddles":
         return {
           type: "ascii+html",
           ascii: ASCII_ART.cuddles,
           html: `<br><b>*** CREW MEMBER: CO-CAPTAIN CUDDLES ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67<br><br>Assignment: Distribute superior emotional support and soft skills`
-        };
+  };
 
-      case "bojack":
-        return {
-          type: "ascii+html",
-          ascii: ASCII_ART.bojack,
-          asciiSpeed: TYPING_SPEEDS.asciiFast,
-          htmlSpeed: TYPING_SPEEDS.htmlSlow,
-          html: `<br><b>*** CREW MEMBER: BOJACK ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67<br><br>Assignment: Securing the perimeter and handling all threats`
-        };
+  case "bojack":
+  return {
+    type: "ascii+html",
+    ascii: ASCII_ART.bojack,
+    asciiSpeed: TYPING_SPEEDS.asciiFast,
+    htmlSpeed: TYPING_SPEEDS.htmlSlow,
+    html: `<br><b>*** CREW MEMBER: BOJACK ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67<br><br>Assignment: Securing the perimeter and handling all threats`
+  };
+
 
       case "callie":
         return {
           type: "ascii+html",
           ascii: ASCII_ART.callie,
-          html: `<br><b>*** CREW MEMBER: CALLIE ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68<br><br>Assignment: Supervising all lower-level employees`
-        };
-
+          html: `
+          <br><b>*** CREW MEMBER: CALLIE ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68<br><br>Assignment: Supervising all lower-level employees`
+  };
       case "calliefornia":
         return ASCII_ART.callie;
-
       case "refuel":
         return ASCII_ART.drp;
-
       case "home":
         return ASCII_ART.home;
-
       case "ping":
         launchPong();
         return null;
-
       case "pip":
         displayPip();
         return null;
-
       default:
         return `'${command}' is not recognized as a command. Type 'menu' for a list of available commands.`;
     }
@@ -731,95 +728,103 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Password handler ---
   const handlePassword = async (inputValue) => {
-    awaitingPassword = false;
-    if (inputValue === CORRECT_PASSWORD) {
-      await typeText("Access granted.\nWelcome back, admin. Access to secretmenu now authorized\n");
-    } else {
-      await typeText("Access denied.\nInvalid credentials. You'll never find my password! Surely I'd never store it somewhere obvious like my journal...\n");
-    }
+  awaitingPassword = false;
+  if (inputValue === CORRECT_PASSWORD) {
+    await typeText("Access granted.\nWelcome back, admin. Access to secretmenu now authorized\n");
+  } else {
+    await typeText("Access denied.\nInvalid credentials. You'll never find my password! Surely I'd never store it somewhere obvious like my journal...\n");
+  }
   };
 
-  // List of valid commands that can exit a log
-  const commandList = ["menu","status","nav","crew","comms","alerts","ping","login","clear","reboot"];
+// List of valid commands that can exit a log
+const commandList = ["menu","status","nav","crew","comms","alerts","ping","login","clear","reboot"];
 
-  // --- Journal handler ---
-  const handleJournalSelection = async (inputValue) => {
-    const lowerInput = inputValue.toLowerCase();
+// --- Journal handler ---
+const handleJournalSelection = async (inputValue) => {
+  const lowerInput = inputValue.toLowerCase();
 
-    if (commandList.includes(lowerInput)) {
-      awaitingJournalSelection = false;
-      processCommand(inputValue);
-      return;
-    }
-
+  // Exit if input is an actual command
+  if (commandList.includes(lowerInput)) {
     awaitingJournalSelection = false;
+    await processCommand(lowerInput);
+    return;
+  }
 
-    const index = parseInt(inputValue) - 1;
-    const entryKeys = Object.keys(journalEntries);
-    let entry = entryKeys[index] || inputValue;
+  // Exit if input is 'exit'
+  if (lowerInput === "exit") {
+    awaitingJournalSelection = false;
+    await typeText("Exited journal mode.\n");
+    return;
+  }
 
-    if (journalEntries[entry]) {
-      await typeText(journalEntries[entry] + "\n");
-    } else {
-      await typeText(`Journal entry '${inputValue}' not found.\n`);
-    }
-  };
+  // Lookup by name or number
+  let entryText = journalEntries[inputValue];
+  if (!entryText && !isNaN(parseInt(inputValue, 10))) {
+    const key = Object.keys(journalEntries)[parseInt(inputValue, 10) - 1];
+    entryText = journalEntries[key];
+  }
 
-  // --- Comms log handler ---
-  const handleCommsLogSelection = async (inputValue) => {
-    const lowerInput = inputValue.toLowerCase();
+  await typeText(entryText ? `\n${entryText}\n` : "Entry not found.\n");
+};
 
-    if (commandList.includes(lowerInput)) {
-      awaitingCommsLogSelection = false;
-      processCommand(inputValue);
-      return;
-    }
 
-    awaitingCommsLogSelection = false;
+ // --- Alerts handler ---
+const handleAlertsSelection = async (inputValue) => {
+  const lowerInput = inputValue.toLowerCase();
 
-    const index = parseInt(inputValue) - 1;
-    const logKeys = Object.keys(commsLogs);
-    let entry = logKeys[index] || inputValue;
-
-    if (commsLogs[entry]) {
-      await typeText(commsLogs[entry] + "\n");
-    } else {
-      await typeText(`Comms log '${inputValue}' not found.\n`);
-    }
-  };
-
-  // --- Alerts handler ---
-  const handleAlertsSelection = async (inputValue) => {
-    const lowerInput = inputValue.toLowerCase();
-
-    if (commandList.includes(lowerInput)) {
-      awaitingAlertsSelection = false;
-      processCommand(inputValue);
-      return;
-    }
-
+  if (commandList.includes(lowerInput)) {
     awaitingAlertsSelection = false;
+    await processCommand(lowerInput);
+    return;
+  }
 
-    const index = parseInt(inputValue) - 1;
-    const alertKeys = Object.keys(alertsLogs);
-    let entry = alertKeys[index] || inputValue;
+  if (lowerInput === "exit") {
+    awaitingAlertsSelection = false;
+    await typeText("Exited alerts menu.\n");
+    return;
+  }
 
-    if (alertsLogs[entry]) {
-      await typeText(alertsLogs[entry] + "\n");
-    } else {
-      await typeText(`Alert log '${inputValue}' not found.\n`);
-    }
-  };
+  const keys = Object.keys(alertsLogs);
 
-  // --- Build command grids for HTML menus ---
-  const buildCommandGrid = (commands) => {
-    let grid = "<table>";
-    commands.forEach(([cmd, desc]) => {
-      grid += `<tr><td><b>${cmd}</b></td><td>${desc}</td></tr>`;
-    });
-    grid += "</table>";
-    return grid;
-  };
+  // Direct key match
+  let alertText = alertsLogs[inputValue];
+
+  // Numbered selection
+  if (!alertText && !isNaN(parseInt(inputValue, 10))) {
+    const index = parseInt(inputValue, 10) - 1;
+    const key = keys[index];
+    alertText = alertsLogs[key];
+  }
+
+  await typeText(alertText ? `\n${alertText}\n` : "Alert not found.\n");
+};
+  
+// --- Comms log handler ---
+const handleCommsLogSelection = async (inputValue) => {
+  const lowerInput = inputValue.toLowerCase();
+
+  if (commandList.includes(lowerInput)) {
+    awaitingCommsLogSelection = false;
+    await processCommand(lowerInput);
+    return;
+  }
+
+  if (lowerInput === "exit") {
+    awaitingCommsLogSelection = false;
+    await typeText("Exited communications log.\n");
+    return;
+  }
+
+  let logText = commsLogs[inputValue];
+
+  if (!logText && !isNaN(parseInt(inputValue, 10))) {
+    const key = Object.keys(commsLogs)[parseInt(inputValue, 10) - 1];
+    logText = commsLogs[key];
+  }
+
+  await typeText(logText ? `\n${logText}\n` : "Log not found.\n");
+};
+
 
   // --- Pip ---
   const displayPip = () => {
