@@ -284,20 +284,19 @@ document.addEventListener("DOMContentLoaded", () => {
   let isTyping = false;
   const CORRECT_PASSWORD = "rosebud";
   const TYPING_SPEEDS = {
-  asciiFast: 5,
-  htmlSlow: 25,
-  normal: 15
-};
+    asciiFast: 5,
+    htmlSlow: 25,
+    normal: 15
+  };
 
-// Convert HTML bios → terminal-safe text
-const htmlToTerminalText = (html) => {
-  return html
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<\/b>/gi, "")
-    .replace(/<b>/gi, "")
-    .replace(/<[^>]+>/g, "");
-};
-
+  // Convert HTML bios → terminal-safe text
+  const htmlToTerminalText = (html) => {
+    return html
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<\/b>/gi, "")
+      .replace(/<b>/gi, "")
+      .replace(/<[^>]+>/g, "");
+  };
 
   // --- Journal entries ---
   const journalEntries = {
@@ -311,20 +310,20 @@ const htmlToTerminalText = (html) => {
   };
 
   // --- Communications Logs ---
-const commsLogs = {
-  "LOG-001": "[INBOUND]\nFrom: ADM ÂCKB░R \nStatus: CO̴RR░PTΞD\nMessage: ...IT'S Â TR░P-",
-  "LOG-002": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
-  "LOG-003": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
-  "LOG-004": "[OUTBOUND]\nTo: Mission Control\nStatus: FAILED\nMessage: Navigation anomaly detected. Requesting guidance."
-};
+  const commsLogs = {
+    "LOG-001": "[INBOUND]\nFrom: ADM ÂCKB░R \nStatus: CO̴RR░PTΞD\nMessage: ...IT'S Â TR░P-",
+    "LOG-002": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
+    "LOG-003": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
+    "LOG-004": "[OUTBOUND]\nTo: Mission Control\nStatus: FAILED\nMessage: Navigation anomaly detected. Requesting guidance."
+  };
 
- // --- Alert Logs ---
-const alertsLogs = {
-  "SYS-882": "[WARNING]\nCATEGORY: SYSTEM \nLOCATION: ENGINE BAY\nSTATUS: ESCALATED\nSUMMARY: Fuel reserves drained to 50% of capacity",
-  "SYS-031": "[CRITICAL]\nCATEGORY: SYSTEM \nLOCATION: VENTILATION\nSTATUS: RESOLVED\nSUMMARY: Dangerous biochemicals noted in crew cabin, further investigation determined Bojack just farted",
-  "THR-113": "[WARNING]\nCATEGORY: THREAT \nLOCATION: GLOBAL\nSTATUS: UNRESOLVED\nSUMMARY: Small furry predators 'cats' seem to be in charge of some humans",
-  "THR-004": "[CRITICAL]\nCATEGORY: DEFENSE \nLOCATION: ORBITAL OBSERVATION\nSTATUS: RESOLVED\nSUMMARY: Missile launch detected. Classified as human celebration of perceived liberty"
-};
+  // --- Alert Logs ---
+  const alertsLogs = {
+    "SYS-882": "[WARNING]\nCATEGORY: SYSTEM \nLOCATION: ENGINE BAY\nSTATUS: ESCALATED\nSUMMARY: Fuel reserves drained to 50% of capacity",
+    "SYS-031": "[CRITICAL]\nCATEGORY: SYSTEM \nLOCATION: VENTILATION\nSTATUS: RESOLVED\nSUMMARY: Dangerous biochemicals noted in crew cabin, further investigation determined Bojack just farted",
+    "THR-113": "[WARNING]\nCATEGORY: THREAT \nLOCATION: GLOBAL\nSTATUS: UNRESOLVED\nSUMMARY: Small furry predators 'cats' seem to be in charge of some humans",
+    "THR-004": "[CRITICAL]\nCATEGORY: DEFENSE \nLOCATION: ORBITAL OBSERVATION\nSTATUS: RESOLVED\nSUMMARY: Missile launch detected. Classified as human celebration of perceived liberty"
+  };
 
   // --- Menu commands ---
   const menuCommands = [
@@ -340,7 +339,7 @@ const alertsLogs = {
     ["clear", "clear all prompts"],
     ["reboot", "restart onboard systems"]
   ];
-  
+
   // --- Secret commands ---
   const secretCommands = [
     ["bloom", "a beautiful flower for you"],
@@ -351,7 +350,7 @@ const alertsLogs = {
     ["refuel", "when you're running low on fuel"]
   ];
 
-    // --- Crew Vitals ---
+  // --- Crew Vitals ---
   const crewvitalsCommands = [
     ["cosmic", "Captain Cosmic"],
     ["cuddles", "Co-Captain Cuddles"],
@@ -366,7 +365,6 @@ const alertsLogs = {
     output.scrollTop = output.scrollHeight; // scroll to bottom
   };
 
-    // --- Helper for scrolling ---
   const scrollToBottom = () => {
     requestAnimationFrame(() => {
       output.scrollTop = output.scrollHeight;
@@ -379,51 +377,51 @@ const alertsLogs = {
   };
 
   // --- Reboot sequence with animated loading bar (character-by-character) and fade-in welcome ---
-const runReboot = async () => {
-  if (isTyping) return;
-  isTyping = true;
+  const runReboot = async () => {
+    if (isTyping) return;
+    isTyping = true;
 
-  // 1. Fade out existing terminal content
-  output.style.transition = "opacity 800ms";
-  output.style.opacity = 0;
-  await new Promise(r => setTimeout(r, 800));
+    // 1. Fade out existing terminal content
+    output.style.transition = "opacity 800ms";
+    output.style.opacity = 0;
+    await new Promise(r => setTimeout(r, 800));
 
-  // 2. Short pause before showing loading bar
-  await new Promise(r => setTimeout(r, 300));
+    // 2. Short pause before showing loading bar
+    await new Promise(r => setTimeout(r, 300));
 
-  // 3. Clear output and show "System rebooting..."
-  output.innerHTML = "";
-  output.style.opacity = 1;
-  appendOutput("System rebooting...\n\n");
+    // 3. Clear output and show "System rebooting..."
+    output.innerHTML = "";
+    output.style.opacity = 1;
+    appendOutput("System rebooting...\n\n");
 
-  // 4. Character-based loading bar
-  const totalChars = 40; // total characters in the loading bar
-  let bar = "[";
-  appendOutput(bar); // starting bracket
-  for (let i = 0; i < totalChars; i++) {
-    await new Promise(r => setTimeout(r, 60)); // small delay for each character
-    appendOutput("=");
-    output.scrollTop = output.scrollHeight; // ensure scroll follows
-  }
-  appendOutput("]\n"); // closing bracket
-  await new Promise(r => setTimeout(r, 300)); // pause at full bar
+    // 4. Character-based loading bar
+    const totalChars = 40; // total characters in the loading bar
+    let bar = "[";
+    appendOutput(bar); // starting bracket
+    for (let i = 0; i < totalChars; i++) {
+      await new Promise(r => setTimeout(r, 60)); // small delay for each character
+      appendOutput("=");
+      output.scrollTop = output.scrollHeight; // ensure scroll follows
+    }
+    appendOutput("]\n"); // closing bracket
+    await new Promise(r => setTimeout(r, 300)); // pause at full bar
 
-  // 5. Clear terminal and prepare welcome message
-  output.innerHTML = "";
-  const welcomeText = document.createElement("div");
-  welcomeText.textContent = "*** WELCOME TO THE TERMINAL ***\nType 'menu' to begin...";
-  welcomeText.style.opacity = 0;
-  welcomeText.style.transition = "opacity 1500ms";
-  output.appendChild(welcomeText);
+    // 5. Clear terminal and prepare welcome message
+    output.innerHTML = "";
+    const welcomeText = document.createElement("div");
+    welcomeText.textContent = "*** WELCOME TO THE TERMINAL ***\nType 'menu' to begin...";
+    welcomeText.style.opacity = 0;
+    welcomeText.style.transition = "opacity 1500ms";
+    output.appendChild(welcomeText);
 
-  // 6. Fade in the welcome message
-  await new Promise(r => requestAnimationFrame(() => {
-    welcomeText.style.opacity = 1;
-  }));
+    // 6. Fade in the welcome message
+    await new Promise(r => requestAnimationFrame(() => {
+      welcomeText.style.opacity = 1;
+    }));
 
-  output.scrollTop = output.scrollHeight;
-  isTyping = false;
-};
+    output.scrollTop = output.scrollHeight;
+    isTyping = false;
+  };
 
   // --- Input listener ---
   input.addEventListener("keydown", (e) => {
@@ -431,17 +429,17 @@ const runReboot = async () => {
       const value = input.value.trim();
       if (!value) return;
 
-if (awaitingPassword) {
-  handlePassword(value);
-} else if (awaitingJournalSelection) {
-  handleJournalSelection(value);
-} else if (awaitingCommsLogSelection) {
-  handleCommsLogSelection(value);
-} else if (awaitingAlertsSelection) {
-  handleAlertsSelection(value);
-} else {
-  processCommand(value);
-}
+      if (awaitingPassword) {
+        handlePassword(value);
+      } else if (awaitingJournalSelection) {
+        handleJournalSelection(value);
+      } else if (awaitingCommsLogSelection) {
+        handleCommsLogSelection(value);
+      } else if (awaitingAlertsSelection) {
+        handleAlertsSelection(value);
+      } else {
+        processCommand(value);
+      }
 
       input.value = "";
     }
@@ -449,75 +447,61 @@ if (awaitingPassword) {
 
   // --- Typing functions ---
   const typeText = (text, speed = 20) => {
-  return new Promise((resolve) => {
-    if (isTyping) return resolve();
+    return new Promise((resolve) => {
+      if (isTyping) return resolve();
 
+      isTyping = true;
+      let i = 0;
+
+      const interval = setInterval(() => {
+        appendOutput(text.charAt(i));
+        i++;
+
+        if (i >= text.length) {
+          clearInterval(interval);
+          isTyping = false;
+          resolve();
+        }
+      }, speed);
+    });
+  };
+
+  const typeHTML = async (container, html, speed = 20) => {
+    if (isTyping) return;
     isTyping = true;
-    let i = 0;
 
-    const interval = setInterval(() => {
-      appendOutput(text.charAt(i));
-      i++;
+    const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
+    let currentParent = container;
 
-      if (i >= text.length) {
-        clearInterval(interval);
-        isTyping = false;
-        resolve();
+    for (const chunk of chunks) {
+
+      if (chunk.startsWith("</")) {
+        container.insertAdjacentHTML("beforeend", chunk);
+        currentParent = container;
+      } else if (chunk.startsWith("<")) {
+        container.insertAdjacentHTML("beforeend", chunk);
+        const tagName = chunk.match(/^<([a-zA-Z0-9]+)/)?.[1];
+        if (tagName && tagName !== "br") {
+          currentParent = container.lastElementChild || container;
+        }
+      } else {
+        const textNode = document.createTextNode("");
+        currentParent.appendChild(textNode);
+        for (let i = 0; i < chunk.length; i++) {
+          textNode.textContent += chunk.charAt(i);
+          await new Promise(r => setTimeout(r, speed));
+        }
       }
-    }, speed);
-  });
-};
 
-
-// Animate HTML content but preserve tags
-const typeHTML = async (container, html, speed = 20) => {
-  if (isTyping) return;
-  isTyping = true;
-
-  const chunks = html.split(/(<[^>]+>)/g).filter(Boolean);
-  let currentParent = container;
-
-  for (const chunk of chunks) {
-
-    // Closing tag
-    if (chunk.startsWith("</")) {
-      container.insertAdjacentHTML("beforeend", chunk);
-      currentParent = container;
+      output.scrollTop = output.scrollHeight;
     }
 
-    // Opening tag
-    else if (chunk.startsWith("<")) {
-      container.insertAdjacentHTML("beforeend", chunk);
-
-      const tagName = chunk.match(/^<([a-zA-Z0-9]+)/)?.[1];
-      if (tagName && tagName !== "br") {
-        currentParent = container.lastElementChild || container;
-      }
-    }
-
-    // Text content → animate character-by-character
-    else {
-      const textNode = document.createTextNode("");
-      currentParent.appendChild(textNode);
-
-      for (let i = 0; i < chunk.length; i++) {
-        textNode.textContent += chunk.charAt(i);
-        await new Promise(r => setTimeout(r, speed));
-      }
-    }
-
-    output.scrollTop = output.scrollHeight;
-  }
-
-  isTyping = false;
-};
-
-
+    isTyping = false;
+  };
 
   // --- Command processor ---
   const processCommand = async (command) => {
     const lower = command.toLowerCase();
-    const instantCommands = ["clear", "ping", "pip", "exit"];
     if (isTyping) return;
 
     if (lower === "clear") {
@@ -530,89 +514,58 @@ const typeHTML = async (container, html, speed = 20) => {
 
     appendOutput(`> ${command}\n`);
 
-if (typeof response === "object") {
-
-  // -------- ASCII ONLY (navmap, etc.) --------
-if (response.ascii && !response.type) {
-  const speed = response.asciiSpeed ?? TYPING_SPEEDS.normal;
-  await typeText(response.ascii + "\n", speed);
-  return;
-}
-
-  // -------- ASCII + HTML (fast ASCII → slow HTML) --------
-  if (response.type === "ascii+html") {
-
-    const asciiSpeed = response.asciiSpeed ?? TYPING_SPEEDS.asciiFast;
-    const htmlSpeed  = response.htmlSpeed  ?? TYPING_SPEEDS.htmlSlow;
-
-    if (response.ascii) {
-      await typeText(response.ascii + "\n", asciiSpeed);
-    }
-
-// Animate HTML as terminal text for consistent feel
-const terminalText = htmlToTerminalText(response.html);
-
-await typeText(terminalText + "\n", htmlSpeed);
-return;
-  }
-
-  // -------- HTML ONLY --------
-  if (response.type === "html") {
-
-    if (response.header) {
-      await typeText(response.header + "\n", TYPING_SPEEDS.normal);
-    }
-
-    const container = document.createElement("div");
-    output.appendChild(container);
-
-    if (response.instant) {
-      container.innerHTML = response.content + "\n";
-      scrollToBottom();
-    } else {
-      const normalizedHTML = response.content
-        .replace(/\n\s+/g, "")
-        .trim();
-
-      await typeHTML(container, normalizedHTML + "\n", TYPING_SPEEDS.htmlSlow);
-      scrollToBottom();
-    }
-
-    return;
-  }
-}
-
-
- else {
-  await typeText(response + "\n");
-}
-
-  };
-
-  // --- Command grid builder ---
-  const buildCommandGrid = (commands) => {
-    let html = `<div class="command-grid">`;
-    for (let i = 0; i < commands.length; i += 2) {
-      html += `<div class="cmd">${commands[i][0]}</div><div class="desc">${commands[i][1]}</div>`;
-      if (commands[i + 1]) {
-        html += `<div class="cmd">${commands[i + 1][0]}</div><div class="desc">${commands[i + 1][1]}</div>`;
-      } else {
-        html += `<div></div><div></div>`;
+    if (typeof response === "object") {
+      if (response.ascii && !response.type) {
+        const speed = response.asciiSpeed ?? TYPING_SPEEDS.normal;
+        await typeText(response.ascii + "\n", speed);
+        return;
       }
+
+      if (response.type === "ascii+html") {
+        const asciiSpeed = response.asciiSpeed ?? TYPING_SPEEDS.asciiFast;
+        const htmlSpeed = response.htmlSpeed ?? TYPING_SPEEDS.htmlSlow;
+
+        if (response.ascii) {
+          await typeText(response.ascii + "\n", asciiSpeed);
+        }
+
+        const terminalText = htmlToTerminalText(response.html);
+        await typeText(terminalText + "\n", htmlSpeed);
+        return;
+      }
+
+      if (response.type === "html") {
+        if (response.header) {
+          await typeText(response.header + "\n", TYPING_SPEEDS.normal);
+        }
+
+        const container = document.createElement("div");
+        output.appendChild(container);
+
+        if (response.instant) {
+          container.innerHTML = response.content + "\n";
+          scrollToBottom();
+        } else {
+          const normalizedHTML = response.content.replace(/\n\s+/g, "").trim();
+          await typeHTML(container, normalizedHTML + "\n", TYPING_SPEEDS.htmlSlow);
+          scrollToBottom();
+        }
+
+        return;
+      }
+    } else {
+      await typeText(response + "\n");
     }
-    html += `</div>`;
-    return html;
   };
 
-  // --- Command responses ---
+  // --- Add reboot inside getCommandResponse switch ---
   const getCommandResponse = (command) => {
     switch (command.toLowerCase()) {
-case "menu":
-  return {
-    type: "html",
-    header: "*** MAIN MENU ***",
-    content: buildCommandGrid(menuCommands),
-    instant: true
+      case "reboot":
+        runReboot();
+        return null;
+      // ...rest of your cases remain unchanged...
+    }
   };
 
 case "secretmenu":
