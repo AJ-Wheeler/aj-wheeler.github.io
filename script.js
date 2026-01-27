@@ -338,7 +338,7 @@ const commsLogs = {
     ["gemini", "now this appears to be a good sign..."],
     ["hack", "break into the mainframe"],
     ["leo", "meow big kitty"],
-    ["home", "there's no other place like it"]
+    ["home", "there's no other place like it"],
     ["refuel", "when you're running low on fuel"]
   ];
 
@@ -355,6 +355,13 @@ const commsLogs = {
   const appendOutput = (text) => {
     output.innerHTML += text;
     output.scrollTop = output.scrollHeight; // scroll to bottom
+  };
+
+    // --- Helper for scrolling ---
+  const scrollToBottom = () => {
+    requestAnimationFrame(() => {
+      output.scrollTop = output.scrollHeight;
+    });
   };
 
   const appendOutputHTML = (html) => {
@@ -503,12 +510,14 @@ return;
 
     if (response.instant) {
       container.innerHTML = response.content + "\n";
+      scrollToBottom();
     } else {
       const normalizedHTML = response.content
         .replace(/\n\s+/g, "")
         .trim();
 
       await typeHTML(container, normalizedHTML + "\n", TYPING_SPEEDS.htmlSlow);
+      scrollToBottom();
     }
 
     return;
