@@ -558,173 +558,186 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // --- Add reboot inside getCommandResponse switch ---
-  const getCommandResponse = (command) => {
-    switch (command.toLowerCase()) {
-      case "reboot":
-        runReboot();
-        return null;
-      // ...rest of your cases remain unchanged...
-    }
-  };
+ const getCommandResponse = (command) => {
+  const lower = command.toLowerCase();
+  if (isTyping) return null;
 
-case "secretmenu":
-  return {
-    type: "html",
-    header: "*** SECRET MENU ***",
-    content: buildCommandGrid(secretCommands),
-    instant: true
-  };
+  switch (lower) {
+    case "reboot":
+      runReboot();
+      return null;
 
-case "crewvitals":
-  return {
-    type: "html",
-    header: "*** CREW VITALS ***   select individual to view",
-    content: buildCommandGrid(crewvitalsCommands),
-    instant: true
-  };
+    case "secretmenu":
+      return {
+        type: "html",
+        header: "*** SECRET MENU ***",
+        content: buildCommandGrid(secretCommands),
+        instant: true
+      };
 
-      case "hack":
-        runHackSequence();
-        return null;
-        case "test":
-        runTest();
-        return null;
-      case "1a":
-        run1A();
-        return null;
-      case "2a":
-        run2A();
-        return null;
-      case "3a":
-        run3A();
-        return null;
-      case "login":
-        awaitingPassword = true;
-        return "Enter password:";
-      case "hello":
-        return "Howdy, partner!";
-      case "status":
-        return ASCII_ART.rocket;
-      case "journal":
-        awaitingJournalSelection = true;
-        output.innerHTML = "";
-        let menu = "Journal Menu (type entry name or number, 'exit' to leave journal mode):\n";
-        Object.keys(journalEntries).forEach((key, index) => {
-          menu += `${index + 1}. ${key}\n`;
-        });
-        menu += "\nType the entry name or number:";
-        return menu;
+    case "crewvitals":
+      return {
+        type: "html",
+        header: "*** CREW VITALS ***   select individual to view",
+        content: buildCommandGrid(crewvitalsCommands),
+        instant: true
+      };
+
+    case "hack":
+      runHackSequence();
+      return null;
+
+    case "test":
+      runTest();
+      return null;
+
+    case "1a":
+      run1A();
+      return null;
+
+    case "2a":
+      run2A();
+      return null;
+
+    case "3a":
+      run3A();
+      return null;
+
+    case "login":
+      awaitingPassword = true;
+      return "Enter password:";
+
+    case "hello":
+      return "Howdy, partner!";
+
+    case "status":
+      return ASCII_ART.rocket;
+
+    case "journal":
+      awaitingJournalSelection = true;
+      output.innerHTML = "";
+      let menu = "Journal Menu (type entry name or number, 'exit' to leave journal mode):\n";
+      Object.keys(journalEntries).forEach((key, index) => {
+        menu += `${index + 1}. ${key}\n`;
+      });
+      menu += "\nType the entry name or number:";
+      return menu;
+
     case "commslog":
-        awaitingCommsLogSelection = true;
-        output.innerHTML = "";
-        let commsMenu = "COMMUNICATIONS LOG (select log or type 'exit' to leave communications log):\n";
-        Object.keys(commsLogs).forEach((key, index) => {
-          commsMenu += `${index + 1}. ${key}\n`;
-  });
-        commsMenu += "\nType log name or number:";
-        return commsMenu;
-      case "alerts":
-        awaitingAlertsSelection = true;
-        output.innerHTML = "";
-        let alertsMenu = "ALERTS LOG (select log or type 'exit' to leave alerts menu):\n";
-        Object.keys(alertsLogs).forEach((key, index) => {
-          alertsMenu += `${index + 1}. ${key}\n`;
-  });
-        alertsMenu += "\nType log name or number:";
-        return alertsMenu;
-      case "bloom":
-        return {
-          ascii: ASCII_ART.rose,
-    asciiSpeed: TYPING_SPEEDS.asciiFast
-  };
-      case "gemini":
-        return {
-          ascii: ASCII_ART.gemini,
-    asciiSpeed: TYPING_SPEEDS.asciiFast
-  };
-      case "leo":
-        return {
-          ascii: ASCII_ART.leo,
-    asciiSpeed: TYPING_SPEEDS.asciiFast
-  };
-      case "date":
-        return new Date().toString();
-      case "nav":
-        return {
-          type: "html",
-          header: "",
-          content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
-  };
-case "navmap":
-  return {
-    ascii: ASCII_ART.navmap,
-    asciiSpeed: TYPING_SPEEDS.asciiFast
-  };
-      case "comms":
-        return {
-          type: "html",
-          header: "",
-          content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>uplink</b> Retrieve new communication data<br><b>commslog</b> Show received communications<br><br>`
-  };
-      case "uplink":
-        return {
-          type: "html",
-          header: "",
-          content: `<br><b>*** 2 NEW INCOMING MESSAGES ***</b><br><br>Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br>`
-  };
-      case "crew":
-        return {
-          type: "html",
-          header: "",
-          content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic<br>Co-Captain: Cuddles<br>Supervisor: Callie<br>Security: Bojack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
-  };
-      case "cosmic":
-        return {
-          type: "ascii+html",
-          ascii: ASCII_ART.cosmic,
-          html: `<br><b>*** CREW MEMBER: CAPTAIN COSMIC ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 69<br><br>Assignment: Navigate the cosmos with superb parallel parking skills`
-  };
-      case "cuddles":
-        return {
-          type: "ascii+html",
-          ascii: ASCII_ART.cuddles,
-          html: `<br><b>*** CREW MEMBER: CO-CAPTAIN CUDDLES ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67<br><br>Assignment: Distribute superior emotional support and soft skills`
-  };
+      awaitingCommsLogSelection = true;
+      output.innerHTML = "";
+      let commsMenu = "COMMUNICATIONS LOG (select log or type 'exit' to leave communications log):\n";
+      Object.keys(commsLogs).forEach((key, index) => {
+        commsMenu += `${index + 1}. ${key}\n`;
+      });
+      commsMenu += "\nType log name or number:";
+      return commsMenu;
 
-  case "bojack":
-  return {
-    type: "ascii+html",
-    ascii: ASCII_ART.bojack,
-    asciiSpeed: TYPING_SPEEDS.asciiFast,
-    htmlSpeed: TYPING_SPEEDS.htmlSlow,
-    html: `<br><b>*** CREW MEMBER: BOJACK ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67<br><br>Assignment: Securing the perimeter and handling all threats`
-  };
+    case "alerts":
+      awaitingAlertsSelection = true;
+      output.innerHTML = "";
+      let alertsMenu = "ALERTS LOG (select log or type 'exit' to leave alerts menu):\n";
+      Object.keys(alertsLogs).forEach((key, index) => {
+        alertsMenu += `${index + 1}. ${key}\n`;
+      });
+      alertsMenu += "\nType log name or number:";
+      return alertsMenu;
 
+    case "bloom":
+      return { ascii: ASCII_ART.rose, asciiSpeed: TYPING_SPEEDS.asciiFast };
 
-      case "callie":
-        return {
-          type: "ascii+html",
-          ascii: ASCII_ART.callie,
-          html: `
-          <br><b>*** CREW MEMBER: CALLIE ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68<br><br>Assignment: Supervising all lower-level employees`
-  };
-      case "calliefornia":
-        return ASCII_ART.callie;
-      case "refuel":
-        return ASCII_ART.drp;
-      case "home":
-        return ASCII_ART.home;
-      case "ping":
-        launchPong();
-        return null;
-      case "pip":
-        displayPip();
-        return null;
-      default:
-        return `'${command}' is not recognized as a command. Type 'menu' for a list of available commands.`;
-    }
-  };
+    case "gemini":
+      return { ascii: ASCII_ART.gemini, asciiSpeed: TYPING_SPEEDS.asciiFast };
+
+    case "leo":
+      return { ascii: ASCII_ART.leo, asciiSpeed: TYPING_SPEEDS.asciiFast };
+
+    case "date":
+      return new Date().toString();
+
+    case "nav":
+      return {
+        type: "html",
+        header: "",
+        content: `<br><b>*** NAVIGATION CONTROL ***</b><br><br>Current Sector: ECHO-7<br>Current Destination: Rosewater Mission Control<br><br><b>navmap</b> View star map and set navigation destination<br><br>`
+      };
+
+    case "navmap":
+      return { ascii: ASCII_ART.navmap, asciiSpeed: TYPING_SPEEDS.asciiFast };
+
+    case "comms":
+      return {
+        type: "html",
+        header: "",
+        content: `<br><b>*** COMMUNICATIONS ARRAY ***</b><br><br>Status: Optimal<br>Last Signal: 04/05/2025<br>Origin: 32.7574624,-97.1500809<br><br><b>uplink</b> Retrieve new communication data<br><b>commslog</b> Show received communications<br><br>`
+      };
+
+    case "uplink":
+      return {
+        type: "html",
+        header: "",
+        content: `<br><b>*** 2 NEW INCOMING MESSAGES ***</b><br><br>Origin: 32.8887704,-96.958692<br>Date: 02/28/2026<br>Message: P I Z Z A<br><br>Origin: 33.148969,-96.8191008<br>Date: 04/04/2026<br>Message: T A C O S<br><br>`
+      };
+
+    case "crew":
+      return {
+        type: "html",
+        header: "",
+        content: `<br><b>*** CREW ROSTER ***</b><br><br>Captain: Cosmic<br>Co-Captain: Cuddles<br>Supervisor: Callie<br>Security: Bojack<br>Janitorial: Lewis<br><br><b>crewvitals</b> Display crew member vitals & biometric data<br><br>`
+      };
+
+    case "cosmic":
+      return {
+        type: "ascii+html",
+        ascii: ASCII_ART.cosmic,
+        html: `<br><b>*** CREW MEMBER: CAPTAIN COSMIC ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Fair<br>H20 Levels: Poor<br>Blood Pressure: !Warning Over Limit!<br>Heart Rate: 69<br><br>Assignment: Navigate the cosmos with superb parallel parking skills`
+      };
+
+    case "cuddles":
+      return {
+        type: "ascii+html",
+        ascii: ASCII_ART.cuddles,
+        html: `<br><b>*** CREW MEMBER: CO-CAPTAIN CUDDLES ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Good<br>Heart Rate: 67<br><br>Assignment: Distribute superior emotional support and soft skills`
+      };
+
+    case "bojack":
+      return {
+        type: "ascii+html",
+        ascii: ASCII_ART.bojack,
+        asciiSpeed: TYPING_SPEEDS.asciiFast,
+        htmlSpeed: TYPING_SPEEDS.htmlSlow,
+        html: `<br><b>*** CREW MEMBER: BOJACK ***</b><br><br>Oxygen Levels: Fair<br>C02 Levels: !HIGH!<br>H20 Levels: !HIGH!<br>Blood Pressure: Fair<br>Heart Rate: 67<br><br>Assignment: Securing the perimeter and handling all threats`
+      };
+
+    case "callie":
+      return {
+        type: "ascii+html",
+        ascii: ASCII_ART.callie,
+        html: `<br><b>*** CREW MEMBER: CALLIE ***</b><br><br>Oxygen Levels: Good<br>C02 Levels: Good<br>H20 Levels: Excellent<br>Blood Pressure: Fair<br>Heart Rate: 68<br><br>Assignment: Supervising all lower-level employees`
+      };
+
+    case "calliefornia":
+      return ASCII_ART.callie;
+
+    case "refuel":
+      return ASCII_ART.drp;
+
+    case "home":
+      return ASCII_ART.home;
+
+    case "ping":
+      launchPong();
+      return null;
+
+    case "pip":
+      displayPip();
+      return null;
+
+    default:
+      return `'${command}' is not recognized as a command. Type 'menu' for a list of available commands.`;
+  }
+};
+
 
   // --- Password handler ---
   const handlePassword = async (inputValue) => {
