@@ -280,6 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let awaitingPassword = false;
   let awaitingJournalSelection = false;
   let awaitingCommsLogSelection = false;
+  let awaitingAlertsSelection = false;
   let isTyping = false;
   const CORRECT_PASSWORD = "rosebud";
   const TYPING_SPEEDS = {
@@ -315,6 +316,14 @@ const commsLogs = {
   "LOG-002": "[OUTBOUND]\nTo: Vessel ATLAS-9\nStatus: SENT\nMessage: Approaching rendezvous point.\nSignal strength stable.",
   "LOG-003": "[INBOUND]\nFrom: Vessel ATLAS-9\nStatus: RECEIVED\nMessage: Acknowledged. Holding position.",
   "LOG-004": "[OUTBOUND]\nTo: Mission Control\nStatus: FAILED\nMessage: Navigation anomaly detected. Requesting guidance."
+};
+
+ // --- Alert Logs ---
+const alertsLogs = {
+  "SYS-882": "[WARNING]\nCATEGORY: SYSTEM \nLOCATION: ENGINE BAY\nSTATUS: ESCALATED\nSUMMARY: Fuel reserves drained to 50% of capacity",
+  "SYS-031": "[CRITICAL]\nCATEGORY: SYSTEM \nLOCATION: VENTILATION\nSTATUS: RESOLVED\nSUMMARY: Dangerous biochemicals noted in crew cabin, further investigation determined Bojack just farted",
+  "THR-113": "[WARNING]\nCATEGORY: THREAT \nLOCATION: GLOBAL\nSTATUS: UNRESOLVED\nSUMMARY: Small furry predators 'cats' seem to be in charge of some humans",
+  "THR-004": "[CRITICAL]\nCATEGORY: DEFENSE \nLOCATION: ORBITAL OBSERVATION\nSTATUS: RESOLVED\nSUMMARY: Missile launch detected. Classified as human celebration of perceived liberty"
 };
 
   // --- Menu commands ---
@@ -381,6 +390,8 @@ if (awaitingPassword) {
   handleJournalSelection(value);
 } else if (awaitingCommsLogSelection) {
   handleCommsLogSelection(value);
+} else if (awaitingAlertsSelection) {
+  handleAlertsSelection(value);
 } else {
   processCommand(value);
 }
@@ -613,6 +624,15 @@ case "crewvitals":
   });
         commsMenu += "\nType log name or number:";
         return commsMenu;
+      case "alerts":
+        awaitingAlertsSelection = true;
+        output.innerHTML = "";
+        let alertsMenu = "ALERTS LOG (select log or type 'exit' to leave alerts menu):\n";
+        Object.keys(alertsLogs).forEach((key, index) => {
+          alertsMenu += `${index + 1}. ${key}\n`;
+  });
+        alertsMenu += "\nType log name or number:";
+        return alertsMenu;
       case "bloom":
         return {
           ascii: ASCII_ART.rose,
@@ -732,21 +752,46 @@ case "navmap":
 };
 
 
-  // --- Comms Log handler ---
-const handleCommsLogSelection = async (inputValue) => {
+  // --- Alert handler ---
+const handleAlertsSelection = async (inputValue) => {
   if (inputValue.toLowerCase() === "exit") {
-    awaitingCommsLogSelection = false;
-    await typeText("Exited communications log.\n");
+    awaitingAlertsSelection = false;
+    await typeText("Exited alerts menu.\n");
     return;
   }
-  let logText = commsLogs[inputValue];
-  if (!logText && !isNaN(inputValue)) {
-    const key = Object.keys(commsLogs)[inputValue - 1];
-    logText = commsLogs[key];
+
+  const keys = Object.keys(alertsLogs);
+
+  // Direct key match (e.g. SYS-882)
+  let alertText = alertsLogs[inputValue];
+
+  // Numbered selection (e.g. "1")
+  if (!alertText && !isNaN(inputValue)) {
+    const index = parseInt(inputValue, 10) - 1;
+    const key = keys[index];
+    alertText = alertsLogs[key];
   }
-  await typeText(logText ? `\n${logText}\n` : "Log not found.\n");
+
+  await typeText(
+    alertText ? `\n${alertText}\n` : "Alert not found.\n"
+  );
 };
 
+
+    // --- Journal handler ---
+ const handleJournalSelection = async (inputValue) => {
+  if (inputValue.toLowerCase() === "exit") {
+    awaitingJournalSelection = false;
+    await typeText("Exited journal mode.\n");
+    return;
+  }
+  let entryText = journalEntries[inputValue];
+  if (!entryText && !isNaN(inputValue)) {
+    const key = Object.keys(journalEntries)[inputValue - 1];
+    entryText = journalEntries[key];
+  }
+  await typeText(entryText ? `\n${entryText}\n` : "Entry not found.\n");
+};
 
   // --- Pip ---
   const displayPip = () => {
