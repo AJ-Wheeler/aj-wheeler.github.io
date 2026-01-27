@@ -736,25 +736,49 @@ case "navmap":
   }
   };
 
-  // --- Journal handler ---
- const handleJournalSelection = async (inputValue) => {
-  if (inputValue.toLowerCase() === "exit") {
+// List of valid commands that can exit a log
+const commandList = ["menu","status","nav","crew","comms","alerts","ping","login","clear","reboot"];
+
+// --- Journal handler ---
+const handleJournalSelection = async (inputValue) => {
+  const lowerInput = inputValue.toLowerCase();
+
+  // Exit if input is an actual command
+  if (commandList.includes(lowerInput)) {
+    awaitingJournalSelection = false;
+    await processCommand(lowerInput);
+    return;
+  }
+
+  // Exit if input is 'exit'
+  if (lowerInput === "exit") {
     awaitingJournalSelection = false;
     await typeText("Exited journal mode.\n");
     return;
   }
+
+  // Lookup by name or number
   let entryText = journalEntries[inputValue];
-  if (!entryText && !isNaN(inputValue)) {
-    const key = Object.keys(journalEntries)[inputValue - 1];
+  if (!entryText && !isNaN(parseInt(inputValue, 10))) {
+    const key = Object.keys(journalEntries)[parseInt(inputValue, 10) - 1];
     entryText = journalEntries[key];
   }
+
   await typeText(entryText ? `\n${entryText}\n` : "Entry not found.\n");
 };
 
 
-  // --- Alert handler ---
+ // --- Alerts handler ---
 const handleAlertsSelection = async (inputValue) => {
-  if (inputValue.toLowerCase() === "exit") {
+  const lowerInput = inputValue.toLowerCase();
+
+  if (commandList.includes(lowerInput)) {
+    awaitingAlertsSelection = false;
+    await processCommand(lowerInput);
+    return;
+  }
+
+  if (lowerInput === "exit") {
     awaitingAlertsSelection = false;
     await typeText("Exited alerts menu.\n");
     return;
@@ -762,33 +786,42 @@ const handleAlertsSelection = async (inputValue) => {
 
   const keys = Object.keys(alertsLogs);
 
-  // Direct key match (e.g. SYS-882)
+  // Direct key match
   let alertText = alertsLogs[inputValue];
 
-  // Numbered selection (e.g. "1")
-  if (!alertText && !isNaN(inputValue)) {
+  // Numbered selection
+  if (!alertText && !isNaN(parseInt(inputValue, 10))) {
     const index = parseInt(inputValue, 10) - 1;
     const key = keys[index];
     alertText = alertsLogs[key];
   }
 
-  await typeText(
-    alertText ? `\n${alertText}\n` : "Alert not found.\n"
-  );
+  await typeText(alertText ? `\n${alertText}\n` : "Alert not found.\n");
 };
-
-  // --- Comms Log handler ---
+  
+// --- Comms log handler ---
 const handleCommsLogSelection = async (inputValue) => {
-  if (inputValue.toLowerCase() === "exit") {
+  const lowerInput = inputValue.toLowerCase();
+
+  if (commandList.includes(lowerInput)) {
+    awaitingCommsLogSelection = false;
+    await processCommand(lowerInput);
+    return;
+  }
+
+  if (lowerInput === "exit") {
     awaitingCommsLogSelection = false;
     await typeText("Exited communications log.\n");
     return;
   }
+
   let logText = commsLogs[inputValue];
-  if (!logText && !isNaN(inputValue)) {
-    const key = Object.keys(commsLogs)[inputValue - 1];
+
+  if (!logText && !isNaN(parseInt(inputValue, 10))) {
+    const key = Object.keys(commsLogs)[parseInt(inputValue, 10) - 1];
     logText = commsLogs[key];
   }
+
   await typeText(logText ? `\n${logText}\n` : "Log not found.\n");
 };
 
